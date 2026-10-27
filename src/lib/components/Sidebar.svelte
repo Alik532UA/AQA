@@ -1,44 +1,24 @@
 <script lang="ts">
-	import type { QACard, QACategory } from '#lib/types';
-	import { CheckCircle2, Layers } from '@lucide/svelte';
-
 	interface Props {
-		cards: QACard[];
-		activeCategory: QACategory;
-		onCategoryChange: (cat: QACategory) => void;
-		onSelectCard: (id: string) => void;
-		activeCardId?: string;
+		activeCategory: 'M' | 'A';
+		onCategoryChange: (cat: 'M' | 'A') => void;
+		activeSlideId: string;
+		onSelectSlide: (slideId: string) => void;
 		isMobileOpen: boolean;
 		onCloseMobile: () => void;
 	}
 
 	let {
-		cards,
 		activeCategory,
 		onCategoryChange,
-		onSelectCard,
-		activeCardId,
+		activeSlideId,
+		onSelectSlide,
 		isMobileOpen,
 		onCloseMobile
 	}: Props = $props();
 
-	// Group cards by section for current category view
-	let groupedSections = $derived.by(() => {
-		const groups: { [key: string]: QACard[] } = {};
-		for (const card of cards) {
-			if (!groups[card.section]) {
-				groups[card.section] = [];
-			}
-			groups[card.section].push(card);
-		}
-		return Object.entries(groups).map(([section, items]) => ({
-			section,
-			items
-		}));
-	});
-
-	function handleItemClick(id: string) {
-		onSelectCard(id);
+	function handleSlideClick(id: string) {
+		onSelectSlide(id);
 		onCloseMobile();
 	}
 </script>
@@ -56,119 +36,286 @@
 
 <!-- Sidebar Container -->
 <aside
-	class="fixed top-0 bottom-0 left-0 z-50 w-72 md:w-80 bg-[#070b13] border-r border-cyan-500/30 flex flex-col transition-transform duration-300 ease-in-out lg:translate-x-0 {isMobileOpen
+	class="fixed top-0 bottom-0 left-0 z-50 w-72 md:w-80 bg-black border-r border-cyan-950 flex flex-col justify-between transition-transform duration-300 ease-in-out lg:translate-x-0 {isMobileOpen
 		? 'translate-x-0'
 		: '-translate-x-full'}"
 >
 	<!-- Top M / A Mode Switcher Bar -->
-	<div class="p-4 border-b border-cyan-950 flex flex-col gap-3 bg-[#080e18]/90">
-		<div class="flex items-center justify-center gap-4">
+	<div class="p-4 border-b border-cyan-950/60 bg-black">
+		<div class="flex items-center justify-center gap-6">
 			<!-- Manual QA Button 'M' -->
 			<button
 				type="button"
-				onclick={() => onCategoryChange('manual')}
-				title="Переключити на Manual QA"
-				class="relative group flex flex-col items-center gap-1 cursor-pointer"
+				onclick={() => onCategoryChange('M')}
+				title="Manual QA"
+				class="relative group cursor-pointer"
 			>
 				<div
-					class="w-12 h-12 rounded-full flex items-center justify-center text-lg font-bold font-mono transition-all duration-300 {activeCategory ===
-					'manual'
-						? 'bg-cyan-500 text-black shadow-[0_0_20px_#00f0ff] ring-2 ring-cyan-300'
-						: 'bg-[#0e1726] text-cyan-400 border border-cyan-500/30 hover:border-cyan-400 hover:shadow-[0_0_12px_rgba(0,240,255,0.4)]'}"
+					class="w-14 h-14 rounded-full flex items-center justify-center text-2xl font-bold font-mono transition-all duration-300 {activeCategory ===
+					'M'
+						? 'border-2 border-cyan-400 text-white shadow-[0_0_20px_#00f0ff]'
+						: 'border border-cyan-900/60 text-slate-400 hover:border-cyan-500 hover:text-cyan-300'}"
 				>
 					M
 				</div>
-				<span
-					class="text-[11px] font-mono tracking-wider transition-colors {activeCategory ===
-					'manual'
-						? 'text-cyan-300 font-semibold'
-						: 'text-slate-400'}"
-				>
-					Manual QA
-				</span>
-			</button>
-
-			<!-- All Mode Pill -->
-			<button
-				type="button"
-				onclick={() => onCategoryChange('all')}
-				title="Показати всі розділи"
-				class="w-8 h-8 rounded-full flex items-center justify-center text-xs font-mono font-bold transition-all duration-300 {activeCategory ===
-				'all'
-					? 'bg-cyan-400/20 text-cyan-200 border border-cyan-400 shadow-[0_0_10px_rgba(0,240,255,0.3)]'
-					: 'text-slate-400 hover:text-cyan-300'}"
-			>
-				<Layers class="w-4 h-4" />
 			</button>
 
 			<!-- Automation QA Button 'A' -->
 			<button
 				type="button"
-				onclick={() => onCategoryChange('automation')}
-				title="Переключити на Automation QA (.NET)"
-				class="relative group flex flex-col items-center gap-1 cursor-pointer"
+				onclick={() => onCategoryChange('A')}
+				title="Automation QA"
+				class="relative group cursor-pointer"
 			>
 				<div
-					class="w-12 h-12 rounded-full flex items-center justify-center text-lg font-bold font-mono transition-all duration-300 {activeCategory ===
-					'automation'
-						? 'bg-purple-500 text-white shadow-[0_0_20px_#a855f7] ring-2 ring-purple-300'
-						: 'bg-[#0e1726] text-purple-400 border border-purple-500/30 hover:border-purple-400 hover:shadow-[0_0_12px_rgba(168,85,247,0.4)]'}"
+					class="w-14 h-14 rounded-full flex items-center justify-center text-2xl font-bold font-mono transition-all duration-300 {activeCategory ===
+					'A'
+						? 'border-2 border-cyan-400 text-white shadow-[0_0_20px_#00f0ff]'
+						: 'border border-cyan-900/60 text-slate-400 hover:border-cyan-500 hover:text-cyan-300'}"
 				>
 					A
 				</div>
-				<span
-					class="text-[11px] font-mono tracking-wider transition-colors {activeCategory ===
-					'automation'
-						? 'text-purple-300 font-semibold'
-						: 'text-slate-400'}"
-				>
-					Automation
-				</span>
 			</button>
 		</div>
 	</div>
 
-	<!-- Navigation Items by Section -->
-	<nav class="flex-1 overflow-y-auto px-3 py-4 space-y-6">
-		{#each groupedSections as { section, items }}
-			<div>
-				<div class="px-3 mb-2 flex items-center gap-2">
-					<span class="w-1.5 h-1.5 rounded-full bg-cyan-400 shadow-[0_0_5px_#00f0ff]"></span>
-					<h4 class="text-xs font-mono uppercase tracking-wider text-cyan-400/90 font-bold">
-						{section}
-					</h4>
-				</div>
+	<!-- Navigation Items by Category -->
+	<nav class="flex-1 overflow-y-auto px-3 py-3 space-y-2.5 text-xs text-white">
+		{#if activeCategory === 'M'}
+			<!-- ================= MANUAL QA NAVIGATION ================= -->
 
-				<div class="space-y-1">
-					{#each items as item}
-						<button
-							type="button"
-							onclick={() => handleItemClick(item.id)}
-							class="w-full text-left px-3 py-2 rounded-lg text-xs md:text-sm transition-all duration-200 flex items-center justify-between group {activeCardId ===
-							item.id
-								? 'bg-cyan-950/70 text-cyan-200 border border-cyan-500/60 shadow-[0_0_12px_rgba(0,240,255,0.2)]'
-								: 'text-slate-300 hover:text-cyan-200 hover:bg-[#0c1626]'}"
-						>
-							<span class="truncate font-medium">{item.title}</span>
-							<span
-								class="text-[10px] font-mono ml-2 px-1.5 py-0.5 rounded opacity-60 group-hover:opacity-100 {item.category ===
-								'manual'
-									? 'bg-cyan-950 text-cyan-400'
-									: 'bg-purple-950 text-purple-400'}"
-							>
-								{item.category === 'manual' ? 'M' : 'A'}
-							</span>
-						</button>
-					{/each}
+			<!-- Group 1: Basics -->
+			<button
+				type="button"
+				onclick={() => handleSlideClick('m-basics')}
+				class="w-full text-left p-3 rounded-2xl border transition-all duration-200 block group cursor-pointer {activeSlideId ===
+				'm-basics'
+					? 'border-2 border-cyan-400 bg-cyan-950/20 shadow-[0_0_15px_rgba(0,240,255,0.25)]'
+					: 'border-slate-800 bg-[#060910] hover:border-cyan-700 hover:bg-[#09111c]'}"
+			>
+				<div class="space-y-1.5 text-[11px] leading-tight">
+					<p class="font-bold text-white group-hover:text-cyan-300">Що таке тестування?</p>
+					<p class="text-slate-400">Тестування програмного забезпечення ПЗ</p>
+					<p class="text-slate-400">Software Quality | Якість програмного забезпечення</p>
+					<p class="text-slate-400">Testing goals | Цілі тестування</p>
+					<p class="text-slate-400">Testing stages | Етапи тестування</p>
+					<p class="text-slate-400">Життєвий цикл тестування (STLC)</p>
+					<p class="text-slate-400">Test Plan | Тест план</p>
+					<p class="text-slate-400">Основні пункти тест плану</p>
+					<p class="text-slate-400">Тест дизайн</p>
 				</div>
+			</button>
+
+			<!-- Group 2: Test Types -->
+			<button
+				type="button"
+				onclick={() => handleSlideClick('m-types')}
+				class="w-full text-left p-3 rounded-2xl border transition-all duration-200 block cursor-pointer {activeSlideId ===
+				'm-types'
+					? 'border-2 border-cyan-400 bg-cyan-950/20 shadow-[0_0_15px_rgba(0,240,255,0.25)]'
+					: 'border-slate-800 bg-[#060910] hover:border-cyan-700 hover:bg-[#09111c]'}"
+			>
+				<p class="font-bold text-white text-xs">Test Types</p>
+				<p class="text-slate-400 text-[11px]">Типи (види) тестування</p>
+			</button>
+
+			<!-- Group 3: V&V and Techniques -->
+			<button
+				type="button"
+				onclick={() => handleSlideClick('m-techniques')}
+				class="w-full text-left p-3 rounded-2xl border transition-all duration-200 block cursor-pointer {activeSlideId ===
+				'm-techniques'
+					? 'border-2 border-cyan-400 bg-cyan-950/20 shadow-[0_0_15px_rgba(0,240,255,0.25)]'
+					: 'border-slate-800 bg-[#060910] hover:border-cyan-700 hover:bg-[#09111c]'}"
+			>
+				<div class="space-y-1 text-[11px] leading-tight">
+					<p class="font-bold text-white">Верифікація / Валідація</p>
+					<p class="text-slate-400">Verification / Validation</p>
+					<p class="font-bold text-white pt-1">Техники тест дизайна</p>
+					<p class="text-slate-400">Design test techniques</p>
+					<p class="font-bold text-white pt-1">Severity vs Priority</p>
+				</div>
+			</button>
+
+			<!-- Group 4: Test Case, Check list, Defects, Bug Report -->
+			<button
+				type="button"
+				onclick={() => handleSlideClick('m-defects')}
+				class="w-full text-left p-3 rounded-2xl border transition-all duration-200 block cursor-pointer {activeSlideId ===
+				'm-defects'
+					? 'border-2 border-cyan-400 bg-cyan-950/20 shadow-[0_0_15px_rgba(0,240,255,0.25)]'
+					: 'border-slate-800 bg-[#060910] hover:border-cyan-700 hover:bg-[#09111c]'}"
+			>
+				<div class="space-y-1 text-[11px] leading-tight">
+					<p class="font-bold text-white">Test Case | Тестовий сценарій</p>
+					<p class="font-bold text-white">Check list | список перевірок</p>
+					<p class="font-bold text-white">Bug / Error / Failure</p>
+					<p class="font-bold text-white">Bug Report</p>
+				</div>
+			</button>
+
+			<!-- Group 5: Levels of testing -->
+			<button
+				type="button"
+				onclick={() => handleSlideClick('m-levels')}
+				class="w-full text-left p-3 rounded-2xl border transition-all duration-200 block cursor-pointer {activeSlideId ===
+				'm-levels'
+					? 'border-2 border-cyan-400 bg-cyan-950/20 shadow-[0_0_15px_rgba(0,240,255,0.25)]'
+					: 'border-slate-800 bg-[#060910] hover:border-cyan-700 hover:bg-[#09111c]'}"
+			>
+				<p class="font-bold text-white text-xs">Рівні тестування</p>
+				<p class="text-slate-400 text-[11px]">Levels of testing</p>
+			</button>
+
+		{:else}
+			<!-- ================= AUTOMATION QA NAVIGATION ================= -->
+
+			<!-- 1. CI/CD Practices -->
+			<button
+				type="button"
+				onclick={() => handleSlideClick('a-cicd')}
+				class="w-full text-left p-2.5 rounded-2xl border transition-all duration-200 block cursor-pointer {activeSlideId ===
+				'a-cicd'
+					? 'border-2 border-cyan-400 bg-cyan-950/20 shadow-[0_0_15px_rgba(0,240,255,0.25)]'
+					: 'border-slate-800 bg-[#060910] hover:border-cyan-700 hover:bg-[#09111c]'}"
+			>
+				<p class="font-bold text-white text-xs">CI/CD Practices</p>
+			</button>
+
+			<!-- 2. Design Principles and Approaches -->
+			<button
+				type="button"
+				onclick={() => handleSlideClick('a-design-principles')}
+				class="w-full text-left p-2.5 rounded-2xl border transition-all duration-200 block cursor-pointer {activeSlideId ===
+				'a-design-principles'
+					? 'border-2 border-cyan-400 bg-cyan-950/20 shadow-[0_0_15px_rgba(0,240,255,0.25)]'
+					: 'border-slate-800 bg-[#060910] hover:border-cyan-700 hover:bg-[#09111c]'}"
+			>
+				<p class="font-bold text-white text-xs">Design Principles and Approaches</p>
+				<p class="text-slate-400 text-[10px]">Принципи та підходи до проектування</p>
+			</button>
+
+			<!-- 3. Platform Specific Test Automation -->
+			<button
+				type="button"
+				onclick={() => handleSlideClick('a-platform-specific')}
+				class="w-full text-left p-2.5 rounded-2xl border transition-all duration-200 block cursor-pointer {activeSlideId ===
+				'a-platform-specific'
+					? 'border-2 border-cyan-400 bg-cyan-950/20 shadow-[0_0_15px_rgba(0,240,255,0.25)]'
+					: 'border-slate-800 bg-[#060910] hover:border-cyan-700 hover:bg-[#09111c]'}"
+			>
+				<p class="font-bold text-white text-xs">Platform Specific Test Automation</p>
+				<p class="text-slate-400 text-[10px]">Автоматизація тестування для конкретної платформи</p>
+			</button>
+
+			<!-- 4. Refactoring -->
+			<button
+				type="button"
+				onclick={() => handleSlideClick('a-refactoring')}
+				class="w-full text-left p-2.5 rounded-2xl border transition-all duration-200 block cursor-pointer {activeSlideId ===
+				'a-refactoring'
+					? 'border-2 border-cyan-400 bg-cyan-950/20 shadow-[0_0_15px_rgba(0,240,255,0.25)]'
+					: 'border-slate-800 bg-[#060910] hover:border-cyan-700 hover:bg-[#09111c]'}"
+			>
+				<p class="font-bold text-white text-xs">Refactoring</p>
+				<p class="text-slate-400 text-[10px]">Рефакторинг</p>
+			</button>
+
+			<!-- 5. Test Automation Framework -->
+			<button
+				type="button"
+				onclick={() => handleSlideClick('a-framework')}
+				class="w-full text-left p-2.5 rounded-2xl border transition-all duration-200 block cursor-pointer {activeSlideId ===
+				'a-framework'
+					? 'border-2 border-cyan-400 bg-cyan-950/20 shadow-[0_0_15px_rgba(0,240,255,0.25)]'
+					: 'border-slate-800 bg-[#060910] hover:border-cyan-700 hover:bg-[#09111c]'}"
+			>
+				<p class="font-bold text-white text-xs">Test Automation Framework</p>
+				<p class="text-slate-400 text-[10px]">Фреймворк для автоматизації тестування</p>
+			</button>
+
+			<!-- 6. Test Automation Infrastructure -->
+			<button
+				type="button"
+				onclick={() => handleSlideClick('a-infrastructure')}
+				class="w-full text-left p-2.5 rounded-2xl border transition-all duration-200 block cursor-pointer {activeSlideId ===
+				'a-infrastructure'
+					? 'border-2 border-cyan-400 bg-cyan-950/20 shadow-[0_0_15px_rgba(0,240,255,0.25)]'
+					: 'border-slate-800 bg-[#060910] hover:border-cyan-700 hover:bg-[#09111c]'}"
+			>
+				<p class="font-bold text-white text-xs">Test Automation Infrastructure</p>
+				<p class="text-slate-400 text-[10px]">Інфраструктура для автоматизації тестування</p>
+			</button>
+
+			<!-- 7. Test Automation Patterns -->
+			<button
+				type="button"
+				onclick={() => handleSlideClick('a-patterns')}
+				class="w-full text-left p-2.5 rounded-2xl border transition-all duration-200 block cursor-pointer {activeSlideId ===
+				'a-patterns'
+					? 'border-2 border-cyan-400 bg-cyan-950/20 shadow-[0_0_15px_rgba(0,240,255,0.25)]'
+					: 'border-slate-800 bg-[#060910] hover:border-cyan-700 hover:bg-[#09111c]'}"
+			>
+				<p class="font-bold text-white text-xs">Test Automation Patterns</p>
+				<p class="text-slate-400 text-[10px]">Шаблони для автоматизації тестування</p>
+			</button>
+
+			<!-- 8. Version Control Systems -->
+			<button
+				type="button"
+				onclick={() => handleSlideClick('a-vcs')}
+				class="w-full text-left p-2.5 rounded-2xl border transition-all duration-200 block cursor-pointer {activeSlideId ===
+				'a-vcs'
+					? 'border-2 border-cyan-400 bg-cyan-950/20 shadow-[0_0_15px_rgba(0,240,255,0.25)]'
+					: 'border-slate-800 bg-[#060910] hover:border-cyan-700 hover:bg-[#09111c]'}"
+			>
+				<p class="font-bold text-white text-xs">Version Control Systems</p>
+				<p class="text-slate-400 text-[10px]">Системи контролю версій</p>
+			</button>
+
+			<!-- 9. Data Storages + SQL pill row -->
+			<div class="flex items-center gap-1.5">
+				<button
+					type="button"
+					onclick={() => handleSlideClick('a-data-storages')}
+					class="flex-1 text-left p-2.5 rounded-2xl border transition-all duration-200 cursor-pointer {activeSlideId ===
+					'a-data-storages'
+						? 'border-2 border-cyan-400 bg-cyan-950/20 shadow-[0_0_15px_rgba(0,240,255,0.25)]'
+						: 'border-slate-800 bg-[#060910] hover:border-cyan-700 hover:bg-[#09111c]'}"
+				>
+					<p class="font-bold text-white text-xs">Data Storages</p>
+					<p class="text-slate-400 text-[10px]">Сховища даних</p>
+				</button>
+
+				<button
+					type="button"
+					onclick={() => handleSlideClick('a-sql')}
+					class="px-3.5 py-3 rounded-2xl border font-bold text-xs font-mono transition-all duration-200 cursor-pointer {activeSlideId ===
+					'a-sql'
+						? 'border-2 border-cyan-400 bg-cyan-950 text-cyan-200 shadow-[0_0_15px_rgba(0,240,255,0.35)]'
+						: 'border-slate-800 bg-[#060910] text-cyan-400 hover:border-cyan-700 hover:bg-[#09111c]'}"
+					title="SQL Команди"
+				>
+					SQL
+				</button>
 			</div>
-		{/each}
+
+			<!-- 10. SOLID -->
+			<button
+				type="button"
+				onclick={() => handleSlideClick('a-solid')}
+				class="w-full text-left p-2.5 rounded-2xl border transition-all duration-200 block cursor-pointer {activeSlideId ===
+				'a-solid'
+					? 'border-2 border-cyan-400 bg-cyan-950/20 shadow-[0_0_15px_rgba(0,240,255,0.25)]'
+					: 'border-slate-800 bg-[#060910] hover:border-cyan-700 hover:bg-[#09111c]'}"
+			>
+				<p class="font-bold text-white text-xs">SOLID</p>
+			</button>
+		{/if}
 	</nav>
 
 	<!-- Sidebar Footer -->
-	<div class="p-3 border-t border-cyan-950 bg-[#060910] text-[11px] font-mono text-cyan-500/70 text-center flex items-center justify-center gap-2">
-		<span>QA Interview Prep v1.0</span>
-		<span>•</span>
-		<span>SvelteKit 5</span>
+	<div class="p-2 border-t border-cyan-950/60 bg-black text-[10px] font-mono text-cyan-600 text-center">
+		<span>QA Presentation Dashboard</span>
 	</div>
 </aside>

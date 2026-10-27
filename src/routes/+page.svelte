@@ -1,248 +1,315 @@
 <script lang="ts">
 	import { onMount } from 'svelte';
-	import { qaCards } from '#lib/data/qaData';
-	import type { QACard, QACategory } from '#lib/types';
+	import { slidesData, type Slide } from '#lib/data/slidesData';
 	import Sidebar from '#lib/components/Sidebar.svelte';
-	import Navbar from '#lib/components/Navbar.svelte';
-	import Card from '#lib/components/Card.svelte';
-	import { ArrowUp, BookOpen, Sparkles, AlertCircle } from '@lucide/svelte';
+	import SlideView from '#lib/components/SlideView.svelte';
+	import {
+		Search,
+		X,
+		Menu,
+		ChevronLeft,
+		ChevronRight,
+		Maximize2,
+		Minimize2,
+		Sparkles
+	} from '@lucide/svelte';
 
+	let activeCategory = $state<'M' | 'A'>('M');
+	let activeSlideId = $state<string>('m-basics');
 	let searchQuery = $state('');
-	let activeCategory = $state<QACategory>('manual');
-	let selectedTag = $state<string | null>(null);
-	let onlyFavorites = $state(false);
-	let bookmarkedIds = $state<string[]>([]);
 	let isMobileSidebarOpen = $state(false);
-	let activeCardId = $state<string | undefined>(undefined);
-	let showBackToTop = $state(false);
+	let isFullscreen = $state(false);
+	let showSearchResults = $state(false);
 
-	// Load bookmarks from LocalStorage
-	onMount(() => {
-		try {
-			const saved = localStorage.getItem('qa_cheat_sheet_bookmarks');
-			if (saved) {
-				bookmarkedIds = JSON.parse(saved);
-			}
-		} catch (e) {
-			console.error('Failed to load bookmarks', e);
-		}
-
-		const handleScroll = () => {
-			showBackToTop = window.scrollY > 400;
-		};
-
-		window.addEventListener('scroll', handleScroll, { passive: true });
-		return () => window.removeEventListener('scroll', handleScroll);
+	// Slides in current category
+	let categorySlides = $derived.by(() => {
+		return slidesData.filter((s) => s.category === activeCategory);
 	});
 
-	function toggleBookmark(id: string) {
-		if (bookmarkedIds.includes(id)) {
-			bookmarkedIds = bookmarkedIds.filter((item) => item !== id);
-		} else {
-			bookmarkedIds = [...bookmarkedIds, id];
-		}
-		try {
-			localStorage.setItem('qa_cheat_sheet_bookmarks', JSON.stringify(bookmarkedIds));
-		} catch (e) {
-			console.error('Failed to save bookmark', e);
-		}
-	}
+	// Current active slide object
+	let currentSlide = $derived.by(() => {
+		const found = slidesData.find((s) => s.id === activeSlideId);
+		if (found) return found;
+		return categorySlides[0] || slidesData[0];
+	});
 
-	function handleTagClick(tag: string) {
-		selectedTag = tag;
-		window.scrollTo({ top: 0, behavior: 'smooth' });
-	}
+	// Current slide index in active category (1-based)
+	let currentSlideIndex = $derived.by(() => {
+		const idx = categorySlides.findIndex((s) => s.id === currentSlide.id);
+		return idx >= 0 ? idx + 1 : 1;
+	});
 
-	function clearTag() {
-		selectedTag = null;
-	}
-
-	function scrollToCard(id: string) {
-		activeCardId = id;
-		const el = document.getElementById(id);
-		if (el) {
-			const yOffset = -100;
-			const y = el.getBoundingClientRect().top + window.pageYOffset + yOffset;
-			window.scrollTo({ top: y, behavior: 'smooth' });
-		}
-	}
-
-	function scrollToTop() {
-		window.scrollTo({ top: 0, behavior: 'smooth' });
-	}
-
-	// Filtered cards list
-	let filteredCards = $derived.by(() => {
-		return qaCards.filter((card) => {
-			// Category filter
-			if (activeCategory !== 'all' && card.category !== activeCategory) {
-				return false;
-			}
-
-			// Favorites filter
-			if (onlyFavorites && !bookmarkedIds.includes(card.id)) {
-				return false;
-			}
-
-			// Tag filter
-			if (selectedTag && !card.tags.includes(selectedTag)) {
-				return false;
-			}
-
-			// Search query filter
-			if (searchQuery.trim()) {
-				const query = searchQuery.toLowerCase().trim();
-				const inTitle = card.title.toLowerCase().includes(query);
-				const inSubtitle = card.subtitle?.toLowerCase().includes(query) ?? false;
-				const inSummary = card.summary.toLowerCase().includes(query);
-				const inTags = card.tags.some((t) => t.toLowerCase().includes(query));
-				const inPoints = card.points?.some((p) => p.toLowerCase().includes(query)) ?? false;
-				const inConcepts =
-					card.concepts?.some(
-						(c) => c.title.toLowerCase().includes(query) || c.desc.toLowerCase().includes(query)
-					) ?? false;
-				const inCode = card.codeSnippet?.code.toLowerCase().includes(query) ?? false;
-
-				if (!inTitle && !inSubtitle && !inSummary && !inTags && !inPoints && !inConcepts && !inCode) {
-					return false;
-				}
-			}
-
-			return true;
+	// Search matching slides across all slides
+	let matchingSlides = $derived.by(() => {
+		if (!searchQuery.trim()) return [];
+		const q = searchQuery.toLowerCase().trim();
+		return slidesData.filter((slide) => {
+			const inTitle = slide.menuTitle.toLowerCase().includes(q);
+			const inSub = slide.menuSub?.toLowerCase().includes(q) ?? false;
+			const inCards = slide.cards.some((c) => {
+				const inCardTitle = c.title?.toLowerCase().includes(q) ?? false;
+				const inContent = c.contentHtml?.toLowerCase().includes(q) ?? false;
+				return inCardTitle || inContent;
+			});
+			return inTitle || inSub || inCards;
 		});
 	});
 
-	// Cards available in the current category mode (for sidebar navigation)
-	let sidebarCards = $derived.by(() => {
-		if (activeCategory === 'all') return qaCards;
-		return qaCards.filter((c) => c.category === activeCategory);
+	function handleCategoryChange(cat: 'M' | 'A') {
+		activeCategory = cat;
+		const slides = slidesData.filter((s) => s.category === cat);
+		if (slides.length > 0) {
+			activeSlideId = slides[0].id;
+		}
+	}
+
+	function goToPrevSlide() {
+		const idx = categorySlides.findIndex((s) => s.id === currentSlide.id);
+		if (idx > 0) {
+			activeSlideId = categorySlides[idx - 1].id;
+		} else if (idx === 0) {
+			// Loop to last slide
+			activeSlideId = categorySlides[categorySlides.length - 1].id;
+		}
+	}
+
+	function goToNextSlide() {
+		const idx = categorySlides.findIndex((s) => s.id === currentSlide.id);
+		if (idx >= 0 && idx < categorySlides.length - 1) {
+			activeSlideId = categorySlides[idx + 1].id;
+		} else if (idx === categorySlides.length - 1) {
+			// Loop to first slide
+			activeSlideId = categorySlides[0].id;
+		}
+	}
+
+	function selectSlide(id: string) {
+		const slide = slidesData.find((s) => s.id === id);
+		if (slide) {
+			activeCategory = slide.category;
+			activeSlideId = slide.id;
+		}
+	}
+
+	function toggleFullscreen() {
+		if (!document.fullscreenElement) {
+			document.documentElement.requestFullscreen().catch((err) => {
+				console.error(`Error attempting to enable fullscreen: ${err.message}`);
+			});
+			isFullscreen = true;
+		} else {
+			if (document.exitFullscreen) {
+				document.exitFullscreen();
+				isFullscreen = false;
+			}
+		}
+	}
+
+	// Keyboard arrow navigation
+	function handleKeydown(e: KeyboardEvent) {
+		// Ignore if user is typing in the search bar
+		const target = e.target as HTMLElement;
+		if (target.tagName === 'INPUT' || target.tagName === 'TEXTAREA') {
+			if (e.key === 'Escape') {
+				searchQuery = '';
+				(target as HTMLInputElement).blur();
+			}
+			return;
+		}
+
+		if (e.key === 'ArrowRight' || e.key === 'ArrowDown' || e.key === 'PageDown' || e.key === ' ') {
+			e.preventDefault();
+			goToNextSlide();
+		} else if (e.key === 'ArrowLeft' || e.key === 'ArrowUp' || e.key === 'PageUp') {
+			e.preventDefault();
+			goToPrevSlide();
+		} else if (e.key === 'f' || e.key === 'F') {
+			toggleFullscreen();
+		}
+	}
+
+	onMount(() => {
+		window.addEventListener('keydown', handleKeydown);
+		const handleFsChange = () => {
+			isFullscreen = !!document.fullscreenElement;
+		};
+		document.addEventListener('fullscreenchange', handleFsChange);
+
+		return () => {
+			window.removeEventListener('keydown', handleKeydown);
+			document.removeEventListener('fullscreenchange', handleFsChange);
+		};
 	});
 </script>
 
-<div class="min-h-screen bg-[#05070c] text-slate-100 flex flex-col">
-	<!-- Left Sidebar (Desktop Fixed & Mobile Drawer) -->
+<svelte:head>
+	<title>{currentSlide.menuTitle} | QA Interview Presentation</title>
+</svelte:head>
+
+<div class="h-screen w-screen bg-black text-slate-100 flex overflow-hidden font-sans select-none">
+	<!-- Left Navigation Sidebar -->
 	<Sidebar
-		cards={sidebarCards}
 		{activeCategory}
-		onCategoryChange={(cat) => {
-			activeCategory = cat;
-			selectedTag = null;
-		}}
-		onSelectCard={scrollToCard}
-		{activeCardId}
+		onCategoryChange={handleCategoryChange}
+		{activeSlideId}
+		onSelectSlide={selectSlide}
 		isMobileOpen={isMobileSidebarOpen}
 		onCloseMobile={() => (isMobileSidebarOpen = false)}
 	/>
 
-	<!-- Main Content Area with Left Margin for Sidebar -->
-	<div class="lg:pl-72 md:lg:pl-80 flex-1 flex flex-col">
-		<!-- Top Navigation Bar -->
-		<Navbar
-			{searchQuery}
-			onSearchChange={(q) => (searchQuery = q)}
-			{activeCategory}
-			onCategoryChange={(cat) => {
-				activeCategory = cat;
-				selectedTag = null;
-			}}
-			{selectedTag}
-			onClearTag={clearTag}
-			{onlyFavorites}
-			onToggleOnlyFavorites={() => (onlyFavorites = !onlyFavorites)}
-			totalCount={qaCards.length}
-			visibleCount={filteredCards.length}
-			favoritesCount={bookmarkedIds.length}
-			onToggleMobileSidebar={() => (isMobileSidebarOpen = !isMobileSidebarOpen)}
-		/>
-
-		<!-- Content Container -->
-		<main class="flex-1 p-4 md:p-6 lg:p-8 max-w-7xl w-full mx-auto">
-			<!-- Header Banner with Status & Quick Stats -->
-			<div class="mb-6 p-4 md:p-5 rounded-2xl bg-gradient-to-r from-[#091322] via-[#0b192e] to-[#07101c] border border-cyan-500/30 flex flex-col sm:flex-row sm:items-center justify-between gap-4">
-				<div class="flex items-center gap-3">
-					<div class="w-10 h-10 rounded-xl bg-cyan-950 border border-cyan-400 flex items-center justify-center text-cyan-300 shadow-[0_0_15px_rgba(0,240,255,0.3)]">
-						<BookOpen class="w-5 h-5" />
-					</div>
-					<div>
-						<h2 class="text-base md:text-lg font-bold text-white flex items-center gap-2">
-							<span>База знань QA</span>
-							<span class="text-xs font-mono px-2 py-0.5 rounded bg-cyan-950 text-cyan-300 border border-cyan-500/40">
-								{activeCategory === 'manual' ? 'Manual QA' : activeCategory === 'automation' ? 'Automation QA (.NET)' : 'Всі розділи'}
-							</span>
-						</h2>
-						<p class="text-xs text-slate-400">
-							Швидкий огляд ключових концепцій, класифікацій, термінології та прикладів для успішного проходження співбесіди
-						</p>
-					</div>
-				</div>
-
-				<div class="flex items-center gap-2 text-xs font-mono text-cyan-300/80">
-					<span class="inline-block w-2 h-2 rounded-full bg-emerald-400 animate-pulse"></span>
-					<span>Готово до співбесіди</span>
-				</div>
-			</div>
-
-			<!-- Cards Grid -->
-			{#if filteredCards.length > 0}
-				<div class="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-5 items-start">
-					{#each filteredCards as card (card.id)}
-						<Card
-							{card}
-							{searchQuery}
-							isBookmarked={bookmarkedIds.includes(card.id)}
-							onToggleBookmark={toggleBookmark}
-							onTagClick={handleTagClick}
-						/>
-					{/each}
-				</div>
-			{:else}
-				<!-- Empty Search State -->
-				<div class="text-center py-16 px-4 rounded-2xl bg-[#09111c] border border-cyan-950 my-8">
-					<AlertCircle class="w-12 h-12 text-cyan-400 mx-auto mb-3 opacity-60" />
-					<h3 class="text-lg font-bold text-white mb-1">Нічого не знайдено</h3>
-					<p class="text-sm text-slate-400 max-w-md mx-auto mb-5">
-						За вашим запитом "{searchQuery}" не знайдено жодної картки. Спробуйте змінити ключові слова або скинути активні фільтри.
-					</p>
-					<button
-						type="button"
-						onclick={() => {
-							searchQuery = '';
-							selectedTag = null;
-							onlyFavorites = false;
-						}}
-						class="px-4 py-2 rounded-xl bg-cyan-500 text-black font-semibold text-sm hover:bg-cyan-400 shadow-[0_0_15px_rgba(0,240,255,0.4)] transition-all cursor-pointer"
-					>
-						Скинути всі фільтри
-					</button>
-				</div>
-			{/if}
-		</main>
-
-		<!-- Footer -->
-		<footer class="mt-auto py-6 px-4 md:px-8 border-t border-cyan-950 text-center text-xs font-mono text-slate-400 flex flex-col sm:flex-row items-center justify-between gap-3 max-w-7xl w-full mx-auto">
-			<div>
-				<span>QA Cheat Sheet • Створено для підготовки до співбесід</span>
-			</div>
-			<div class="flex items-center gap-4 text-cyan-400/80">
-				<span>Manual QA</span>
-				<span>•</span>
-				<span>Automation (.NET)</span>
-				<span>•</span>
-				<span>ISTQB Standard</span>
-			</div>
-		</footer>
-	</div>
-
-	<!-- Floating Back To Top Button -->
-	{#if showBackToTop}
-		<button
-			type="button"
-			onclick={scrollToTop}
-			class="fixed bottom-6 right-6 z-40 p-3 rounded-full bg-cyan-500 text-black shadow-[0_0_20px_#00f0ff] hover:bg-cyan-400 hover:scale-110 transition-all duration-300 cursor-pointer"
-			title="Вгору"
-			aria-label="Вгору"
+	<!-- Main Presentation Slide Area -->
+	<div class="lg:pl-72 md:lg:pl-80 flex-1 flex flex-col h-full overflow-hidden bg-black">
+		<!-- Compact Top Bar -->
+		<header
+			class="h-11 border-b border-cyan-950/80 bg-black/95 px-3 lg:px-4 flex items-center justify-between gap-2 shrink-0 z-20"
 		>
-			<ArrowUp class="w-5 h-5 font-bold" />
-		</button>
-	{/if}
+			<!-- Left: Mobile Menu & Current Topic Title -->
+			<div class="flex items-center gap-2 overflow-hidden">
+				<button
+					type="button"
+					onclick={() => (isMobileSidebarOpen = true)}
+					class="lg:hidden p-1.5 rounded-md bg-[#09111c] border border-cyan-800 text-cyan-300 hover:text-white cursor-pointer"
+					aria-label="Меню"
+				>
+					<Menu class="w-4 h-4" />
+				</button>
+
+				<div class="flex items-center gap-2 truncate">
+					<span
+						class="px-2 py-0.5 rounded text-[10px] font-mono font-bold uppercase tracking-wider {activeCategory ===
+						'M'
+							? 'bg-cyan-950 text-cyan-300 border border-cyan-700/60'
+							: 'bg-purple-950 text-purple-300 border border-purple-700/60'}"
+					>
+						{activeCategory === 'M' ? 'Manual QA' : 'Automation QA'}
+					</span>
+					<span class="font-bold text-xs text-white truncate hidden sm:inline">
+						{currentSlide.menuTitle}
+					</span>
+				</div>
+			</div>
+
+			<!-- Center: Search Input Bar -->
+			<div class="flex-1 max-w-md mx-2 relative">
+				<div class="relative flex items-center">
+					<Search class="w-3.5 h-3.5 absolute left-2.5 text-cyan-400 pointer-events-none" />
+					<input
+						type="text"
+						value={searchQuery}
+						onfocus={() => (showSearchResults = true)}
+						oninput={(e) => {
+							searchQuery = e.currentTarget.value;
+							showSearchResults = true;
+						}}
+						placeholder="Швидкий пошук (BVA, STLC, SOLID, Git, SQL)..."
+						class="w-full pl-8 pr-7 py-1 text-xs rounded-lg bg-[#070d18] border border-cyan-900 focus:border-cyan-400 focus:outline-none focus:ring-1 focus:ring-cyan-400 text-white placeholder-slate-400 font-sans"
+					/>
+					{#if searchQuery}
+						<button
+							type="button"
+							onclick={() => {
+								searchQuery = '';
+								showSearchResults = false;
+							}}
+							class="absolute right-2 p-0.5 text-slate-400 hover:text-cyan-300 cursor-pointer"
+							title="Очистити"
+						>
+							<X class="w-3.5 h-3.5" />
+						</button>
+					{/if}
+				</div>
+
+				<!-- Search Dropdown Results Popover -->
+				{#if showSearchResults && searchQuery.trim() && matchingSlides.length > 0}
+					<div
+						class="absolute top-full left-0 right-0 mt-1.5 bg-[#060c18] border border-cyan-500/80 rounded-xl shadow-[0_10px_30px_rgba(0,0,0,0.9)] p-2 z-50 max-h-72 overflow-y-auto space-y-1"
+					>
+						<div class="text-[10px] font-mono text-cyan-400 px-2 py-0.5 flex items-center justify-between">
+							<span>Знайдено у {matchingSlides.length} слайдах:</span>
+							<button
+								type="button"
+								onclick={() => (showSearchResults = false)}
+								class="text-slate-400 hover:text-white"
+								title="Закрити список"
+							>
+								✕
+							</button>
+						</div>
+						{#each matchingSlides as match}
+							<button
+								type="button"
+								onclick={() => {
+									selectSlide(match.id);
+									showSearchResults = false;
+								}}
+								class="w-full text-left px-2.5 py-1.5 rounded-lg text-xs hover:bg-cyan-950/60 hover:text-cyan-300 flex items-center justify-between transition-colors cursor-pointer {match.id ===
+								activeSlideId
+									? 'bg-cyan-900/40 text-cyan-200 border border-cyan-600/50'
+									: 'text-slate-200'}"
+							>
+								<div class="truncate">
+									<span class="font-bold">{match.menuTitle}</span>
+									{#if match.menuSub}
+										<span class="text-[10px] text-slate-400 ml-1">({match.menuSub})</span>
+									{/if}
+								</div>
+								<span class="text-[10px] font-mono text-cyan-400 shrink-0 ml-2">
+									{match.category === 'M' ? 'Manual' : 'Auto'}
+								</span>
+							</button>
+						{/each}
+					</div>
+				{/if}
+			</div>
+
+			<!-- Right: Slide Navigation Controls & Fullscreen -->
+			<div class="flex items-center gap-1.5 shrink-0">
+				<!-- Prev Button -->
+				<button
+					type="button"
+					onclick={goToPrevSlide}
+					class="p-1 rounded-md bg-[#09111c] border border-cyan-900 text-slate-300 hover:text-cyan-300 hover:border-cyan-600 transition-colors cursor-pointer"
+					title="Попередній слайд (←)"
+				>
+					<ChevronLeft class="w-4 h-4" />
+				</button>
+
+				<!-- Slide Counter Badge -->
+				<span
+					class="px-2 py-0.5 rounded text-[11px] font-mono font-bold bg-[#09111c] border border-cyan-950 text-cyan-300"
+				>
+					{currentSlideIndex} / {categorySlides.length}
+				</span>
+
+				<!-- Next Button -->
+				<button
+					type="button"
+					onclick={goToNextSlide}
+					class="p-1 rounded-md bg-[#09111c] border border-cyan-900 text-slate-300 hover:text-cyan-300 hover:border-cyan-600 transition-colors cursor-pointer"
+					title="Наступний слайд (→ або Space)"
+				>
+					<ChevronRight class="w-4 h-4" />
+				</button>
+
+				<!-- Fullscreen Toggle -->
+				<button
+					type="button"
+					onclick={toggleFullscreen}
+					class="hidden sm:inline-flex p-1 rounded-md bg-[#09111c] border border-cyan-900 text-slate-300 hover:text-cyan-300 hover:border-cyan-600 transition-colors ml-1 cursor-pointer"
+					title="Повноекранний режим (F)"
+				>
+					{#if isFullscreen}
+						<Minimize2 class="w-4 h-4" />
+					{:else}
+						<Maximize2 class="w-4 h-4" />
+					{/if}
+				</button>
+			</div>
+		</header>
+
+		<!-- Main Active Slide Content -->
+		<main class="flex-1 overflow-hidden p-2 lg:p-3 bg-black flex flex-col justify-center">
+			<SlideView slide={currentSlide} {searchQuery} />
+		</main>
+	</div>
 </div>
