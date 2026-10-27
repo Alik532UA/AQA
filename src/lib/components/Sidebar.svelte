@@ -2,8 +2,8 @@
 	import { ChevronLeft } from '@lucide/svelte';
 
 	interface Props {
-		activeCategory: 'M' | 'A';
-		onCategoryChange: (cat: 'M' | 'A') => void;
+		activeCategory: 'M' | 'A' | 'C';
+		onCategoryChange: (cat: 'M' | 'A' | 'C') => void;
 		activeSlideId: string;
 		onSelectSlide: (slideId: string) => void;
 		isMobileOpen: boolean;
@@ -48,19 +48,19 @@
 		? 'translate-x-0'
 		: '-translate-x-full'}"
 >
-	<!-- Top M / A Mode Switcher Bar -->
-	<div class="p-4 border-b border-cyan-950/60 bg-black relative">
+	<!-- Top M / A / C Mode Switcher Bar -->
+	<div class="p-3 border-b border-cyan-950/60 bg-black relative">
 		<!-- Collapse Button for Desktop -->
 		<button
 			type="button"
 			onclick={onToggleCollapse}
-			class="hidden lg:flex absolute right-2.5 top-1/2 -translate-y-1/2 p-1.5 rounded-lg border border-cyan-950/80 bg-[#060c18] text-slate-400 hover:text-cyan-300 hover:border-cyan-500/80 cursor-pointer transition-colors"
+			class="hidden lg:flex absolute right-2 top-1/2 -translate-y-1/2 p-1 rounded-lg border border-cyan-950/80 bg-[#060c18] text-slate-400 hover:text-cyan-300 hover:border-cyan-500/80 cursor-pointer transition-colors"
 			title="Згорнути меню (Ctrl+B або [)"
 		>
-			<ChevronLeft class="w-4 h-4" />
+			<ChevronLeft class="w-3.5 h-3.5" />
 		</button>
 
-		<div class="flex items-center justify-center gap-6">
+		<div class="flex items-center justify-center gap-3.5 pr-6 lg:pr-7">
 			<!-- Manual QA Button 'M' -->
 			<button
 				type="button"
@@ -69,9 +69,9 @@
 				class="relative group cursor-pointer"
 			>
 				<div
-					class="w-14 h-14 rounded-full flex items-center justify-center text-2xl font-bold font-mono transition-all duration-300 {activeCategory ===
+					class="w-11 h-11 md:w-12 md:h-12 rounded-full flex items-center justify-center text-xl font-bold font-mono transition-all duration-300 {activeCategory ===
 					'M'
-						? 'border-2 border-cyan-400 text-white shadow-[0_0_20px_#00f0ff]'
+						? 'border-2 border-cyan-400 text-white shadow-[0_0_15px_#00f0ff]'
 						: 'border border-cyan-900/60 text-slate-400 hover:border-cyan-500 hover:text-cyan-300'}"
 				>
 					M
@@ -82,16 +82,33 @@
 			<button
 				type="button"
 				onclick={() => onCategoryChange('A')}
-				title="Automation QA"
+				title="Automation QA (.NET)"
 				class="relative group cursor-pointer"
 			>
 				<div
-					class="w-14 h-14 rounded-full flex items-center justify-center text-2xl font-bold font-mono transition-all duration-300 {activeCategory ===
+					class="w-11 h-11 md:w-12 md:h-12 rounded-full flex items-center justify-center text-xl font-bold font-mono transition-all duration-300 {activeCategory ===
 					'A'
-						? 'border-2 border-cyan-400 text-white shadow-[0_0_20px_#00f0ff]'
+						? 'border-2 border-cyan-400 text-white shadow-[0_0_15px_#00f0ff]'
 						: 'border border-cyan-900/60 text-slate-400 hover:border-cyan-500 hover:text-cyan-300'}"
 				>
 					A
+				</div>
+			</button>
+
+			<!-- Senior Consultant Button 'C' -->
+			<button
+				type="button"
+				onclick={() => onCategoryChange('C')}
+				title="Senior AQA Consultant (Desktop / Electron)"
+				class="relative group cursor-pointer"
+			>
+				<div
+					class="w-11 h-11 md:w-12 md:h-12 rounded-full flex items-center justify-center text-xl font-bold font-mono transition-all duration-300 {activeCategory ===
+					'C'
+						? 'border-2 border-emerald-400 text-white shadow-[0_0_15px_#10b981]'
+						: 'border border-cyan-900/60 text-slate-400 hover:border-emerald-500 hover:text-emerald-300'}"
+				>
+					C
 				</div>
 			</button>
 		</div>
@@ -185,7 +202,7 @@
 				<p class="text-slate-400 text-[11px]">Levels of testing</p>
 			</button>
 
-		{:else}
+		{:else if activeCategory === 'A'}
 			<!-- ================= AUTOMATION QA NAVIGATION ================= -->
 
 			<!-- 1. CI/CD Practices -->
@@ -328,6 +345,126 @@
 					: 'border-slate-800 bg-[#060910] hover:border-cyan-700 hover:bg-[#09111c]'}"
 			>
 				<p class="font-bold text-white text-xs">SOLID</p>
+			</button>
+
+		{:else}
+			<!-- ================= SENIOR CONSULTANT NAVIGATION ================= -->
+
+			<!-- 1. Strategy & PoC -->
+			<button
+				type="button"
+				onclick={() => handleSlideClick('c-strategy')}
+				class="w-full text-left p-2.5 rounded-2xl border transition-all duration-200 block cursor-pointer {activeSlideId ===
+				'c-strategy'
+					? 'border-2 border-emerald-400 bg-emerald-950/30 shadow-[0_0_15px_rgba(16,185,129,0.3)]'
+					: 'border-slate-800 bg-[#060910] hover:border-emerald-700 hover:bg-[#09111c]'}"
+			>
+				<p class="font-bold text-white text-xs">Consulting Strategy & PoC</p>
+				<p class="text-emerald-400/80 text-[10px]">План 4-тижневого консалтингу</p>
+			</button>
+
+			<!-- 2. Electron vs Native Windows -->
+			<button
+				type="button"
+				onclick={() => handleSlideClick('c-electron-vs-native')}
+				class="w-full text-left p-2.5 rounded-2xl border transition-all duration-200 block cursor-pointer {activeSlideId ===
+				'c-electron-vs-native'
+					? 'border-2 border-emerald-400 bg-emerald-950/30 shadow-[0_0_15px_rgba(16,185,129,0.3)]'
+					: 'border-slate-800 bg-[#060910] hover:border-emerald-700 hover:bg-[#09111c]'}"
+			>
+				<p class="font-bold text-white text-xs">Electron vs Native Windows</p>
+				<p class="text-emerald-400/80 text-[10px]">Демаркація меж Playwright vs OS</p>
+			</button>
+
+			<!-- 3. Minimal Toolset Architecture -->
+			<button
+				type="button"
+				onclick={() => handleSlideClick('c-toolset')}
+				class="w-full text-left p-2.5 rounded-2xl border transition-all duration-200 block cursor-pointer {activeSlideId ===
+				'c-toolset'
+					? 'border-2 border-emerald-400 bg-emerald-950/30 shadow-[0_0_15px_rgba(16,185,129,0.3)]'
+					: 'border-slate-800 bg-[#060910] hover:border-emerald-700 hover:bg-[#09111c]'}"
+			>
+				<p class="font-bold text-white text-xs">Minimal Toolset Architecture</p>
+				<p class="text-emerald-400/80 text-[10px]">Playwright TS + C#/.NET FlaUI</p>
+			</button>
+
+			<!-- 4. Visual Regression & OCR -->
+			<button
+				type="button"
+				onclick={() => handleSlideClick('c-visual-ocr')}
+				class="w-full text-left p-2.5 rounded-2xl border transition-all duration-200 block cursor-pointer {activeSlideId ===
+				'c-visual-ocr'
+					? 'border-2 border-emerald-400 bg-emerald-950/30 shadow-[0_0_15px_rgba(16,185,129,0.3)]'
+					: 'border-slate-800 bg-[#060910] hover:border-emerald-700 hover:bg-[#09111c]'}"
+			>
+				<p class="font-bold text-white text-xs">Visual Regression & OCR</p>
+				<p class="text-emerald-400/80 text-[10px]">Тестування скріншотами й OCR</p>
+			</button>
+
+			<!-- 5. Upgrades, Installers & Services -->
+			<button
+				type="button"
+				onclick={() => handleSlideClick('c-upgrades-installers')}
+				class="w-full text-left p-2.5 rounded-2xl border transition-all duration-200 block cursor-pointer {activeSlideId ===
+				'c-upgrades-installers'
+					? 'border-2 border-emerald-400 bg-emerald-950/30 shadow-[0_0_15px_rgba(16,185,129,0.3)]'
+					: 'border-slate-800 bg-[#060910] hover:border-emerald-700 hover:bg-[#09111c]'}"
+			>
+				<p class="font-bold text-white text-xs">Upgrades, Installers & Services</p>
+				<p class="text-emerald-400/80 text-[10px]">MSI/NSIS, апдейти та служби</p>
+			</button>
+
+			<!-- 6. Multi-Monitor & DPI Matrix -->
+			<button
+				type="button"
+				onclick={() => handleSlideClick('c-matrix-monitors')}
+				class="w-full text-left p-2.5 rounded-2xl border transition-all duration-200 block cursor-pointer {activeSlideId ===
+				'c-matrix-monitors'
+					? 'border-2 border-emerald-400 bg-emerald-950/30 shadow-[0_0_15px_rgba(16,185,129,0.3)]'
+					: 'border-slate-800 bg-[#060910] hover:border-emerald-700 hover:bg-[#09111c]'}"
+			>
+				<p class="font-bold text-white text-xs">Multi-Monitor & DPI Matrix</p>
+				<p class="text-emerald-400/80 text-[10px]">Per-Monitor DPI & Dedicated стенди</p>
+			</button>
+
+			<!-- 7. CI/CD on Windows Runners -->
+			<button
+				type="button"
+				onclick={() => handleSlideClick('c-windows-ci')}
+				class="w-full text-left p-2.5 rounded-2xl border transition-all duration-200 block cursor-pointer {activeSlideId ===
+				'c-windows-ci'
+					? 'border-2 border-emerald-400 bg-emerald-950/30 shadow-[0_0_15px_rgba(16,185,129,0.3)]'
+					: 'border-slate-800 bg-[#060910] hover:border-emerald-700 hover:bg-[#09111c]'}"
+			>
+				<p class="font-bold text-white text-xs">CI/CD on Windows Runners</p>
+				<p class="text-emerald-400/80 text-[10px]">Session 0, фікстури та логи</p>
+			</button>
+
+			<!-- 8. Architecture & Handover -->
+			<button
+				type="button"
+				onclick={() => handleSlideClick('c-handover-adr')}
+				class="w-full text-left p-2.5 rounded-2xl border transition-all duration-200 block cursor-pointer {activeSlideId ===
+				'c-handover-adr'
+					? 'border-2 border-emerald-400 bg-emerald-950/30 shadow-[0_0_15px_rgba(16,185,129,0.3)]'
+					: 'border-slate-800 bg-[#060910] hover:border-emerald-700 hover:bg-[#09111c]'}"
+			>
+				<p class="font-bold text-white text-xs">Architecture & Handover</p>
+				<p class="text-emerald-400/80 text-[10px]">Структура коду, ADR та інструкції</p>
+			</button>
+
+			<!-- 9. Senior Consultant Interview Q&A -->
+			<button
+				type="button"
+				onclick={() => handleSlideClick('c-interview-qa')}
+				class="w-full text-left p-2.5 rounded-2xl border transition-all duration-200 block cursor-pointer {activeSlideId ===
+				'c-interview-qa'
+					? 'border-2 border-emerald-400 bg-emerald-950/30 shadow-[0_0_15px_rgba(16,185,129,0.3)]'
+					: 'border-slate-800 bg-[#060910] hover:border-emerald-700 hover:bg-[#09111c]'}"
+			>
+				<p class="font-bold text-white text-xs">Senior Consultant Interview Q&A</p>
+				<p class="text-emerald-400/80 text-[10px]">Топ питань та готові відповіді</p>
 			</button>
 		{/if}
 	</nav>

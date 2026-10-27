@@ -28,10 +28,10 @@
 			<h3 class="text-sm font-bold uppercase tracking-wider text-slate-800 mb-4 pb-2 border-b border-slate-200">
 				Зміст друкованого буклету
 			</h3>
-			<div class="grid grid-cols-2 gap-x-6 gap-y-2 text-xs">
+			<div class="grid grid-cols-1 md:grid-cols-3 gap-x-4 gap-y-3 text-[11px]">
 				<div>
-					<p class="font-bold text-slate-900 mb-1">Manual QA (M):</p>
-					<ol class="list-decimal list-inside space-y-1 text-slate-700">
+					<p class="font-bold text-slate-900 mb-1 border-b border-slate-300 pb-0.5">Manual QA (M):</p>
+					<ol class="list-decimal list-inside space-y-0.5 text-slate-700">
 						<li>Основи тестування & STLC</li>
 						<li>Види (типи) тестування</li>
 						<li>V&V, Техніки, Severity/Priority</li>
@@ -40,8 +40,8 @@
 					</ol>
 				</div>
 				<div>
-					<p class="font-bold text-slate-900 mb-1">Automation QA (A):</p>
-					<ol class="list-decimal list-inside space-y-1 text-slate-700" start="6">
+					<p class="font-bold text-slate-900 mb-1 border-b border-slate-300 pb-0.5">Automation QA (A):</p>
+					<ol class="list-decimal list-inside space-y-0.5 text-slate-700" start="6">
 						<li>CI/CD Practices</li>
 						<li>Design Principles & Approaches</li>
 						<li>Platform Specific (.NET)</li>
@@ -50,27 +50,41 @@
 						<li>Infrastructure</li>
 						<li>Test Automation Patterns</li>
 						<li>Version Control Systems (Git)</li>
-						<li>Data Storages</li>
+						<li>Data Storages & TDM</li>
 						<li>SQL Commands</li>
 						<li>SOLID Principles</li>
+					</ol>
+				</div>
+				<div>
+					<p class="font-bold text-emerald-800 mb-1 border-b border-emerald-300 pb-0.5">Senior Consultant (C):</p>
+					<ol class="list-decimal list-inside space-y-0.5 text-slate-700" start="17">
+						<li>Consulting Strategy & PoC</li>
+						<li>Electron vs Native Windows</li>
+						<li>Minimal Toolset Architecture</li>
+						<li>Visual Regression & OCR</li>
+						<li>Upgrades, Installers & Services</li>
+						<li>Multi-Monitor & DPI Matrix</li>
+						<li>CI/CD on Windows Runners</li>
+						<li>Architecture & Handover</li>
+						<li>Senior Consultant Interview Q&A</li>
 					</ol>
 				</div>
 			</div>
 		</div>
 
-		<div class="mt-12 text-[11px] text-slate-500 font-mono">
-			Згенеровано автоматично • Готово до співбесіди
+		<div class="mt-8 text-[11px] text-slate-500 font-mono">
+			Згенеровано автоматично • Комплексна підготовка до Senior AQA Consultant співбесіди
 		</div>
 	</section>
 
-	<!-- All 16 Slides Pages -->
+	<!-- All Slides Pages -->
 	{#each slides as slide, idx}
 		<section class="print-page min-h-[92vh] flex flex-col justify-between p-6 border-2 border-slate-800 rounded-xl mb-8 bg-white">
 			<!-- Slide Header -->
 			<header class="pb-3 mb-4 border-b-2 border-slate-900 flex items-center justify-between">
 				<div>
-					<span class="inline-block px-2 py-0.5 rounded text-[10px] font-mono font-bold uppercase border border-slate-700 {slide.category === 'M' ? 'bg-slate-100 text-slate-800' : 'bg-slate-800 text-white'}">
-						{slide.category === 'M' ? 'Manual QA' : 'Automation QA'}
+					<span class="inline-block px-2 py-0.5 rounded text-[10px] font-mono font-bold uppercase border border-slate-700 {slide.category === 'M' ? 'bg-slate-100 text-slate-800' : slide.category === 'A' ? 'bg-slate-800 text-white' : 'bg-emerald-800 text-white'}">
+						{slide.category === 'M' ? 'Manual QA' : slide.category === 'A' ? 'Automation QA' : 'Senior AQA Consultant'}
 					</span>
 					<h2 class="text-xl font-bold text-slate-950 mt-1">
 						{slide.menuTitle}

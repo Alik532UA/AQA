@@ -6,7 +6,7 @@ export interface SlideCard {
 
 export interface Slide {
 	id: string;
-	category: 'M' | 'A';
+	category: 'M' | 'A' | 'C';
 	menuGroup?: string;
 	menuTitle: string;
 	menuSub?: string;
@@ -32,24 +32,25 @@ export const slidesData: Slide[] = [
 			{
 				title: 'Що таке тестування?',
 				contentHtml: `
-					<p class="mb-2">Тестування - це процес перевірки програмного забезпечення з метою валідації відповідності вимогам (реальне і очікувана поведінка програми) та виявлення помилок.</p>
+					<p class="mb-2">Тестування - це процес перевірки програмного забезпечення з метою валідації відповідності вимогам (фактична та очікувана поведінка програми) та виявлення дефектів.</p>
 					<h4 class="font-bold text-cyan-300 mt-2 mb-1">Тестування програмного забезпечення</h4>
-					<p>техніка контролю якості, що включає активності з планування робіт (Test Management), проектування тестів (Test Design), виконання тестування (Test Execution) і аналізу отриманих результатів (Test Analysis).</p>
+					<p>дисципліна та процес контролю якості (Quality Control), що включає активності з планування робіт (Test Management), проектування тестів (Test Design), виконання тестування (Test Execution) і аналізу отриманих результатів (Test Analysis).</p>
 				`
 			},
 			{
 				title: 'Software Quality | Якість програмного забезпечення',
 				contentHtml: `
-					<p>це сукупність показників, здатності задовольняти потреби. <span class="text-cyan-400 font-mono">[Quality management and quality assurance]</span></p>
+					<p>— ступінь відповідності сукупності властивих характеристик ПЗ встановленим та передбачуваним потребам користувачів і бізнесу (стандарт ISO 25010). <span class="text-cyan-400 font-mono">[Quality management & Quality assurance]</span></p>
 				`
 			},
 			{
 				title: 'Testing goals | Цілі тестування',
 				contentHtml: `
 					<ul class="list-disc list-inside space-y-1 text-slate-200">
-						<li>Підвищити ймовірність того, що програма, призначена для тестування, буде працювати правильно за будь-яких обставин.</li>
-						<li>Підвищити ймовірність того, що програма, призначена для тестування, буде відповідати всім описаним вимогам.</li>
-						<li>Надання актуальної інформації про стан продукту на даний момент.</li>
+						<li>Підвищити ймовірність того, що програма буде коректно та стабільно працювати за визначених умов експлуатації.</li>
+						<li>Підтвердити відповідність реалізації всім задокументованим бізнес- та функціональним вимогам.</li>
+						<li>Надання актуальної та об'єктивної інформації про стан і якість продукту стейкхолдерам для прийняття рішень про реліз.</li>
+						<li>Запобігання виникненню дефектів на ранніх етапах та зниження ризиків відмов.</li>
 					</ul>
 				`
 			},
@@ -110,11 +111,11 @@ export const slidesData: Slide[] = [
 			{
 				title: 'Основні пункти тест плану',
 				contentHtml: `
-					<p class="mb-1 text-[11px] text-cyan-400">У стандарті IEEE 829 перераховані пункти, з яких повинен (нехай може) складатися тест-план:</p>
+					<p class="mb-1 text-[11px] text-cyan-400">У стандарті IEEE 829 перераховані пункти, з яких повинен (або може) складатися тест-план:</p>
 					<ol class="space-y-0.5 text-[11px] font-mono leading-tight">
 						<li><strong class="text-cyan-300">A. Test plan identifier</strong> | ідентифікатор плану тестування;</li>
 						<li><strong class="text-cyan-300">B. Introduction</strong> | вступ</li>
-						<li><strong class="text-cyan-300">C. Test items</strong> | тестові завдання</li>
+						<li><strong class="text-cyan-300">C. Test items</strong> | Об'єкти тестування (модулі, системи);</li>
 						<li><strong class="text-cyan-300">D. Features to be tested</strong> | характеристики, що підлягають перевірці</li>
 						<li><strong class="text-cyan-300">E. Features not to be tested</strong> | Функції, які не підлягають тестуванню</li>
 						<li><strong class="text-cyan-300">F. Approach</strong> | підхід</li>
@@ -122,7 +123,7 @@ export const slidesData: Slide[] = [
 						<li><strong class="text-cyan-300">H. Suspension criteria and resumption requirements</strong> | критерії призупинення та вимоги до відновлення;</li>
 						<li><strong class="text-cyan-300">I. Test deliverables</strong> | Результати тестування</li>
 						<li><strong class="text-cyan-300">J. Testing tasks</strong> | Тестові завдання</li>
-						<li><strong class="text-cyan-300">K. Environmental needs</strong> | Потреби в тестовому середовищі (лаби, ОС, БД)</li>
+						<li><strong class="text-cyan-300">K. Environmental needs</strong> | Потреби в тестовому середовищі (стенди, ОС, БД)</li>
 						<li><strong class="text-cyan-300">L. Responsibilities</strong> | Обов'язки</li>
 						<li><strong class="text-cyan-300">M. Staffing and training needs</strong> | потреби в кадрах і навчанні;</li>
 						<li><strong class="text-cyan-300">N. Schedule</strong> | Розклад</li>
@@ -134,13 +135,13 @@ export const slidesData: Slide[] = [
 			{
 				title: 'Test Plan | Тест план',
 				contentHtml: `
-					<p class="mb-2 text-xs">це документ, який описує весь обсяг робіт з тестування, починаючи з опису об'єкта, стратегій, розписів, критеріїв початку та закінчення тестування, до необхідного в процесі роботи обладнання, спеціальних знань, а також оцінки ризиків з варіантами їх дозволів.</p>
+					<p class="mb-2 text-xs">це документ, який описує весь обсяг робіт з тестування, починаючи з опису об'єкта, стратегії, графіків і розкладу, критеріїв початку та завершення тестування, до необхідного обладнання, спеціальних знань, а також оцінки ризиків зі шляхами їх мінімізації та усунення.</p>
 					<h4 class="font-bold text-cyan-300 mb-1 text-xs">Відповідає на питання:</h4>
 					<ul class="list-disc list-inside space-y-0.5 text-xs text-slate-200">
 						<li>Що потрібно тестувати?</li>
 						<li>Що (по факту) будемо тестувати?</li>
 						<li>Як будемо тестувати?</li>
-						<li>Коли будете тестувати?</li>
+						<li>Коли будемо тестувати?</li>
 						<li>Критерії початку тестування.</li>
 						<li>Критерії закінчення тестування.</li>
 					</ul>
@@ -197,8 +198,8 @@ export const slidesData: Slide[] = [
 							перевірка, чи були виправлені дефекти, виявлені під час попереднього тестування.
 						</li>
 						<li>
-							<strong class="text-cyan-400">Build Verification Test | Тестування складання:</strong>
-							перевірка базових можливостей білда та належної інтеграції компонентів.
+							<strong class="text-cyan-400">Build Verification Test (BVT) | Тестування збірки:</strong>
+							перевірка базових можливостей білда та належної інтеграції компонентів перед початком детального тестування.
 						</li>
 						<li>
 							<strong class="text-cyan-400">Sanity Testing | Санітарне тестування:</strong>
@@ -215,9 +216,10 @@ export const slidesData: Slide[] = [
 					<div class="space-y-1 text-[11px] text-slate-200 leading-tight">
 						<p><strong class="text-cyan-400">Performance testing | Тестування продуктивності:</strong> Оцінює швидкість, час відгуку, пропускну здатність.</p>
 						<div class="pl-3 space-y-0.5 text-slate-300">
-							<p><strong>a. Load testing | Навантаження:</strong> поведінка під великим навантаженням, виявлення вузьких місць.</p>
-							<p><strong>b. Stress testing | Стрес-тестування:</strong> межі стійкості системи, перевантаження ресурсів.</p>
-							<p><strong>c. Volume testing | Витривалість:</strong> тривала робота без збоїв і втрати даних.</p>
+							<p><strong>a. Load testing | Навантаження:</strong> поведінка під очікуваним робочим навантаженням, виявлення вузьких місць.</p>
+							<p><strong>b. Stress testing | Стрес-тестування:</strong> межі стійкості системи при екстремальному навантаженні.</p>
+							<p><strong>c. Volume testing | Тестування великих обсягів:</strong> робота системи з великими базами даних та файлами.</p>
+							<p><strong>d. Soak / Endurance testing | Витривалість:</strong> тривала робота під навантаженням для виявлення витоків пам'яті (memory leaks).</p>
 						</div>
 						<p><strong class="text-cyan-400">Reliability testing | Тестування надійності:</strong> стійкість до збоїв. MTBF (Mean time between failures), MTTR (Mean time to repair).</p>
 						<p><strong class="text-cyan-400">Usability testing | Зручність використання:</strong> наскільки легко та інтуїтивно користувачеві взаємодіяти з системою.</p>
@@ -261,39 +263,43 @@ export const slidesData: Slide[] = [
 			{
 				title: 'Validation | Валідація',
 				contentHtml: `
-					<p class="font-mono text-cyan-300 text-xs mb-1">Validation — 'is this the right specification?'</p>
-					<p class="text-xs text-slate-300 mb-1">Перевірка — «це правильна специфікація?»</p>
-					<p class="text-xs text-slate-200 mb-1">це визначення (оцінка) відповідності ПЗ що розробляється очікуванням і потребам користувача, вимогам до системи [BS7925-1].</p>
-					<p class="text-[11px] text-cyan-400 bg-cyan-950/40 p-2 rounded border border-cyan-800/40">Оцінка відповідності явним вимогам (специфікаціям) — верифікація; оцінка відповідності очікуванням користувачів — валідація.</p>
+					<p class="font-mono text-cyan-300 text-xs mb-1">Validation — 'Are we building the right product?'</p>
+					<p class="text-xs text-slate-300 mb-1">Валідація — «Чи правильний продукт ми розробляємо?»</p>
+					<p class="text-xs text-slate-200 mb-1">це оцінка відповідності розроблюваного ПЗ очікуванням, потребам користувача та бізнес-вимогам [BS7925-1 / ISTQB].</p>
+					<p class="text-[11px] text-cyan-400 bg-cyan-950/40 p-2 rounded border border-cyan-800/40">Верифікація — «Чи правильно ми створюємо продукт?» (відповідність ТЗ/специфікаціям). Валідація — «Чи правильний продукт ми створили?» (відповідність потребам користувачів).</p>
 				`
 			},
 			{
 				title: 'Техніки тест-дизайну | Design test techniques',
 				contentHtml: `
-					<ul class="space-y-2 text-xs text-slate-200">
+					<ul class="space-y-1.5 text-xs text-slate-200">
 						<li>
 							<strong class="text-cyan-300">Еквівалентний поділ (Equivalence Partitioning — EP):</strong>
-							<p class="text-slate-300 text-[11px] pl-2">діапазон допустимих значень від 1 до 10: обрати одне валідне значення всередині інтервалу (наприклад, 5) та одне невалідне поза інтервалом (наприклад, 0).</p>
+							<p class="text-slate-300 text-[11px] pl-2">розподіл вхідних даних на класи: валідні (всередині діапазону) та невалідні (поза діапазоном). Наприклад, для 1..10: обрати 5 (валідний), 0 та 11 (невалідні).</p>
 						</li>
 						<li>
 							<strong class="text-cyan-300">Аналіз граничних значень (Boundary Value Analysis — BVA):</strong>
-							<p class="text-slate-300 text-[11px] pl-2">обираємо мінімальну та максимальну межі (1 і 10), а також значення безпосередньо біля меж (0 і 11).</p>
+							<p class="text-slate-300 text-[11px] pl-2">перевірка меж та значень біля них (для 1..10: граничні точки 0, 1, 10, 11).</p>
 						</li>
 						<li>
-							<strong class="text-cyan-300">Причина / Наслідок (Cause / Effect — CE):</strong>
-							<p class="text-slate-300 text-[11px] pl-2">ввести поля «Ім'я», «Телефон», натиснути «Додати» (Причина) → система додає клієнта в базу даних і показує його номер (Наслідок).</p>
+							<strong class="text-cyan-300">Таблиці рішень (Decision Table Testing):</strong>
+							<p class="text-slate-300 text-[11px] pl-2">структурування складних бізнес-правил та комбінацій вхідних умов для вибору дій системи.</p>
 						</li>
 						<li>
-							<strong class="text-cyan-300">Передбачення помилки (Error Guessing — EG):</strong>
-							<p class="text-slate-300 text-[11px] pl-2">тестувальник використовує свій досвід та знання системи: «Що, якщо не ввести обов'язковий код?», «Що, якщо ввести невірний формат даних?»</p>
-						</li>
-						<li>
-							<strong class="text-cyan-300">Вичерпне тестування (Exhaustive Testing — ET):</strong>
-							<p class="text-slate-300 text-[11px] pl-2">перевірка абсолютно всіх можливих комбінацій вхідних даних та станів. На практиці неможливе (принцип ISTQB №2) через нескінченну кількість варіантів.</p>
+							<strong class="text-cyan-300">Діаграма переходів станів (State Transition Testing):</strong>
+							<p class="text-slate-300 text-[11px] pl-2">перевірка переходів між різними життєвими циклами об'єкта (наприклад: New → In Progress → Closed).</p>
 						</li>
 						<li>
 							<strong class="text-cyan-300">Попарне тестування (Pairwise Testing):</strong>
-							<p class="text-slate-300 text-[11px] pl-2">техніка формування тестових наборів даних: кожне значення кожного параметра поєднується зі значеннями всіх інших параметрів щонайменше один раз.</p>
+							<p class="text-slate-300 text-[11px] pl-2">оптимальний набір комбінацій, де кожна пара значень параметрів тестується щонайменше один раз.</p>
+						</li>
+						<li>
+							<strong class="text-cyan-300">Передбачення помилки (Error Guessing — EG):</strong>
+							<p class="text-slate-300 text-[11px] pl-2">досвід та інтуїція тестувальника: «Що буде при некоректному форматі даних чи порожніх полях?»</p>
+						</li>
+						<li>
+							<strong class="text-cyan-300">Вичерпне тестування (Exhaustive Testing — ET):</strong>
+							<p class="text-slate-300 text-[11px] pl-2">перевірка всіх можливих комбінацій. Практично неможливе (принцип ISTQB №2).</p>
 						</li>
 					</ul>
 				`
@@ -344,11 +350,12 @@ export const slidesData: Slide[] = [
 						<span class="text-cyan-400">Статуси: (passed | failed | blocked)</span><br>
 						click on field e-mail | Login page is opened | Passed
 					</div>
-					<h4 class="font-bold text-cyan-300 text-xs mb-1">Кожен тест-кейс повинен мати 3 частини:</h4>
+					<h4 class="font-bold text-cyan-300 text-xs mb-1">Ключові обов'язкові складові тест-кейсу:</h4>
 					<ul class="text-[11px] space-y-1 text-slate-300">
-						<li><strong>PreConditions:</strong> список умов чи дій, які приводять систему до стану, придатного для проведення перевірки.</li>
-						<li><strong>Description / Steps:</strong> послідовність дій для перевірки реалізації.</li>
-						<li><strong>PostConditions:</strong> переведення системи у вихідний первинний стан (initial state).</li>
+						<li><strong>PreConditions:</strong> умови чи стан системи, необхідні для проведення перевірки.</li>
+						<li><strong>Steps:</strong> чітка послідовність дій для перевірки функціоналу.</li>
+						<li><strong>Expected Result:</strong> обов'язковий очікуваний результат згідно зі специфікацією.</li>
+						<li><strong>PostConditions:</strong> повернення системи у початковий вихідний стан (teardown/cleanup).</li>
 					</ul>
 				`
 			},
@@ -365,20 +372,16 @@ export const slidesData: Slide[] = [
 				contentHtml: `
 					<div class="space-y-2 text-xs">
 						<div>
-							<strong class="text-cyan-300 block">Дефект (він же баг):</strong>
-							<span class="text-slate-300 text-[11px]">невідповідність фактичного результату очікуваному результату специфікації вимог.</span>
+							<strong class="text-amber-300 block">Error / Mistake (Помилка людини):</strong>
+							<span class="text-slate-300 text-[11px]">дія людини (розробника, архітектора, тестувальника), що призводить до дефекту в коді чи документації. Також помилкова дія користувача (некоректне введення даних).</span>
 						</div>
 						<div>
-							<strong class="text-amber-300 block">Error (Помилка):</strong>
-							<span class="text-slate-300 text-[11px]">помилка користувача або розробника (намагається використовувати програму іншим способом, невірний ввід).</span>
-						</div>
-						<div>
-							<strong class="text-rose-400 block">Bug (Defect):</strong>
-							<span class="text-slate-300 text-[11px]">помилка програміста (дизайнера) у коді, через що програма виходить з-під контролю або падає.</span>
+							<strong class="text-rose-400 block">Bug / Defect (Дефект / Баг):</strong>
+							<span class="text-slate-300 text-[11px]">недолік або невідповідність у коді чи специфікації, створений внаслідок помилки людини, що спричиняє неправильну роботу системи.</span>
 						</div>
 						<div>
 							<strong class="text-purple-400 block">Failure (Збій / Відмова):</strong>
-							<span class="text-slate-300 text-[11px]">збій у роботі компонента чи системи (краш, апаратний або програмний збій під час виконання).</span>
+							<span class="text-slate-300 text-[11px]">подія під час виконання, коли система відхиляється від очікуваної роботи (краш, збій програми під час виконання).</span>
 						</div>
 					</div>
 				`
@@ -398,7 +401,7 @@ export const slidesData: Slide[] = [
 							<li><strong>Пріоритет (Priority):</strong> P1 High, P2 Medium, P3 Low</li>
 							<li><strong>Статус (Status):</strong> Життєвий цикл дефекту (New, Open, In Progress, Resolved, Closed)</li>
 						</ul>
-						<p><strong class="text-cyan-400 mt-1 block">Оточення (Environment):</strong> ОС, Браузер + версія, Сервіс Пак, роздільна здатність, мобільний девайс.</p>
+						<p><strong class="text-cyan-400 mt-1 block">Оточення (Environment):</strong> ОС, Браузер + версія, Service Pack / версія ОС, роздільна здатність, пристрій.</p>
 						<p><strong class="text-cyan-400 mt-1 block">Опис (Description):</strong></p>
 						<ul class="list-disc list-inside pl-2 space-y-0.5 text-slate-300">
 							<li>Кроки відтворення (Steps to Reproduce)</li>
@@ -592,7 +595,7 @@ export const slidesData: Slide[] = [
 				contentHtml: `
 					<ul class="list-disc list-inside space-y-1 text-[11px] text-slate-200 mb-3">
 						<li><strong>Інтерфейси:</strong> відокремлення абстракції від конкретної реалізації для гнучкої заміни компонентів.</li>
-						<li><strong>Депенденцій інжекшн (DI):</strong> зменшує зв'язність між компонентами та полегшує тестування.</li>
+						<li><strong>Впровадження залежностей (Dependency Injection — DI):</strong> зменшує зв'язність (coupling), полегшує створення ізольованих тестових сервісів та передачу інстансів WebDriver/конфігурацій.</li>
 						<li><strong>DRY (Don't Repeat Yourself):</strong> не дублюйте однаковий код у кількох місцях.</li>
 						<li><strong>KISS (Keep It Simple, Stupid):</strong> простота рішень без надлишкового ускладнення.</li>
 						<li><strong>YAGNI (You Aren't Gonna Need It):</strong> не пишіть функціонал наперед, якщо він не потрібен прямо зараз.</li>
@@ -679,17 +682,22 @@ export const slidesData: Slide[] = [
 			{
 				title: 'Рефакторинг (Refactoring)',
 				contentHtml: `
-					<p class="text-sm text-slate-100 mb-3 leading-relaxed">
+					<p class="text-sm text-slate-100 mb-2 leading-relaxed">
 						<strong>Рефакторинг</strong> – це процес зміни внутрішньої структури програмного коду без зміни його зовнішньої поведінки. Це робиться для покращення читабельності, зрозумілості та підтримуваності коду.
 					</p>
-					<div class="space-y-3 text-xs text-slate-200">
-						<div class="p-3 rounded-lg bg-[#08121f] border border-cyan-900/50">
-							<h4 class="font-bold text-cyan-300 mb-1">Виявлення прихованих проблем:</h4>
-							<p>Під час рефакторингу можуть бути виявлені та усунені приховані помилки або вразливості в системі завдяки спрощенню логіки та усуненню зайвої складності.</p>
+					<div class="space-y-2 text-xs text-slate-200">
+						<div class="p-2.5 rounded-lg bg-[#08121f] border border-cyan-900/50">
+							<h4 class="font-bold text-cyan-300 mb-0.5">Усунення «Test Smells» в автотестах:</h4>
+							<ul class="list-disc list-inside space-y-0.5 text-[11px] text-slate-300">
+								<li><strong>Hardcoded Sleeps:</strong> заміна статичних Thread.Sleep на явні динамічні очікування (WebDriverWait / Playwright auto-waiting).</li>
+								<li><strong>Дублювання локаторів:</strong> винесення селекторів у класи сторінок (Page Objects / Components).</li>
+								<li><strong>Assert Roulette:</strong> розбиття перевантажених тестів на сфокусовані атомарні перевірки з інформативними повідомленнями.</li>
+								<li><strong>Flaky Tests:</strong> усунення недетермінованих падінь через race conditions та асинхронні запити.</li>
+							</ul>
 						</div>
-						<div class="p-3 rounded-lg bg-[#08121f] border border-cyan-900/50">
-							<h4 class="font-bold text-cyan-300 mb-1">Запобігання технічному боргу:</h4>
-							<p>Рефакторинг є важливою частиною процесу розробки програмного забезпечення, оскільки він допомагає підтримувати код в хорошому стані та запобігає накопиченню технічного боргу в автоматизації тестування.</p>
+						<div class="p-2.5 rounded-lg bg-[#08121f] border border-cyan-900/50">
+							<h4 class="font-bold text-cyan-300 mb-0.5">Запобігання технічному боргу:</h4>
+							<p class="text-[11px] text-slate-300">Регулярний рефакторинг тестового фреймворку підтримує високу швидкість виконання, спрощує онбординг нових інженерів і запобігає «старінню» кодової бази.</p>
 						</div>
 					</div>
 				`
@@ -714,10 +722,11 @@ export const slidesData: Slide[] = [
 					
 					<h4 class="font-bold text-cyan-300 text-xs mb-1">Основні компоненти Test Automation Framework:</h4>
 					<ol class="list-decimal list-inside space-y-0.5 text-[11px] text-slate-200 mb-2">
-						<li><strong>Тестові скрипти:</strong> набір інструкцій на мові програмування для взаємодії з системою, вводу даних та перевірки результатів.</li>
-						<li><strong>Тестові дані:</strong> дані для тестування (вхідні параметри, очікувані значення).</li>
-						<li><strong>Тестове середовище:</strong> апаратне та програмне оточення, де виконуються тести.</li>
-						<li><strong>Тестовий фреймворк:</strong> структура, яка організовує процес (планування, виконання, звітування).</li>
+						<li><strong>Тестові скрипти:</strong> набір перевірок на C# для взаємодії з системою, вводу даних та асертів.</li>
+						<li><strong>Тестові дані:</strong> параметризація (вхідні параметри, очікувані значення, фейкери).</li>
+						<li><strong>Тестове середовище:</strong> інфраструктура запуску (Docker, локальні браузери, Grid).</li>
+						<li><strong>Тестовий раннер:</strong> структура, що організовує паралельний запуск та життєвий цикл тестів.</li>
+						<li><strong>Рівень звітності (Reporting):</strong> інформативні звіти з логами та скріншотами (Allure, ExtentReports).</li>
 					</ol>
 
 					<h4 class="font-bold text-cyan-300 text-xs mb-1">Переваги використання:</h4>
@@ -738,13 +747,13 @@ export const slidesData: Slide[] = [
 						<li>Тип проекту, технології, досвід команди, бюджет.</li>
 					</ul>
 
-					<h4 class="font-bold text-cyan-300 text-xs mb-1">Популярні фреймворки для .NET:</h4>
+					<h4 class="font-bold text-cyan-300 text-xs mb-1">Популярні фреймворки та інструменти для .NET:</h4>
 					<ul class="list-disc list-inside space-y-0.5 text-[11px] text-slate-200 mb-2">
-						<li><strong>Selenium WebDriver:</strong> для веб-тестування.</li>
-						<li><strong>Appium:</strong> для мобільного тестування.</li>
-						<li><strong>MSTest:</strong> вбудований фреймворк у Visual Studio.</li>
-						<li><strong>NUnit:</strong> популярний сторонній фреймворк.</li>
-						<li><strong>xUnit.net:</strong> сучасний фреймворк з потужними функціями.</li>
+						<li><strong>Playwright for .NET / Selenium WebDriver:</strong> для веб-тестування.</li>
+						<li><strong>Appium:</strong> для мобільного тестування (iOS, Android).</li>
+						<li><strong>NUnit / xUnit.net:</strong> потужні та сучасні тестові раннери.</li>
+						<li><strong>RestSharp / HttpClient:</strong> для перевірки API сервісів.</li>
+						<li><strong>Allure Report:</strong> наочна візуалізація результатів прогонів.</li>
 					</ul>
 
 					<h4 class="font-bold text-cyan-300 text-xs mb-1">Ключові моменти для успішного використання:</h4>
@@ -855,11 +864,14 @@ export const slidesData: Slide[] = [
 				title: 'BDD та критерії вибору шаблону',
 				contentHtml: `
 					<h4 class="font-bold text-cyan-300 text-xs mb-1">4. Шаблон Behavior-Driven Development (BDD):</h4>
-					<ul class="list-disc list-inside space-y-0.5 text-[11px] text-slate-200 mb-3">
+					<ul class="list-disc list-inside space-y-0.5 text-[11px] text-slate-200 mb-2">
 						<li>Використовує природну мову для опису функціональності з точки зору користувача.</li>
-						<li>Формат "Given-When-Then" (наприклад, SpecFlow / Reqnroll, Cucumber).</li>
+						<li>Формат "Given-When-Then" (наприклад, Reqnroll / SpecFlow у .NET, Cucumber).</li>
 						<li>Покращує комунікацію між розробниками, QA та бізнес-аналітиками.</li>
 					</ul>
+
+					<h4 class="font-bold text-cyan-300 text-xs mb-1">5. Fluent Interface (Method Chaining):</h4>
+					<p class="text-[11px] text-slate-200 mb-2">Методи дій сторінки повертають екземпляр сторінки для створення зв'язних ланцюжків: <code>loginPage.EnterEmail().EnterPass().ClickSubmit();</code></p>
 
 					<h4 class="font-bold text-cyan-300 text-xs mb-1">Вибір шаблону тестування залежить від:</h4>
 					<ul class="list-disc list-inside space-y-0.5 text-[11px] text-slate-300 mb-2">
@@ -1131,6 +1143,488 @@ ORDER BY customers.name;</pre>
 						<li><strong>Приклад у C#:</strong> NotificationService залежить від абстракції <em>IMessageSender</em>, яка передається через конструктор (DI), а не створює напряму new EmailSender().</li>
 						<li><strong>Порушення:</strong> Жорстке створення new EmailSender() у високорівневих сервісах.</li>
 					</ul>
+				`
+			}
+		]
+	},
+
+	// ==========================================
+	// SENIOR AUTOMATION QA CONSULTANT (C) SLIDES
+	// (Native Windows, Electron, C#/.NET, Playwright, OCR, CI, Upgrades)
+	// ==========================================
+	{
+		id: 'c-strategy',
+		category: 'C',
+		menuTitle: 'Consulting Strategy & PoC',
+		menuSub: 'План 4-тижневого консалтингу: від аудиту до фундаменту',
+		layout: 'grid-2',
+		cards: [
+			{
+				title: 'План та таймлайн консалтингу (4 тижні)',
+				contentHtml: `
+					<p class="text-xs text-slate-300 mb-2">Головна мета консалтингу — не «стратегічний PDF-документ», а практичний, підтримуваний фундамент автоматизації для нативного Windows додатку з працюючим CI/CD.</p>
+					
+					<h4 class="font-bold text-cyan-300 text-xs mb-1">Покроковий 4-тижневий план впровадження:</h4>
+					<div class="space-y-1.5 text-[11px] text-slate-200">
+						<div class="p-2 rounded bg-[#08121f] border border-cyan-900/50">
+							<strong class="text-cyan-400">Тиждень 1: Технічний аудит та виявлення прогалин (Gaps)</strong>
+							<p class="text-slate-300">Аналіз наявних .NET, OCR, Electron та інсталяційних перевірок. Складання карти прогалин у регресійному тестуванні мерчантів, перевірці оновлень (app upgrades) та релізній валідації.</p>
+						</div>
+						<div class="p-2 rounded bg-[#08121f] border border-cyan-900/50">
+							<strong class="text-cyan-400">Тиждень 2: Архітектурне розмежування та мінімальний стек</strong>
+							<p class="text-slate-300">Розділення шарів тестування: Electron UI (Playwright/TS), фонові служби та оновлення (.NET/C#), візуальна інтеграція (Screenshots/OCR). Формування та узгодження ADR.</p>
+						</div>
+						<div class="p-2 rounded bg-[#08121f] border border-cyan-900/50">
+							<strong class="text-cyan-400">Тиждень 3: Працюючі Proof of Concept (PoC) на критичних флоу</strong>
+							<p class="text-slate-300">Реалізація 3-х ключових PoC: 1) Target Merchant App Flow; 2) Screenshot-based інтеграція з OCR; 3) Автоматизована перевірка Application Upgrade.</p>
+						</div>
+						<div class="p-2 rounded bg-[#08121f] border border-cyan-900/50">
+							<strong class="text-cyan-400">Тиждень 4: Windows CI-пайплайн, тестова матриця та Handover</strong>
+							<p class="text-slate-300">Розгортання Windows CI runner шаблонів, матриця дисплеїв (DPI, multi-monitor), walk-through для ліда команди та передача інструкцій штатному інженеру.</p>
+						</div>
+					</div>
+				`
+			},
+			{
+				title: 'Критерії успішного Handover (Що отримує бізнес)',
+				contentHtml: `
+					<h4 class="font-bold text-cyan-300 text-xs mb-1">Артефакти здачі проекту клієнту (Deliverables):</h4>
+					<ul class="list-disc list-inside space-y-1 text-[11px] text-slate-200 mb-2">
+						<li><strong>Runnable PoC Repository:</strong> репозиторій з чистою модульною архітектурою, готовими фікстурами та конфігураціями середовища.</li>
+						<li><strong>Green Windows CI Pipeline:</strong> стабільні шаблони пайплайнів (GitHub Actions / Azure DevOps / GitLab) без флакі-тестів та проблем із Session 0.</li>
+						<li><strong>Test Matrix & Priorities:</strong> чітка матриця покриття: що ганяється на PR (5 хв), а що йде в нічний повний регрес.</li>
+						<li><strong>Architecture Decision Records (ADR):</strong> обґрунтування вибору інструментів та відмови від застарілих рішень (наприклад, WinAppDriver).</li>
+						<li><strong>Runbooks & Troubleshooting:</strong> покрокова інструкція для Project Lead з локального запуску, аналізу звітів і підтримки фреймворку штатною командою.</li>
+					</ul>
+
+					<div class="p-2 rounded bg-cyan-950/40 border border-cyan-800/40 text-[11px] text-cyan-200">
+						<strong class="text-cyan-300">Формула успіху консультанта:</strong> «Не залишати абстрактних документів на 50 сторінок. Залишити працюючий інструмент, зелені білди і чіткий шлях, який штатний інженер може масштабувати з першого дня».
+					</div>
+				`
+			}
+		]
+	},
+
+	// ==========================================
+	// SLIDE C2: ELECTRON VS NATIVE WINDOWS
+	// ==========================================
+	{
+		id: 'c-electron-vs-native',
+		category: 'C',
+		menuTitle: 'Electron vs Native Windows',
+		menuSub: 'Демаркація меж Playwright vs нативні Windows інструменти',
+		layout: 'grid-2',
+		cards: [
+			{
+				title: 'Можливості та межі Playwright в Electron',
+				contentHtml: `
+					<p class="text-xs text-slate-300 mb-2">Playwright підтримує Electron з коробки через експериментальний модуль <code>_electron.launch({ args: ['main.js'] })</code>, керуючи Chromium рендерером через Chrome DevTools Protocol (CDP).</p>
+					
+					<h4 class="font-bold text-cyan-300 text-xs mb-1">Що Playwright робить ІДЕАЛЬНО (Швидко & Стабільно):</h4>
+					<ul class="list-disc list-inside space-y-0.5 text-[11px] text-slate-200 mb-2">
+						<li><strong>Веб-інтерфейс у вікні Electron:</strong> повний доступ до DOM-дерева, компонентів React/Vue, форм введення даних мерчанта.</li>
+						<li><strong>Швидкі локатори та auto-waiting:</strong> усуває необхідність у ручних очікуваннях.</li>
+						<li><strong>Мокування бекенду:</strong> підміна мережевих запитів через <code>page.route()</code> для ізольованого тестування UI.</li>
+						<li><strong>Емуляція IPC повідомлень:</strong> перехоплення та виклик методів <code>ipcRenderer</code> / <code>ipcMain</code> безпосередньо в рантаймі.</li>
+						<li><strong>Вбудовані артефакти:</strong> автоматичний запис Playwright Trace Viewer, скріншотів та відео.</li>
+					</ul>
+					<p class="text-[11px] text-cyan-400">Playwright покриває до 85-90% бізнес-сценаріїв мерчант-додатку з максимальною швидкістю виконання.</p>
+				`
+			},
+			{
+				title: 'Коли потрібні нативні Windows інструменти (.NET / FlaUI)',
+				contentHtml: `
+					<h4 class="font-bold text-rose-400 text-xs mb-1">Що Playwright ПРИНЦИПОВО НЕ МОЖЕ протестувати:</h4>
+					<div class="space-y-1 text-[11px] text-slate-200 mb-2">
+						<p><strong class="text-cyan-400">1. Системний трей (System Tray / Notification Area):</strong> меню правої кнопки миші біля годинника Windows, запуск додатку згорнутим у трей.</p>
+						<p><strong class="text-cyan-400">2. Нативні діалоги Win32 / Common Dialogs:</strong> системні вікна Open File / Save File, вікна вибору сертифікатів, запити UAC (User Account Control).</p>
+						<p><strong class="text-cyan-400">3. Windows Services & Background Updaters:</strong> фонові процеси оновлення, демони, зв'язок через Named Pipes та локальні сокети.</p>
+						<p><strong class="text-cyan-400">4. Інсталяція, оновлення та реєстр:</strong> запуск MSI/InnoSetup інсталяторів, перевірка автозапуску в реєстрі (HKLM/HKCU).</p>
+						<p><strong class="text-cyan-400">5. Взаємодія зі стороннім софтом:</strong> POS-термінали, касові драйвери або legacy Win32/WPF вікна без доступу до Chromium.</p>
+					</div>
+					<div class="p-2 rounded bg-[#091524] border border-cyan-800/50 text-[11px] text-slate-300">
+						<strong class="text-cyan-300">Правило демаркації:</strong> Все, що знаходиться всередині Chromium вікна Electron — тестується Playwright (TS). Все, що стосується ОС Windows, трею, інсталяторів та процесів — тестується через C# / .NET (FlaUI, System.Management, Registry).
+					</div>
+				`
+			}
+		]
+	},
+
+	// ==========================================
+	// SLIDE C3: MINIMAL SUITABLE TOOLSET
+	// ==========================================
+	{
+		id: 'c-toolset',
+		category: 'C',
+		menuTitle: 'Minimal Toolset Architecture',
+		menuSub: 'Мінімальний набір інструментів: Playwright TS + C#/.NET FlaUI',
+		layout: 'grid-2',
+		cards: [
+			{
+				title: 'Принцип «Smallest Suitable Toolset»',
+				contentHtml: `
+					<p class="text-xs text-slate-300 mb-2">Консультант повинен запобігти переускладненню (Over-engineering). Замість «зоопарку» з 4-5 різних бібліотек вибудовується двокомпонентне ядро:</p>
+					
+					<div class="space-y-2 text-[11px] text-slate-200 mb-2">
+						<div class="p-2.5 rounded bg-[#08121f] border border-cyan-800/60">
+							<strong class="text-cyan-300 text-xs block mb-1">Компонент 1: Playwright + TypeScript (Electron UI)</strong>
+							<ul class="list-disc list-inside space-y-0.5 text-slate-300">
+								<li>Покриває 85-90% регресійних тестів інтерфейсу мерчанта.</li>
+								<li>Найшвидший запуск, підтримка параллелізму, headless/headed режим.</li>
+								<li>Єдина екосистема з фронтенд-розробниками (TypeScript, NPM).</li>
+							</ul>
+						</div>
+
+						<div class="p-2.5 rounded bg-[#08121f] border border-cyan-800/60">
+							<strong class="text-cyan-300 text-xs block mb-1">Компонент 2: C# / .NET + FlaUI (Native Windows)</strong>
+							<ul class="list-disc list-inside space-y-0.5 text-slate-300">
+								<li>Покриває 10-15% системних перевірок (інсталятори, трей, оновлення, служби).</li>
+								<li>Прямий доступ до Windows UI Automation (UIA3) та Win32 API.</li>
+								<li>Нативна інтеграція з .NET стеком бекенду додатку.</li>
+							</ul>
+						</div>
+					</div>
+					<p class="text-[11px] text-cyan-400">Цей набір забезпечує 100% покриття без зайвих залежностей та конфліктів.</p>
+				`
+			},
+			{
+				title: 'Чому FlaUI замість WinAppDriver або Appium?',
+				contentHtml: `
+					<table class="w-full text-left border-collapse text-[11px] mb-2">
+						<thead>
+							<tr class="border-b border-cyan-800 text-cyan-300">
+								<th class="py-1">Критерій</th>
+								<th class="py-1">WinAppDriver</th>
+								<th class="py-1 text-emerald-400">FlaUI (.NET)</th>
+							</tr>
+						</thead>
+						<tbody class="text-slate-300 divide-y divide-slate-800">
+							<tr>
+								<td class="py-1 font-semibold">Стан проекту</td>
+								<td class="text-rose-400">Практично закинутий MS</td>
+								<td class="text-emerald-400">Активний Open-Source</td>
+							</tr>
+							<tr>
+								<td class="py-1 font-semibold">Windows 11 & DPI</td>
+								<td class="text-amber-400">Часті збої координат</td>
+								<td class="text-emerald-400">Повна нативна сумісність</td>
+							</tr>
+							<tr>
+								<td class="py-1 font-semibold">Архітектура</td>
+								<td>Вимагає фоновий exe-сервер</td>
+								<td class="text-emerald-400">Пряма C# DLL бібліотека</td>
+							</tr>
+							<tr>
+								<td class="py-1 font-semibold">Швидкодія</td>
+								<td>HTTP WebDriver overhead</td>
+								<td class="text-emerald-400">Миттєві прямі COM-виклики</td>
+							</tr>
+							<tr>
+								<td class="py-1 font-semibold">Події Windows</td>
+								<td>Обмежені</td>
+								<td class="text-emerald-400">UIA3 Automation Events</td>
+							</tr>
+						</tbody>
+					</table>
+
+					<div class="p-2 rounded bg-[#091524] border border-cyan-800/50 text-[11px] text-slate-300">
+						<strong class="text-cyan-300">Експертний висновок для ліда:</strong> WinAppDriver додає нестабільність і зайвий шар абстракції. FlaUI дозволяє писати надійні C# тести для Windows без сторонніх серверів.
+					</div>
+				`
+			}
+		]
+	},
+
+	// ==========================================
+	// SLIDE C4: SCREENSHOTS & OCR
+	// ==========================================
+	{
+		id: 'c-visual-ocr',
+		category: 'C',
+		menuTitle: 'Visual Regression & OCR',
+		menuSub: 'Тестування скріншотами, OCR та комп\'ютерний зір',
+		layout: 'grid-2',
+		cards: [
+			{
+				title: 'Скріншотні перевірки та OCR у закритих середовищах',
+				contentHtml: `
+					<p class="text-xs text-slate-300 mb-2">У додатках для мерчантів часто виникають сценарії, де Accessibility дерево недоступне: фіскальні чеки, графічні канваси, POS-екрани або сторонні плагіни.</p>
+					
+					<h4 class="font-bold text-cyan-300 text-xs mb-1">Методи тестування:</h4>
+					<div class="space-y-1.5 text-[11px] text-slate-200">
+						<div class="p-2 rounded bg-[#08121f] border border-cyan-900/50">
+							<strong class="text-cyan-400">1. Screenshot Comparison (Playwright):</strong>
+							<p class="text-slate-300"><code>expect(page).toHaveScreenshot('receipt.png', { maxDiffPixelRatio: 0.02 })</code>. Порівняння рендерингу з еталоном піксель-у-піксель.</p>
+						</div>
+						<div class="p-2 rounded bg-[#08121f] border border-cyan-900/50">
+							<strong class="text-cyan-400">2. Optical Character Recognition (OCR — Tesseract):</strong>
+							<p class="text-slate-300">Вичитування динамічного тексту (сум платежів, номерів замовлень, статусів) з графічних областей через <code>Tesseract.js</code> або <code>Tesseract .NET</code>.</p>
+						</div>
+						<div class="p-2 rounded bg-[#08121f] border border-cyan-900/50">
+							<strong class="text-cyan-400">3. Template Matching (OpenCV / Emgu CV):</strong>
+							<p class="text-slate-300">Знаходження іконок статусу, логотипів банків чи кнопок на екрані за зразком зображення, коли немає локаторів.</p>
+						</div>
+					</div>
+				`
+			},
+			{
+				title: 'Підводні камені візуальних тестів та методи боротьби',
+				contentHtml: `
+					<h4 class="font-bold text-rose-400 text-xs mb-1">Головні причини хибних спрацьовувань (Flakiness):</h4>
+					<ul class="list-disc list-inside space-y-1 text-[11px] text-slate-200 mb-2">
+						<li><strong>Динамічні дані:</strong> дати, час, секунди, номери сесій, миготливий текстовий курсор.</li>
+						<li><strong>Антиаліасинг та субпіксельний рендеринг:</strong> різниця рендерингу шрифтів на різних відеокартах або версіях Windows (ClearType).</li>
+						<li><strong>DPI масштабування:</strong> запуск на 100% vs 125% дає повністю різні скріншоти.</li>
+					</ul>
+
+					<h4 class="font-bold text-cyan-300 text-xs mb-1">Інженерні рішення консультанта:</h4>
+					<div class="space-y-1 text-[11px] text-slate-300">
+						<p>• <strong>Masking:</strong> маскування динамічних зон: <code>toHaveScreenshot({ mask: [page.locator('.timestamp')] })</code>.</p>
+						<p>• <strong>Freeze Timers:</strong> фіксація системного часу через <code>page.clock.setFixedTime()</code>.</p>
+						<p>• <strong>Disable CSS Animations:</strong> автоматичне відключення CSS перевантажень та переходів перед знімком.</p>
+						<p>• <strong>CI Strict Resolution:</strong> фіксований віртуальний екран 1920x1080x32 у Windows CI.</p>
+					</div>
+				`
+			}
+		]
+	},
+
+	// ==========================================
+	// SLIDE C5: UPGRADES, INSTALLERS & SERVICES
+	// ==========================================
+	{
+		id: 'c-upgrades-installers',
+		category: 'C',
+		menuTitle: 'Upgrades, Installers & Services',
+		menuSub: 'Тестування інсталяторів (MSI/NSIS/Squirrel), апдейтів та фонових служб',
+		layout: 'grid-2',
+		cards: [
+			{
+				title: 'Тестування інсталяторів та розгортання',
+				contentHtml: `
+					<p class="text-xs text-slate-300 mb-2">Інсталятор — це перша точка контакту мерчанта з додатком. Помилка інсталяції блокує 100% користувачів.</p>
+					
+					<h4 class="font-bold text-cyan-300 text-xs mb-1">Специфіка автоматизації інсталяторів:</h4>
+					<ul class="list-disc list-inside space-y-0.5 text-[11px] text-slate-200 mb-2">
+						<li><strong>Silent / Unattended Install:</strong> тестування ключів тихого встановлення (<code>/S</code>, <code>/qn</code>, <code>/VERYSILENT</code>) з перевіркою Exit Code <code>0</code>.</li>
+						<li><strong>Перевірка структури файлової системи:</strong> цілісність бінарників у <code>%LocalAppData%\\Programs</code> або <code>%ProgramFiles%</code>.</li>
+						<li><strong>Валідація цифрового підпису:</strong> перевірка сертифіката через <code>signtool.exe verify /pa</code> для запобігання попередженням Windows Defender / SmartScreen.</li>
+						<li><strong>Перевірка системного реєстру:</strong> коректність ключів деінсталяції у <code>HKLM\\Software\\Microsoft\\Windows\\CurrentVersion\\Uninstall</code>.</li>
+						<li><strong>Асоціації протоколів (Deep Links):</strong> реєстрація кастомних протоколів (наприклад, <code>merchantapp://pay</code>).</li>
+					</ul>
+				`
+			},
+			{
+				title: 'Життєвий цикл оновлень (App Upgrades) та фонові служби',
+				contentHtml: `
+					<h4 class="font-bold text-cyan-300 text-xs mb-1">Тестування оновлення версії (N → N+1):</h4>
+					<div class="space-y-1 text-[11px] text-slate-200 mb-2">
+						<p><strong class="text-cyan-400">1. Збереження сесії та даних (State Persistence):</strong> встановлення версії N → авторизація мерчанта, збереження локальної бази (SQLite / IndexedDB) → запуск автооновлення на N+1 → перевірка збереження сесії без повторного логіну.</p>
+						<p><strong class="text-cyan-400">2. Блокування файлів (File Locks):</strong> оновлення додатку у фоні, поки мерчант працює; валідація механізму Windows Restart Manager.</p>
+						<p><strong class="text-cyan-400">3. Rollback (Відкат):</strong> аварійне завершення оновлення не повинно призводити до неробочого стану програми.</p>
+					</div>
+
+					<h4 class="font-bold text-cyan-300 text-xs mb-1">Тестування Windows Services:</h4>
+					<p class="text-[11px] text-slate-300">Перевірка статусу через PowerShell (<code>Get-Service</code>) або C# <code>ServiceController</code>: запуск служби, авторестарт при збоях, робота під LocalSystem обліковим записом без витоків пам'яті.</p>
+				`
+			}
+		]
+	},
+
+	// ==========================================
+	// SLIDE C6: MULTI-MONITOR & DPI
+	// ==========================================
+	{
+		id: 'c-matrix-monitors',
+		category: 'C',
+		menuTitle: 'Multi-Monitor & DPI Matrix',
+		menuSub: 'Тестова матриця: Windows 10/11, Per-Monitor DPI та дисплеї',
+		layout: 'grid-2',
+		cards: [
+			{
+				title: 'Виклики Per-Monitor DPI та Multi-Display у Windows',
+				contentHtml: `
+					<p class="text-xs text-slate-300 mb-2">Мерчанти часто використовують 2 монітори: основний екран каси (1080p @ 100%) та клієнтський дисплей (Touchscreen / 4K @ 150%). Це найчастіше джерело UI-багів.</p>
+					
+					<h4 class="font-bold text-cyan-300 text-xs mb-1">Критичні сценарії для автоматизації:</h4>
+					<ul class="list-disc list-inside space-y-0.5 text-[11px] text-slate-200 mb-2">
+						<li><strong>Переміщення вікна між моніторами з різним DPI:</strong> перевірка, чи не розмивається інтерфейс Electron (DPI Awareness: Per-Monitor V2) та чи не спотворюються модальні вікна.</li>
+						<li><strong>Віртуальні координати екрана:</strong> лівий або верхній додатковий монітор має від'ємні координати <code>X/Y</code> у Windows API (Virtual Screen Bounds).</li>
+						<li><strong>Мінімальні роздільні здатності (1366x768, 1280x800):</strong> валідація появи коректних скролів та відсутності обрізання кнопок оплати.</li>
+						<li><strong>Зміна орієнтації (Portrait vs Landscape):</strong> актуально для планшетних POS на Windows 11.</li>
+					</ul>
+				`
+			},
+			{
+				title: 'CI Virtual Machines vs Dedicated Test Machines',
+				contentHtml: `
+					<div class="space-y-2 text-[11px] text-slate-200">
+						<div class="p-2.5 rounded bg-[#08121f] border border-cyan-900/50">
+							<strong class="text-cyan-300 text-xs block mb-0.5">CI Virtual Machines (Хмарні/Ефемерні ранери):</strong>
+							<p class="text-slate-300 mb-1">• Призначення: 90% щоденних тестів (PR checks, Electron UI, API інтеграція, базові інсталятори).</p>
+							<p class="text-slate-300">• Конфігурація: фіксований віртуальний дисплей 1920x1080 @ 100% DPI. Забезпечує детермінованість і швидкість.</p>
+						</div>
+
+						<div class="p-2.5 rounded bg-[#08121f] border border-cyan-900/50">
+							<strong class="text-cyan-300 text-xs block mb-0.5">Dedicated Test Machines (Виділені фізичні стенди):</strong>
+							<p class="text-slate-300 mb-1">• Призначення: перевірка складних нативних сценаріїв, які неможливо заемулювати у віртуалці.</p>
+							<p class="text-slate-300">• Multi-Monitor стенди з різним фізичним DPI (100% + 150%).</p>
+							<p class="text-slate-300">• Фізичне торгове залізо: POS-термінали, сканери, чекові принтери через COM/USB.</p>
+							<p class="text-slate-300">• Валідація апаратного графічного прискорення (GPU Acceleration).</p>
+						</div>
+					</div>
+				`
+			}
+		]
+	},
+
+	// ==========================================
+	// SLIDE C7: WINDOWS CI RUNNERS
+	// ==========================================
+	{
+		id: 'c-windows-ci',
+		category: 'C',
+		menuTitle: 'CI/CD on Windows Runners',
+		menuSub: 'Вирішення проблеми Session 0, запуск тестів, фікстури та логи',
+		layout: 'grid-2',
+		cards: [
+			{
+				title: 'Головна пастка Windows CI: Session 0 Isolation',
+				contentHtml: `
+					<p class="text-xs text-slate-300 mb-2">Найпоширеніша проблема, з якою стикаються команди на Windows CI — чорні скріншоти або раптове падіння GUI-тестів.</p>
+					
+					<h4 class="font-bold text-rose-400 text-xs mb-1">Причина — Ізоляція Сесії 0:</h4>
+					<p class="text-[11px] text-slate-300 mb-2">Якщо агент CI (GitHub Runner / GitLab Runner / Jenkins Agent) встановлено як системну службу (Windows Service), він запускається в <strong>Session 0</strong>, де за замовчуванням <em>заблоковано графічний дисплей</em> (No Interactive Desktop).</p>
+
+					<h4 class="font-bold text-cyan-300 text-xs mb-1">Інженерне рішення консультанта:</h4>
+					<ul class="list-disc list-inside space-y-1 text-[11px] text-slate-200">
+						<li><strong>Interactive User Session:</strong> налаштування агента для запуску під реальним користувачем з автоматичним входом у систему (Windows AutoLogon).</li>
+						<li><strong>Віртуальний дисплей (Virtual Display Driver):</strong> встановлення віртуального графічного драйвера для headless Windows VM.</li>
+						<li><strong>PowerShell initialization:</strong> автоматичне виставлення роздільної здатності дисплея перед запуском тестів (<code>Set-DisplayResolution -Width 1920 -Height 1080</code>).</li>
+					</ul>
+				`
+			},
+			{
+				title: 'Фікстури, очищення та діагностичні артефакти',
+				contentHtml: `
+					<h4 class="font-bold text-cyan-300 text-xs mb-1">Обов'язкові механізми у фреймворку:</h4>
+					<div class="space-y-1 text-[11px] text-slate-200 mb-2">
+						<p><strong class="text-cyan-400">1. Надійний Teardown (Вбивство зомбі-процесів):</strong> десктопні тести часто залишають фонові процеси. У фікстурах після кожного тесту додається гарантована зачистка: <code>taskkill /F /T /IM electron.exe</code> та очищення тимчасових lock-файлів.</p>
+						<p><strong class="text-cyan-400">2. Ізоляція тестових профілів:</strong> кожен прогін використовує чисту тимчасову директорію даних: <code>--user-data-dir=%TEMP%\\test-profile-xxx</code>.</p>
+						<p><strong class="text-cyan-400">3. Збір діагностики при збоях (Crash Diagnostics):</strong></p>
+						<ul class="list-disc list-inside pl-2 space-y-0.5 text-slate-300">
+							<li>Playwright Traces (.zip) з таймлайном дій.</li>
+							<li>Відеозапис вікна програми.</li>
+							<li>Дамп Windows Event Viewer (Event ID 1000/1026: Application Error / .NET Runtime Error) для виявлення крашів.</li>
+						</ul>
+					</div>
+				`
+			}
+		]
+	},
+
+	// ==========================================
+	// SLIDE C8: ARCHITECTURE & HANDOVER
+	// ==========================================
+	{
+		id: 'c-handover-adr',
+		category: 'C',
+		menuTitle: 'Architecture & Handover',
+		menuSub: 'Структура репозиторію, ADR (Architecture Decision Records) та передача',
+		layout: 'grid-2',
+		cards: [
+			{
+				title: 'Структура репозиторію тестового фундаменту',
+				contentHtml: `
+					<p class="text-xs text-slate-300 mb-1">Консультант створює єдину зрозумілу структуру, яку штатний інженер може миттєво підхопити:</p>
+					
+					<pre class="bg-black/70 p-2 rounded text-[10px] font-mono text-cyan-300 mb-2 overflow-x-auto">
+/tests-automation
+├── /src-electron-playwright     # Playwright + TS (UI тести)
+│   ├── /fixtures               # Electron launch, Auth, IPC mock
+│   ├── /pages                  # Page Object Model класи
+│   └── /specs                  # Merchant regression, checkout
+├── /src-native-windows-csharp   # C# .NET + FlaUI (Системні тести)
+│   ├── /Installers             # Silent install, registry, signtool
+│   ├── /Upgrades               # Version migration & state tests
+│   └── /SystemTray             # Tray context menu & services
+├── /shared-fixtures             # Тестові дані, сертифікати, еталонні фото
+├── /ci-templates                # GitHub Actions / Azure Pipelines YAML
+└── /docs-adr                    # Architecture Decision Records
+					</pre>
+					<p class="text-[11px] text-cyan-400">Така структура розділяє швидкі UI-перевірки та глибокі системні тести Windows.</p>
+				`
+			},
+			{
+				title: 'Architecture Decision Records (ADR) для Project Lead',
+				contentHtml: `
+					<h4 class="font-bold text-cyan-300 text-xs mb-1">Ключові ADR, які формує консультант:</h4>
+					<div class="space-y-1.5 text-[11px] text-slate-200 mb-2">
+						<div class="p-1.5 rounded bg-[#08121f] border border-cyan-900/50">
+							<strong class="text-cyan-400">ADR-001: Playwright для Electron UI</strong>
+							<p class="text-slate-300">Обґрунтування відмови від застарілих Spectron/Puppeteer на користь Playwright (вбудована підтримка CDP, трасування, швидкість).</p>
+						</div>
+						<div class="p-1.5 rounded bg-[#08121f] border border-cyan-900/50">
+							<strong class="text-cyan-400">ADR-002: FlaUI для нативного тестування Windows</strong>
+							<p class="text-slate-300">Обґрунтування вибору FlaUI над WinAppDriver (прямі UIA3 COM-виклики без необхідності окремого стороннього сервера).</p>
+						</div>
+						<div class="p-1.5 rounded bg-[#08121f] border border-cyan-900/50">
+							<strong class="text-cyan-400">ADR-003: Стратегія мокування бекенду в CI</strong>
+							<p class="text-slate-300">Відокремлення UI регресу від нестабільних тестових середовищ мерчант-API через мок-сервер.</p>
+						</div>
+					</div>
+					<p class="text-[11px] text-slate-300 font-semibold">Результат Handover: Lead отримує впевненість у контролі якості релізів, а команда — чіткий шаблон для розширення.</p>
+				`
+			}
+		]
+	},
+
+	// ==========================================
+	// SLIDE C9: INTERVIEW Q&A
+	// ==========================================
+	{
+		id: 'c-interview-qa',
+		category: 'C',
+		menuTitle: 'Senior Consultant Interview Q&A',
+		menuSub: 'Топ-питань на співбесіді для Senior Desktop AQA Consultant',
+		layout: 'grid-2',
+		cards: [
+			{
+				title: 'Технічні запитання (Electron, Windows & Інструменти)',
+				contentHtml: `
+					<div class="space-y-2 text-[11px] text-slate-200">
+						<div>
+							<strong class="text-cyan-300 block">Q1: Як Playwright запускає та контролює Electron?</strong>
+							<span class="text-slate-300">Playwright використовує модуль <code>_electron.launch()</code>, підключаючись до додатка через Chrome DevTools Protocol (CDP). Він отримує об'єкт головного процесу та чекає на перше вікно через <code>firstWindow()</code>, відкриваючи повний доступ до DOM і контексту рендерера.</span>
+						</div>
+						<div>
+							<strong class="text-cyan-300 block">Q2: Як протестувати взаємодію з системним треєм?</strong>
+							<span class="text-slate-300">Трей є нативним елементом оболонки Windows (Shell_TrayWnd). Для його перевірки використовуємо FlaUI (C#), знаходимо область сповіщень через UIA3 та викликаємо контекстні меню правою кнопкою миші.</span>
+						</div>
+						<div>
+							<strong class="text-cyan-300 block">Q3: Як автоматизувати перевірку Application Upgrade?</strong>
+							<span class="text-slate-300">Через пайплайн у 3 кроки: 1) Тиха інсталяція старої версії N + створення мерчант-сесії; 2) Запуск інсталятора версії N+1; 3) Запуск оновленого додатку та перевірка, що сесія збережена, а міграція БД успішна.</span>
+						</div>
+					</div>
+				`
+			},
+			{
+				title: 'Консалтингові та інфраструктурні запитання',
+				contentHtml: `
+					<div class="space-y-2 text-[11px] text-slate-200">
+						<div>
+							<strong class="text-cyan-300 block">Q4: Чому WinAppDriver більше не рекомендується?</strong>
+							<span class="text-slate-300">Проект фактично заморожений Microsoft, погано працює на Windows 11 та multi-DPI, вимагає запуску окремого сервера. FlaUI є сучасною бібліотекою на C#, що працює безпосередньо з UIA3 без зайвих прошарків.</span>
+						</div>
+						<div>
+							<strong class="text-cyan-300 block">Q5: Як вирішити проблему чорних екранів на Windows CI?</strong>
+							<span class="text-slate-300">Не запускати CI-агент як Windows Service (Session 0). Запустити агента в інтерактивній сесії користувача з автологіном (AutoLogon) та віртуальним дисплеєм 1920x1080.</span>
+						</div>
+						<div>
+							<strong class="text-cyan-300 block">Q6: Яка стратегія за 3-4 тижні консалтингу?</strong>
+							<span class="text-slate-300">Аудит прогалин (тиждень 1) → Архітектура та вибір стеку (тиждень 2) → 3 робочі PoC (тиждень 3) → Windows CI пайплайн, ADR та передача команді (тиждень 4). Залишити працюючий інструмент, а не просто теорію.</span>
+						</div>
+					</div>
 				`
 			}
 		]

@@ -20,7 +20,7 @@
 		Sparkles
 	} from '@lucide/svelte';
 
-	let activeCategory = $state<'M' | 'A'>('M');
+	let activeCategory = $state<'M' | 'A' | 'C'>('M');
 	let activeSlideId = $state<string>('m-basics');
 	let searchQuery = $state('');
 	let isMobileSidebarOpen = $state(false);
@@ -139,7 +139,7 @@
 		});
 	});
 
-	function handleCategoryChange(cat: 'M' | 'A') {
+	function handleCategoryChange(cat: 'M' | 'A' | 'C') {
 		activeCategory = cat;
 		const slides = slidesData.filter((s) => s.category === cat);
 		if (slides.length > 0) {
@@ -281,9 +281,11 @@
 						class="px-2 py-0.5 rounded text-[10px] font-mono font-bold uppercase tracking-wider {activeCategory ===
 						'M'
 							? 'bg-cyan-950 text-cyan-300 border border-cyan-700/60'
-							: 'bg-purple-950 text-purple-300 border border-purple-700/60'}"
+							: activeCategory === 'A'
+							? 'bg-purple-950 text-purple-300 border border-purple-700/60'
+							: 'bg-emerald-950 text-emerald-300 border border-emerald-700/60'}"
 					>
-						{activeCategory === 'M' ? 'Manual QA' : 'Automation QA'}
+						{activeCategory === 'M' ? 'Manual QA' : activeCategory === 'A' ? 'Automation QA' : 'Senior AQA Consultant'}
 					</span>
 					<span class="font-bold text-xs text-white truncate hidden sm:inline">
 						{currentSlide.menuTitle}
