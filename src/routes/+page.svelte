@@ -3,6 +3,8 @@
 	import { slidesData, type Slide } from '#lib/data/slidesData';
 	import Sidebar from '#lib/components/Sidebar.svelte';
 	import SlideView from '#lib/components/SlideView.svelte';
+	import PrintBooklet from '#lib/components/PrintBooklet.svelte';
+	import { slideToMarkdown } from '#lib/utils/markdownExporter';
 	import {
 		Search,
 		X,
@@ -11,6 +13,10 @@
 		ChevronRight,
 		Maximize2,
 		Minimize2,
+		Copy,
+		Check,
+		Printer,
+		Type,
 		Sparkles
 	} from '@lucide/svelte';
 
@@ -18,8 +24,86 @@
 	let activeSlideId = $state<string>('m-basics');
 	let searchQuery = $state('');
 	let isMobileSidebarOpen = $state(false);
+	let isSidebarCollapsed = $state(false);
 	let isFullscreen = $state(false);
 	let showSearchResults = $state(false);
+	let fontScale = $state(100);
+	let isCopied = $state(false);
+
+	// Load user preferences from localStorage
+	onMount(() => {
+		try {
+			const savedCollapsed = localStorage.getItem('qa_sidebar_collapsed');
+			if (savedCollapsed !== null) {
+				isSidebarCollapsed = savedCollapsed === 'true';
+			}
+			const savedScale = localStorage.getItem('qa_font_scale');
+			if (savedScale) {
+				const num = parseInt(savedScale, 10);
+				if (!isNaN(num) && num >= 70 && num <= 150) {
+					fontScale = num;
+				}
+			}
+		} catch (e) {
+			console.error('Failed to load preferences', e);
+		}
+
+		window.addEventListener('keydown', handleKeydown);
+		const handleFsChange = () => {
+			isFullscreen = !!document.fullscreenElement;
+		};
+		document.addEventListener('fullscreenchange', handleFsChange);
+
+		return () => {
+			window.removeEventListener('keydown', handleKeydown);
+			document.removeEventListener('fullscreenchange', handleFsChange);
+		};
+	});
+
+	function toggleSidebarCollapse() {
+		isSidebarCollapsed = !isSidebarCollapsed;
+		try {
+			localStorage.setItem('qa_sidebar_collapsed', String(isSidebarCollapsed));
+		} catch (e) {
+			console.error(e);
+		}
+	}
+
+	function changeFontScale(delta: number) {
+		const newScale = Math.min(140, Math.max(75, fontScale + delta));
+		fontScale = newScale;
+		try {
+			localStorage.setItem('qa_font_scale', String(fontScale));
+		} catch (e) {
+			console.error(e);
+		}
+	}
+
+	function resetFontScale() {
+		fontScale = 100;
+		try {
+			localStorage.setItem('qa_font_scale', '100');
+		} catch (e) {
+			console.error(e);
+		}
+	}
+
+	async function copyCurrentSlideMarkdown() {
+		try {
+			const md = slideToMarkdown(currentSlide);
+			await navigator.clipboard.writeText(md);
+			isCopied = true;
+			setTimeout(() => {
+				isCopied = false;
+			}, 2000);
+		} catch (e) {
+			console.error('Failed to copy markdown', e);
+		}
+	}
+
+	function triggerPrint() {
+		window.print();
+	}
 
 	// Slides in current category
 	let categorySlides = $derived.by(() => {
@@ -68,7 +152,6 @@
 		if (idx > 0) {
 			activeSlideId = categorySlides[idx - 1].id;
 		} else if (idx === 0) {
-			// Loop to last slide
 			activeSlideId = categorySlides[categorySlides.length - 1].id;
 		}
 	}
@@ -78,7 +161,6 @@
 		if (idx >= 0 && idx < categorySlides.length - 1) {
 			activeSlideId = categorySlides[idx + 1].id;
 		} else if (idx === categorySlides.length - 1) {
-			// Loop to first slide
 			activeSlideId = categorySlides[0].id;
 		}
 	}
@@ -105,15 +187,27 @@
 		}
 	}
 
-	// Keyboard arrow navigation
+	// Keyboard arrow and shortcut navigation
 	function handleKeydown(e: KeyboardEvent) {
-		// Ignore if user is typing in the search bar
 		const target = e.target as HTMLElement;
 		if (target.tagName === 'INPUT' || target.tagName === 'TEXTAREA') {
 			if (e.key === 'Escape') {
 				searchQuery = '';
+				showSearchResults = false;
 				(target as HTMLInputElement).blur();
 			}
+			return;
+		}
+
+		if (e.ctrlKey && e.key.toLowerCase() === 'b') {
+			e.preventDefault();
+			toggleSidebarCollapse();
+			return;
+		}
+
+		if (e.key === '[' || e.key === ']') {
+			e.preventDefault();
+			toggleSidebarCollapse();
 			return;
 		}
 
@@ -127,26 +221,14 @@
 			toggleFullscreen();
 		}
 	}
-
-	onMount(() => {
-		window.addEventListener('keydown', handleKeydown);
-		const handleFsChange = () => {
-			isFullscreen = !!document.fullscreenElement;
-		};
-		document.addEventListener('fullscreenchange', handleFsChange);
-
-		return () => {
-			window.removeEventListener('keydown', handleKeydown);
-			document.removeEventListener('fullscreenchange', handleFsChange);
-		};
-	});
 </script>
 
 <svelte:head>
 	<title>{currentSlide.menuTitle} | QA Interview Presentation</title>
 </svelte:head>
 
-<div class="h-screen w-screen bg-black text-slate-100 flex overflow-hidden font-sans select-none">
+<!-- Interactive App Container (Hidden during Print) -->
+<div class="no-print h-screen w-screen bg-black text-slate-100 flex overflow-hidden font-sans select-none">
 	<!-- Left Navigation Sidebar -->
 	<Sidebar
 		{activeCategory}
@@ -155,16 +237,23 @@
 		onSelectSlide={selectSlide}
 		isMobileOpen={isMobileSidebarOpen}
 		onCloseMobile={() => (isMobileSidebarOpen = false)}
+		isCollapsed={isSidebarCollapsed}
+		onToggleCollapse={toggleSidebarCollapse}
 	/>
 
 	<!-- Main Presentation Slide Area -->
-	<div class="lg:pl-72 md:lg:pl-80 flex-1 flex flex-col h-full overflow-hidden bg-black">
+	<div
+		class="{isSidebarCollapsed
+			? 'pl-0'
+			: 'lg:pl-72 md:lg:pl-80'} flex-1 flex flex-col h-full overflow-hidden bg-black transition-all duration-300"
+	>
 		<!-- Compact Top Bar -->
 		<header
-			class="h-11 border-b border-cyan-950/80 bg-black/95 px-3 lg:px-4 flex items-center justify-between gap-2 shrink-0 z-20"
+			class="h-11 border-b border-cyan-950/80 bg-black/95 px-2.5 lg:px-4 flex items-center justify-between gap-2 shrink-0 z-20"
 		>
-			<!-- Left: Mobile Menu & Current Topic Title -->
+			<!-- Left: Mobile Menu / Collapse Re-open & Topic Title -->
 			<div class="flex items-center gap-2 overflow-hidden">
+				<!-- Mobile Menu Button -->
 				<button
 					type="button"
 					onclick={() => (isMobileSidebarOpen = true)}
@@ -174,7 +263,20 @@
 					<Menu class="w-4 h-4" />
 				</button>
 
-				<div class="flex items-center gap-2 truncate">
+				<!-- Desktop Re-open Sidebar Button when Collapsed -->
+				{#if isSidebarCollapsed}
+					<button
+						type="button"
+						onclick={toggleSidebarCollapse}
+						class="hidden lg:flex items-center gap-1 px-2 py-1 rounded-md bg-[#09111c] border border-cyan-800 text-cyan-300 hover:text-white hover:border-cyan-400 cursor-pointer text-xs font-mono transition-all"
+						title="Розгорнути меню (Ctrl+B або [)"
+					>
+						<ChevronRight class="w-4 h-4" />
+						<span class="text-[11px] font-bold">Меню</span>
+					</button>
+				{/if}
+
+				<div class="flex items-center gap-1.5 truncate">
 					<span
 						class="px-2 py-0.5 rounded text-[10px] font-mono font-bold uppercase tracking-wider {activeCategory ===
 						'M'
@@ -190,7 +292,7 @@
 			</div>
 
 			<!-- Center: Search Input Bar -->
-			<div class="flex-1 max-w-md mx-2 relative">
+			<div class="flex-1 max-w-sm lg:max-w-md mx-1 lg:mx-2 relative">
 				<div class="relative flex items-center">
 					<Search class="w-3.5 h-3.5 absolute left-2.5 text-cyan-400 pointer-events-none" />
 					<input
@@ -262,13 +364,70 @@
 				{/if}
 			</div>
 
-			<!-- Right: Slide Navigation Controls & Fullscreen -->
+			<!-- Right: Controls & Actions (Font Size, Export, Navigation, Fullscreen) -->
 			<div class="flex items-center gap-1.5 shrink-0">
+				<!-- Font Scaling Switcher (A- / 100% / A+) -->
+				<div class="hidden sm:flex items-center border border-cyan-950 bg-[#070d18] rounded-md overflow-hidden text-[10px] font-mono">
+					<button
+						type="button"
+						onclick={() => changeFontScale(-10)}
+						class="px-1.5 py-1 text-slate-300 hover:text-cyan-300 hover:bg-cyan-950/60 cursor-pointer transition-colors"
+						title="Зменшити шрифт"
+					>
+						A-
+					</button>
+					<button
+						type="button"
+						onclick={resetFontScale}
+						class="px-1.5 py-1 text-cyan-400 hover:bg-cyan-950/60 cursor-pointer transition-colors font-bold border-x border-cyan-950"
+						title="Скинути масштаб шрифту (100%)"
+					>
+						{fontScale}%
+					</button>
+					<button
+						type="button"
+						onclick={() => changeFontScale(10)}
+						class="px-1.5 py-1 text-slate-300 hover:text-cyan-300 hover:bg-cyan-950/60 cursor-pointer transition-colors"
+						title="Збільшити шрифт"
+					>
+						A+
+					</button>
+				</div>
+
+				<!-- Copy to Markdown Button -->
+				<button
+					type="button"
+					onclick={copyCurrentSlideMarkdown}
+					class="p-1 rounded-md bg-[#09111c] border border-cyan-900 hover:border-cyan-600 cursor-pointer transition-all flex items-center gap-1 text-[11px] font-mono {isCopied
+						? 'text-green-400 border-green-500 bg-green-950/40'
+						: 'text-slate-300 hover:text-cyan-300'}"
+					title="Скопіювати цей слайд у форматі Markdown"
+				>
+					{#if isCopied}
+						<Check class="w-3.5 h-3.5 text-green-400" />
+						<span class="hidden md:inline text-[10px]">Скопійовано!</span>
+					{:else}
+						<Copy class="w-3.5 h-3.5" />
+						<span class="hidden md:inline text-[10px]">MD</span>
+					{/if}
+				</button>
+
+				<!-- Print / PDF Booklet Button -->
+				<button
+					type="button"
+					onclick={triggerPrint}
+					class="p-1 rounded-md bg-[#09111c] border border-cyan-900 text-slate-300 hover:text-cyan-300 hover:border-cyan-600 cursor-pointer transition-all flex items-center gap-1 text-[11px] font-mono"
+					title="Друк / Зберегти всі 16 слайдів у PDF"
+				>
+					<Printer class="w-3.5 h-3.5" />
+					<span class="hidden md:inline text-[10px]">PDF</span>
+				</button>
+
 				<!-- Prev Button -->
 				<button
 					type="button"
 					onclick={goToPrevSlide}
-					class="p-1 rounded-md bg-[#09111c] border border-cyan-900 text-slate-300 hover:text-cyan-300 hover:border-cyan-600 transition-colors cursor-pointer"
+					class="p-1 rounded-md bg-[#09111c] border border-cyan-900 text-slate-300 hover:text-cyan-300 hover:border-cyan-600 transition-colors cursor-pointer ml-1"
 					title="Попередній слайд (←)"
 				>
 					<ChevronLeft class="w-4 h-4" />
@@ -295,7 +454,7 @@
 				<button
 					type="button"
 					onclick={toggleFullscreen}
-					class="hidden sm:inline-flex p-1 rounded-md bg-[#09111c] border border-cyan-900 text-slate-300 hover:text-cyan-300 hover:border-cyan-600 transition-colors ml-1 cursor-pointer"
+					class="hidden sm:inline-flex p-1 rounded-md bg-[#09111c] border border-cyan-900 text-slate-300 hover:text-cyan-300 hover:border-cyan-600 transition-colors cursor-pointer"
 					title="Повноекранний режим (F)"
 				>
 					{#if isFullscreen}
@@ -309,7 +468,10 @@
 
 		<!-- Main Active Slide Content -->
 		<main class="flex-1 overflow-hidden p-2 lg:p-3 bg-black flex flex-col justify-center">
-			<SlideView slide={currentSlide} {searchQuery} />
+			<SlideView slide={currentSlide} {searchQuery} {fontScale} />
 		</main>
 	</div>
 </div>
+
+<!-- Dedicated Print Booklet View (Rendered only on print / Save to PDF) -->
+<PrintBooklet slides={slidesData} />

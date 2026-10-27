@@ -1,4 +1,6 @@
 <script lang="ts">
+	import { ChevronLeft } from '@lucide/svelte';
+
 	interface Props {
 		activeCategory: 'M' | 'A';
 		onCategoryChange: (cat: 'M' | 'A') => void;
@@ -6,6 +8,8 @@
 		onSelectSlide: (slideId: string) => void;
 		isMobileOpen: boolean;
 		onCloseMobile: () => void;
+		isCollapsed: boolean;
+		onToggleCollapse: () => void;
 	}
 
 	let {
@@ -14,7 +18,9 @@
 		activeSlideId,
 		onSelectSlide,
 		isMobileOpen,
-		onCloseMobile
+		onCloseMobile,
+		isCollapsed,
+		onToggleCollapse
 	}: Props = $props();
 
 	function handleSlideClick(id: string) {
@@ -36,12 +42,24 @@
 
 <!-- Sidebar Container -->
 <aside
-	class="fixed top-0 bottom-0 left-0 z-50 w-72 md:w-80 bg-black border-r border-cyan-950 flex flex-col justify-between transition-transform duration-300 ease-in-out lg:translate-x-0 {isMobileOpen
+	class="fixed top-0 bottom-0 left-0 z-50 w-72 md:w-80 bg-black border-r border-cyan-950 flex flex-col justify-between transition-transform duration-300 ease-in-out {isCollapsed
+		? 'lg:-translate-x-full'
+		: 'lg:translate-x-0'} {isMobileOpen
 		? 'translate-x-0'
 		: '-translate-x-full'}"
 >
 	<!-- Top M / A Mode Switcher Bar -->
-	<div class="p-4 border-b border-cyan-950/60 bg-black">
+	<div class="p-4 border-b border-cyan-950/60 bg-black relative">
+		<!-- Collapse Button for Desktop -->
+		<button
+			type="button"
+			onclick={onToggleCollapse}
+			class="hidden lg:flex absolute right-2.5 top-1/2 -translate-y-1/2 p-1.5 rounded-lg border border-cyan-950/80 bg-[#060c18] text-slate-400 hover:text-cyan-300 hover:border-cyan-500/80 cursor-pointer transition-colors"
+			title="Згорнути меню (Ctrl+B або [)"
+		>
+			<ChevronLeft class="w-4 h-4" />
+		</button>
+
 		<div class="flex items-center justify-center gap-6">
 			<!-- Manual QA Button 'M' -->
 			<button

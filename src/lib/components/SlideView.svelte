@@ -4,9 +4,10 @@
 	interface Props {
 		slide: Slide;
 		searchQuery: string;
+		fontScale?: number;
 	}
 
-	let { slide, searchQuery }: Props = $props();
+	let { slide, searchQuery, fontScale = 100 }: Props = $props();
 
 	function highlightText(html: string, query: string) {
 		if (!query || !query.trim()) return html;
@@ -19,7 +20,10 @@
 	}
 </script>
 
-<div class="h-full flex flex-col justify-between p-2 lg:p-3 overflow-y-auto xl:overflow-hidden select-text">
+<div
+	class="slide-viewport h-full flex flex-col justify-between p-2 lg:p-3 overflow-y-auto xl:overflow-hidden select-text transition-all duration-150"
+	style="--font-scale: {fontScale / 100}; font-size: calc(12px * var(--font-scale, 1));"
+>
 	{#if slide.layout === 'custom-m1'}
 		<!-- 3-column layout matching Screenshot 102050 -->
 		<div class="grid grid-cols-1 md:grid-cols-3 gap-2.5 h-full items-stretch">
@@ -236,3 +240,25 @@
 		</div>
 	{/if}
 </div>
+
+<style>
+	.slide-viewport {
+		font-size: calc(12px * var(--font-scale, 1));
+	}
+	.slide-viewport :global(h3) {
+		font-size: calc(13.5px * var(--font-scale, 1));
+	}
+	.slide-viewport :global(h4) {
+		font-size: calc(12.5px * var(--font-scale, 1));
+	}
+	.slide-viewport :global(p),
+	.slide-viewport :global(li),
+	.slide-viewport :global(span) {
+		font-size: calc(11.5px * var(--font-scale, 1));
+		line-height: 1.35;
+	}
+	.slide-viewport :global(pre),
+	.slide-viewport :global(code) {
+		font-size: calc(11px * var(--font-scale, 1));
+	}
+</style>
