@@ -120,7 +120,7 @@
 					<p class="text-slate-400">Життєвий цикл тестування (STLC)</p>
 					<p class="text-slate-400">Test Plan | Тест план</p>
 					<p class="text-slate-400">Основні пункти тест плану</p>
-					<p class="text-slate-400">Тест дизайн</p>
+					<p class="text-slate-400">Тест-дизайн</p>
 				</div>
 			</button>
 
@@ -149,7 +149,7 @@
 				<div class="space-y-1 text-[11px] leading-tight">
 					<p class="font-bold text-white">Верифікація / Валідація</p>
 					<p class="text-slate-400">Verification / Validation</p>
-					<p class="font-bold text-white pt-1">Техники тест дизайна</p>
+					<p class="font-bold text-white pt-1">Техніки тест-дизайну</p>
 					<p class="text-slate-400">Design test techniques</p>
 					<p class="font-bold text-white pt-1">Severity vs Priority</p>
 				</div>

@@ -26,7 +26,7 @@ export const slidesData: Slide[] = [
 		id: 'm-basics',
 		category: 'M',
 		menuTitle: 'Основи тестування',
-		menuSub: 'Що таке тестування, STLC, Тест план, Тест дизайн',
+		menuSub: 'Що таке тестування, STLC, Тест-план, Тест-дизайн',
 		layout: 'custom-m1',
 		cards: [
 			{
@@ -97,13 +97,13 @@ export const slidesData: Slide[] = [
 				`
 			},
 			{
-				title: 'Тест дизайн',
+				title: 'Тест-дизайн',
 				contentHtml: `
-					<p class="mb-1">— это этап процесса тестирования ПО, на котором проектируются и создаются тестовые сценарии (тест кейсы), в соответствии с определёнными ранее критериями качества и целями тестирования.</p>
-					<p class="font-semibold text-cyan-300">Роли, ответственные за тест дизайн:</p>
+					<p class="mb-1">— це етап процесу тестування ПЗ, на якому проектуються та створюються тестові сценарії (тест-кейси) відповідно до визначених критеріїв якості та цілей тестування.</p>
+					<p class="font-semibold text-cyan-300">Ролі, відповідальні за тест-дизайн:</p>
 					<ul class="list-disc list-inside space-y-0.5 text-slate-200">
-						<li><strong>Тест аналитик</strong> — определяет «ЧТО тестировать?»</li>
-						<li><strong>Тест дизайнер</strong> — определяет «КАК тестировать?»</li>
+						<li><strong>Тест-аналітик</strong> — визначає «ЩО тестувати?»</li>
+						<li><strong>Тест-дизайнер</strong> — визначає «ЯК тестувати?»</li>
 					</ul>
 				`
 			},
@@ -122,7 +122,7 @@ export const slidesData: Slide[] = [
 						<li><strong class="text-cyan-300">H. Suspension criteria and resumption requirements</strong> | критерії призупинення та вимоги до відновлення;</li>
 						<li><strong class="text-cyan-300">I. Test deliverables</strong> | Результати тестування</li>
 						<li><strong class="text-cyan-300">J. Testing tasks</strong> | Тестові завдання</li>
-						<li><strong class="text-cyan-300">K. Environmental needs</strong> | Екологічні потреби</li>
+						<li><strong class="text-cyan-300">K. Environmental needs</strong> | Потреби в тестовому середовищі (лаби, ОС, БД)</li>
 						<li><strong class="text-cyan-300">L. Responsibilities</strong> | Обов'язки</li>
 						<li><strong class="text-cyan-300">M. Staffing and training needs</strong> | потреби в кадрах і навчанні;</li>
 						<li><strong class="text-cyan-300">N. Schedule</strong> | Розклад</li>
@@ -247,7 +247,7 @@ export const slidesData: Slide[] = [
 		id: 'm-techniques',
 		category: 'M',
 		menuTitle: 'Верифікація / Валідація',
-		menuSub: 'Техніки тест дизайна, Severity vs Priority',
+		menuSub: 'Техніки тест-дизайну, Severity vs Priority',
 		layout: 'custom-m3',
 		cards: [
 			{
@@ -268,32 +268,32 @@ export const slidesData: Slide[] = [
 				`
 			},
 			{
-				title: 'Техники тест дизайна | Design test techniques',
+				title: 'Техніки тест-дизайну | Design test techniques',
 				contentHtml: `
 					<ul class="space-y-2 text-xs text-slate-200">
 						<li>
-							<strong class="text-cyan-300">Эквивалентное Разделение (Equivalence Partitioning — EP):</strong>
-							<p class="text-slate-300 text-[11px] pl-2">диапазон допустимых значений от 1 до 10: выбрать одно верное значение внутри интервала (например, 5) и одно неверное вне интервала (например, 0).</p>
+							<strong class="text-cyan-300">Еквівалентний поділ (Equivalence Partitioning — EP):</strong>
+							<p class="text-slate-300 text-[11px] pl-2">діапазон допустимих значень від 1 до 10: обрати одне валідне значення всередині інтервалу (наприклад, 5) та одне невалідне поза інтервалом (наприклад, 0).</p>
 						</li>
 						<li>
-							<strong class="text-cyan-300">Анализ Граничных Значений (Boundary Value Analysis — BVA):</strong>
-							<p class="text-slate-300 text-[11px] pl-2">выберем минимальную и максимальную границы (1 и 10), и значения больше и меньше границ (0 и 11).</p>
+							<strong class="text-cyan-300">Аналіз граничних значень (Boundary Value Analysis — BVA):</strong>
+							<p class="text-slate-300 text-[11px] pl-2">обираємо мінімальну та максимальну межі (1 і 10), а також значення безпосередньо біля меж (0 і 11).</p>
 						</li>
 						<li>
-							<strong class="text-cyan-300">Причина | Следствие (Cause | Effect — CE):</strong>
-							<p class="text-slate-300 text-[11px] pl-2">ввести поля «Имя», «Телефон», нажать «Добавить» (Причина) -> система добавляет клиента и показывает номер (Следствие).</p>
+							<strong class="text-cyan-300">Причина / Наслідок (Cause / Effect — CE):</strong>
+							<p class="text-slate-300 text-[11px] pl-2">ввести поля «Ім'я», «Телефон», натиснути «Додати» (Причина) → система додає клієнта в базу даних і показує його номер (Наслідок).</p>
 						</li>
 						<li>
-							<strong class="text-cyan-300">Предугадывание ошибки (Error Guessing — EG):</strong>
-							<p class="text-slate-300 text-[11px] pl-2">тестировщик использует свой опыт и знания: «Что, если не ввести код?», «Что, если ввести неверный формат?»</p>
+							<strong class="text-cyan-300">Передбачення помилки (Error Guessing — EG):</strong>
+							<p class="text-slate-300 text-[11px] pl-2">тестувальник використовує свій досвід та знання системи: «Що, якщо не ввести обов'язковий код?», «Що, якщо ввести невірний формат даних?»</p>
 						</li>
 						<li>
-							<strong class="text-cyan-300">Исчерпывающее тестирование (Exhaustive Testing — ET):</strong>
-							<p class="text-slate-300 text-[11px] pl-2">крайний случай, проверка всех возможных комбинаций. На практике невозможно из-за огромного количества состояний.</p>
+							<strong class="text-cyan-300">Вичерпне тестування (Exhaustive Testing — ET):</strong>
+							<p class="text-slate-300 text-[11px] pl-2">перевірка абсолютно всіх можливих комбінацій вхідних даних та станів. На практиці неможливе (принцип ISTQB №2) через нескінченну кількість варіантів.</p>
 						</li>
 						<li>
-							<strong class="text-cyan-300">Попарное тестирование (Pairwise Testing):</strong>
-							<p class="text-slate-300 text-[11px] pl-2">каждое тестируемое значение каждого параметра хотя бы единожды сочетается со значениями всех остальных параметров.</p>
+							<strong class="text-cyan-300">Попарне тестування (Pairwise Testing):</strong>
+							<p class="text-slate-300 text-[11px] pl-2">техніка формування тестових наборів даних: кожне значення кожного параметра поєднується зі значеннями всіх інших параметрів щонайменше один раз.</p>
 						</li>
 					</ul>
 				`
@@ -302,22 +302,22 @@ export const slidesData: Slide[] = [
 				title: 'Severity vs Priority',
 				contentHtml: `
 					<p class="text-xs text-slate-200 mb-2">
-						<strong>Серьезность (Severity)</strong> — атрибут, характеризующий влияние дефекта на работоспособность приложения (выставляется тестировщиком).<br>
-						<strong>Приоритет (Priority)</strong> — атрибут, указывающий на очередность выполнения задачи или устранения дефекта (менеджером, тимлидом, заказчиком).
+						<strong>Серйозність (Severity)</strong> — атрибут, що характеризує технічний вплив дефекту на працездатність програми (виставляється тестувальником).<br>
+						<strong>Пріоритет (Priority)</strong> — атрибут, що вказує на черговість виконання завдання або усунення дефекту для бізнесу (виставляється менеджером, Product Owner, лідом або замовником).
 					</p>
-					<h4 class="font-bold text-cyan-300 text-xs mb-1">Градация Серьезности дефекта (Severity):</h4>
+					<h4 class="font-bold text-cyan-300 text-xs mb-1">Градація Серйозності дефекту (Severity):</h4>
 					<ul class="text-[11px] space-y-1 mb-2 text-slate-300">
-						<li><strong class="text-cyan-400">S1 Блокирующая (Blocker):</strong> приводит приложение в нерабочее состояние, ключевые функции не работают.</li>
-						<li><strong class="text-cyan-400">S2 Критическая (Critical):</strong> неправильная ключевая бизнес-логика, дыра безопасности, падение сервера без обходного пути.</li>
-						<li><strong class="text-cyan-400">S3 Значительная (Major):</strong> часть логики работает некорректно, но есть возможность обойти проблему.</li>
-						<li><strong class="text-cyan-400">S4 Незначительная (Minor):</strong> не нарушает бизнес-логику, очевидная проблема UI.</li>
-						<li><strong class="text-cyan-400">S5 Тривиальная (Trivial):</strong> малозаметная проблема UI, опечатка, не влияет на общее качество.</li>
+						<li><strong class="text-cyan-400">S1 Блокуюча (Blocker):</strong> повна зупинка системи або критичної функції, робота з програмою неможлива, тестування заблоковано.</li>
+						<li><strong class="text-cyan-400">S2 Критична (Critical):</strong> не працює ключова бізнес-логіка, діра в безпеці, падіння сервера без можливості обходу (no workaround).</li>
+						<li><strong class="text-cyan-400">S3 Значна (Major):</strong> частина логіки працює некоректно, але є обхідний шлях (workaround).</li>
+						<li><strong class="text-cyan-400">S4 Незначна (Minor):</strong> не порушує бізнес-логіку, очевидна невідповідність інтерфейсу (UI).</li>
+						<li><strong class="text-cyan-400">S5 Тривіальна (Trivial):</strong> малопомітна проблема UI, одруківка в тексті, не впливає на загальну якість.</li>
 					</ul>
-					<h4 class="font-bold text-cyan-300 text-xs mb-1">Градация Приоритета дефекта (Priority):</h4>
+					<h4 class="font-bold text-cyan-300 text-xs mb-1">Градація Пріоритету дефекту (Priority):</h4>
 					<ul class="text-[11px] space-y-0.5 text-slate-300">
-						<li><strong class="text-cyan-400">P1 Высокий (High):</strong> исправить как можно быстрее, критично для проекта.</li>
-						<li><strong class="text-cyan-400">P2 Средний (Medium):</strong> не критично, но требует обязательного решения.</li>
-						<li><strong class="text-cyan-400">P3 Низкий (Low):</strong> не требует срочного решения.</li>
+						<li><strong class="text-cyan-400">P1 Високий (High):</strong> виправити якнайшвидше, критично для релізу/проекту.</li>
+						<li><strong class="text-cyan-400">P2 Середній (Medium):</strong> не блокує реліз, але обов'язкове до виправлення.</li>
+						<li><strong class="text-cyan-400">P3 Низький (Low):</strong> не вимагає термінового виправлення, за наявності часу.</li>
 					</ul>
 				`
 			}
@@ -353,10 +353,10 @@ export const slidesData: Slide[] = [
 				`
 			},
 			{
-				title: 'Чек-лист (check list) | список перевірок',
+				title: 'Чек-лист (Checklist) | список перевірок',
 				contentHtml: `
 					<p class="text-xs text-slate-200 mb-1">це документ, який описує, що повинно бути протестовано. Може бути абсолютно різного рівня деталізації залежно від вимог та складності продукту.</p>
-					<p class="text-xs text-slate-300 mb-1">Як правило, чек-лист містить тільки дії (шаги) без надлишкового очікуваного результату.</p>
+					<p class="text-xs text-slate-300 mb-1">Як правило, чек-лист містить тільки дії (кроки) без надлишкового очікуваного результату.</p>
 					<p class="text-[11px] text-cyan-300 font-semibold">Чек-лист менш формалізований, ніж тестовий сценарій. Його доречно використовувати в Agile, коли тест-кейси є надлишковими.</p>
 				`
 			},
@@ -389,20 +389,20 @@ export const slidesData: Slide[] = [
 					<p class="text-xs text-slate-300 mb-2">це документ, що описує ситуацію або послідовність дій, яка призвела до некоректної роботи системи, із зазначенням причин і очікуваного результату.</p>
 					<h4 class="font-bold text-cyan-300 text-xs mb-1">Структура баг-репорту:</h4>
 					<div class="space-y-1 text-[11px] text-slate-200">
-						<p><strong class="text-cyan-400">Шапка:</strong></p>
+						<p><strong class="text-cyan-400">Заголовок / Шапка:</strong></p>
 						<ul class="list-disc list-inside pl-2 space-y-0.5 text-slate-300">
 							<li><strong>Короткий опис (Summary):</strong> Що? Де? Коли? (однозначно та стисло)</li>
 							<li><strong>Проект (Project) & Компонент (Component)</strong></li>
-							<li><strong>Номер версії (Version) & Автор (Author) & Назначен на (Assigned To)</strong></li>
-							<li><strong>Серьезность (Severity):</strong> S1 Blocker, S2 Critical, S3 Major, S4 Minor, S5 Trivial</li>
-							<li><strong>Приоритет (Priority):</strong> P1 High, P2 Medium, P3 Low</li>
+							<li><strong>Номер версії (Version) & Автор (Author) & Призначено на (Assigned To)</strong></li>
+							<li><strong>Серйозність (Severity):</strong> S1 Blocker, S2 Critical, S3 Major, S4 Minor, S5 Trivial</li>
+							<li><strong>Пріоритет (Priority):</strong> P1 High, P2 Medium, P3 Low</li>
 							<li><strong>Статус (Status):</strong> Життєвий цикл дефекту (New, Open, In Progress, Resolved, Closed)</li>
 						</ul>
 						<p><strong class="text-cyan-400 mt-1 block">Оточення (Environment):</strong> ОС, Браузер + версія, Сервіс Пак, роздільна здатність, мобільний девайс.</p>
 						<p><strong class="text-cyan-400 mt-1 block">Опис (Description):</strong></p>
 						<ul class="list-disc list-inside pl-2 space-y-0.5 text-slate-300">
-							<li>Шаги відтворення (Steps to Reproduce)</li>
-							<li>Фактичний результат (Result)</li>
+							<li>Кроки відтворення (Steps to Reproduce)</li>
+							<li>Фактичний результат (Actual Result)</li>
 							<li>Очікуваний результат (Expected Result)</li>
 							<li>Прикріплені файли (Attachments: скріншоти, логи, відео)</li>
 						</ul>
