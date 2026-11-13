@@ -83,8 +83,8 @@
 			<!-- Slide Header -->
 			<header class="pb-3 mb-4 border-b-2 border-slate-900 flex items-center justify-between">
 				<div>
-					<span class="inline-block px-2 py-0.5 rounded text-[10px] font-mono font-bold uppercase border border-slate-700 {slide.category === 'M' ? 'bg-slate-100 text-slate-800' : slide.category === 'A' ? 'bg-slate-800 text-white' : 'bg-emerald-800 text-white'}">
-						{slide.category === 'M' ? 'Manual QA' : slide.category === 'A' ? 'Automation QA' : 'Senior AQA Consultant'}
+					<span class="inline-block px-2 py-0.5 rounded text-[10px] font-mono font-bold uppercase border border-slate-700 {slide.category === 'M' ? 'bg-slate-100 text-slate-800' : slide.category === 'A' ? 'bg-slate-800 text-white' : slide.category === 'C' ? 'bg-emerald-800 text-white' : 'bg-sky-800 text-white'}">
+						{slide.category === 'M' ? 'Manual QA' : slide.category === 'A' ? 'Automation QA' : slide.category === 'C' ? 'Senior AQA Consultant' : 'Middle Flutter QA (Nayax)'}
 					</span>
 					<h2 class="text-xl font-bold text-slate-950 mt-1">
 						{slide.menuTitle}

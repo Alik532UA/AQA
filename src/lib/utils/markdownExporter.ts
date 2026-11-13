@@ -10,7 +10,7 @@ export function slideToMarkdown(slide: Slide): string {
 		md += `> **Підтеми:** ${slide.menuSub}\n\n`;
 	}
 
-	md += `**Категорія:** ${slide.category === 'M' ? 'Manual QA' : slide.category === 'A' ? 'Automation QA' : 'Senior AQA Consultant'}\n\n`;
+	md += `**Категорія:** ${slide.category === 'M' ? 'Manual QA' : slide.category === 'A' ? 'Automation QA' : slide.category === 'C' ? 'Senior AQA Consultant' : 'Middle Flutter QA (Nayax)'}\n\n`;
 	md += `---\n\n`;
 
 	for (const card of slide.cards) {

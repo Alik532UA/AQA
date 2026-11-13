@@ -40,3 +40,15 @@
 8. [Architecture & Handover](./03_senior_consultant/08_Architecture_and_Handover.md) — *Структура репозиторію, ADR (Architecture Decision Records) та передача*
 9. [Senior Consultant Interview Q&A](./03_senior_consultant/09_Senior_Consultant_Interview_QandA.md) — *Топ-питань на співбесіді для Senior Desktop AQA Consultant*
 
+### Middle Manual QA Engineer (Flutter / Mobile — Nayax)
+
+1. [Nayax Domain & Vending CRM](./04_flutter_nayax_qa/01_Nayax_Domain_and_Vending_CRM.md) — *Бізнес-домен Nayax, телеметрія вендингу та CRM флоу*
+2. [Flutter Architecture & QA Specifics](./04_flutter_nayax_qa/02_Flutter_Architecture_and_QA_Specifics.md) — *Особливості тестування Flutter: Dart VM, Impeller, Platform Channels*
+3. [Android Testing & Studio Toolset](./04_flutter_nayax_qa/03_Android_Testing_and_Studio_Toolset.md) — *Android Studio, Logcat, ADB команди та емулятори*
+4. [iOS Testing & Xcode Toolset](./04_flutter_nayax_qa/04_iOS_Testing_and_Xcode_Toolset.md) — *Xcode Console, Devices & Simulators, TestFlight, Crash Logs*
+5. [Client-Server, Postman & Sniffing](./04_flutter_nayax_qa/05_Client-Server_Postman_and_Sniffing.md) — *REST API, Swagger, Postman, Charles Proxy, SSL Pinning*
+6. [Mobile Test Design & Matrix](./04_flutter_nayax_qa/06_Mobile_Test_Design_and_Matrix.md) — *Тестова матриця девайсів, специфічні мобільні чек-листи*
+7. [QA Process: Jira, Xray & Git](./04_flutter_nayax_qa/07_QA_Process_Jira_Xray_and_Git.md) — *Управління тестуванням в Xray, JQL фільтри та Git для QA*
+8. [Performance Testing & Profiling](./04_flutter_nayax_qa/08_Performance_Testing_and_Profiling.md) — *Клієнтський перформанс Flutter додатку та API бенчмарки*
+9. [Nayax Middle QA Interview Q&A](./04_flutter_nayax_qa/09_Nayax_Middle_QA_Interview_QandA.md) — *Топ технічних та поведінкових запитань з відповідями*
+

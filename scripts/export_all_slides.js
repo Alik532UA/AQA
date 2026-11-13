@@ -25,6 +25,11 @@ const CATEGORIES = {
 		folder: '03_senior_consultant',
 		title: 'Senior AQA Consultant (Desktop / Electron / Windows)',
 		prefix: 'C'
+	},
+	F: {
+		folder: '04_flutter_nayax_qa',
+		title: 'Middle Manual QA Engineer (Flutter / Mobile — Nayax)',
+		prefix: 'F'
 	}
 };
 
@@ -50,7 +55,8 @@ fs.mkdirSync(OUTPUT_DIR, { recursive: true });
 const grouped = {
 	M: [],
 	A: [],
-	C: []
+	C: [],
+	F: []
 };
 
 slidesData.forEach((slide) => {
@@ -116,4 +122,4 @@ Object.entries(CATEGORIES).forEach(([catKey, catInfo]) => {
 // Write master README.md
 fs.writeFileSync(path.join(OUTPUT_DIR, 'README.md'), masterReadme, 'utf8');
 
-console.log('Successfully exported all 25 slides to:', OUTPUT_DIR);
+console.log(`Successfully exported all ${slidesData.length} slides to:`, OUTPUT_DIR);

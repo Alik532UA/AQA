@@ -20,7 +20,7 @@
 		Sparkles
 	} from '@lucide/svelte';
 
-	let activeCategory = $state<'M' | 'A' | 'C'>('M');
+	let activeCategory = $state<'M' | 'A' | 'C' | 'F'>('M');
 	let activeSlideId = $state<string>('m-basics');
 	let searchQuery = $state('');
 	let isMobileSidebarOpen = $state(false);
@@ -139,7 +139,7 @@
 		});
 	});
 
-	function handleCategoryChange(cat: 'M' | 'A' | 'C') {
+	function handleCategoryChange(cat: 'M' | 'A' | 'C' | 'F') {
 		activeCategory = cat;
 		const slides = slidesData.filter((s) => s.category === cat);
 		if (slides.length > 0) {
@@ -283,9 +283,11 @@
 							? 'bg-cyan-950 text-cyan-300 border border-cyan-700/60'
 							: activeCategory === 'A'
 							? 'bg-purple-950 text-purple-300 border border-purple-700/60'
-							: 'bg-emerald-950 text-emerald-300 border border-emerald-700/60'}"
+							: activeCategory === 'C'
+							? 'bg-emerald-950 text-emerald-300 border border-emerald-700/60'
+							: 'bg-sky-950 text-sky-300 border border-sky-700/60'}"
 					>
-						{activeCategory === 'M' ? 'Manual QA' : activeCategory === 'A' ? 'Automation QA' : 'Senior AQA Consultant'}
+						{activeCategory === 'M' ? 'Manual QA' : activeCategory === 'A' ? 'Automation QA' : activeCategory === 'C' ? 'Senior AQA Consultant' : 'Middle Flutter QA'}
 					</span>
 					<span class="font-bold text-xs text-white truncate hidden sm:inline">
 						{currentSlide.menuTitle}
@@ -358,7 +360,7 @@
 									{/if}
 								</div>
 								<span class="text-[10px] font-mono text-cyan-400 shrink-0 ml-2">
-									{match.category === 'M' ? 'Manual' : 'Auto'}
+									{match.category === 'M' ? 'Manual' : match.category === 'A' ? 'Auto' : match.category === 'C' ? 'Consultant' : 'Flutter'}
 								</span>
 							</button>
 						{/each}

@@ -2,8 +2,8 @@
 	import { ChevronLeft } from '@lucide/svelte';
 
 	interface Props {
-		activeCategory: 'M' | 'A' | 'C';
-		onCategoryChange: (cat: 'M' | 'A' | 'C') => void;
+		activeCategory: 'M' | 'A' | 'C' | 'F';
+		onCategoryChange: (cat: 'M' | 'A' | 'C' | 'F') => void;
 		activeSlideId: string;
 		onSelectSlide: (slideId: string) => void;
 		isMobileOpen: boolean;
@@ -60,7 +60,7 @@
 			<ChevronLeft class="w-3.5 h-3.5" />
 		</button>
 
-		<div class="flex items-center justify-center gap-3.5 pr-6 lg:pr-7">
+		<div class="flex items-center justify-center gap-2 pr-5 lg:pr-6">
 			<!-- Manual QA Button 'M' -->
 			<button
 				type="button"
@@ -69,7 +69,7 @@
 				class="relative group cursor-pointer"
 			>
 				<div
-					class="w-11 h-11 md:w-12 md:h-12 rounded-full flex items-center justify-center text-xl font-bold font-mono transition-all duration-300 {activeCategory ===
+					class="w-10 h-10 md:w-11 md:h-11 rounded-full flex items-center justify-center text-lg md:text-xl font-bold font-mono transition-all duration-300 {activeCategory ===
 					'M'
 						? 'border-2 border-cyan-400 text-white shadow-[0_0_15px_#00f0ff]'
 						: 'border border-cyan-900/60 text-slate-400 hover:border-cyan-500 hover:text-cyan-300'}"
@@ -86,7 +86,7 @@
 				class="relative group cursor-pointer"
 			>
 				<div
-					class="w-11 h-11 md:w-12 md:h-12 rounded-full flex items-center justify-center text-xl font-bold font-mono transition-all duration-300 {activeCategory ===
+					class="w-10 h-10 md:w-11 md:h-11 rounded-full flex items-center justify-center text-lg md:text-xl font-bold font-mono transition-all duration-300 {activeCategory ===
 					'A'
 						? 'border-2 border-cyan-400 text-white shadow-[0_0_15px_#00f0ff]'
 						: 'border border-cyan-900/60 text-slate-400 hover:border-cyan-500 hover:text-cyan-300'}"
@@ -103,12 +103,29 @@
 				class="relative group cursor-pointer"
 			>
 				<div
-					class="w-11 h-11 md:w-12 md:h-12 rounded-full flex items-center justify-center text-xl font-bold font-mono transition-all duration-300 {activeCategory ===
+					class="w-10 h-10 md:w-11 md:h-11 rounded-full flex items-center justify-center text-lg md:text-xl font-bold font-mono transition-all duration-300 {activeCategory ===
 					'C'
 						? 'border-2 border-emerald-400 text-white shadow-[0_0_15px_#10b981]'
 						: 'border border-cyan-900/60 text-slate-400 hover:border-emerald-500 hover:text-emerald-300'}"
 				>
 					C
+				</div>
+			</button>
+
+			<!-- Flutter QA Button 'F' -->
+			<button
+				type="button"
+				onclick={() => onCategoryChange('F')}
+				title="Middle Manual QA (Flutter / Nayax)"
+				class="relative group cursor-pointer"
+			>
+				<div
+					class="w-10 h-10 md:w-11 md:h-11 rounded-full flex items-center justify-center text-lg md:text-xl font-bold font-mono transition-all duration-300 {activeCategory ===
+					'F'
+						? 'border-2 border-sky-400 text-white shadow-[0_0_15px_#38bdf8]'
+						: 'border border-cyan-900/60 text-slate-400 hover:border-sky-500 hover:text-sky-300'}"
+				>
+					F
 				</div>
 			</button>
 		</div>
@@ -347,7 +364,7 @@
 				<p class="font-bold text-white text-xs">SOLID</p>
 			</button>
 
-		{:else}
+		{:else if activeCategory === 'C'}
 			<!-- ================= SENIOR CONSULTANT NAVIGATION ================= -->
 
 			<!-- 1. Strategy & PoC -->
@@ -465,6 +482,126 @@
 			>
 				<p class="font-bold text-white text-xs">Senior Consultant Interview Q&A</p>
 				<p class="text-emerald-400/80 text-[10px]">Топ питань та готові відповіді</p>
+			</button>
+
+		{:else}
+			<!-- ================= FLUTTER NAYAX QA NAVIGATION ================= -->
+
+			<!-- 1. Nayax Domain & Vending CRM -->
+			<button
+				type="button"
+				onclick={() => handleSlideClick('f-vending-crm')}
+				class="w-full text-left p-2.5 rounded-2xl border transition-all duration-200 block cursor-pointer {activeSlideId ===
+				'f-vending-crm'
+					? 'border-2 border-sky-400 bg-sky-950/30 shadow-[0_0_15px_rgba(56,189,248,0.3)]'
+					: 'border-slate-800 bg-[#060910] hover:border-sky-700 hover:bg-[#09111c]'}"
+			>
+				<p class="font-bold text-white text-xs">Nayax Domain & Vending CRM</p>
+				<p class="text-sky-400/80 text-[10px]">Бізнес-домен та CRM вендингу</p>
+			</button>
+
+			<!-- 2. Flutter Architecture & QA Specifics -->
+			<button
+				type="button"
+				onclick={() => handleSlideClick('f-flutter-arch')}
+				class="w-full text-left p-2.5 rounded-2xl border transition-all duration-200 block cursor-pointer {activeSlideId ===
+				'f-flutter-arch'
+					? 'border-2 border-sky-400 bg-sky-950/30 shadow-[0_0_15px_rgba(56,189,248,0.3)]'
+					: 'border-slate-800 bg-[#060910] hover:border-sky-700 hover:bg-[#09111c]'}"
+			>
+				<p class="font-bold text-white text-xs">Flutter Architecture & Specifics</p>
+				<p class="text-sky-400/80 text-[10px]">Архітектура Flutter та зони ризику</p>
+			</button>
+
+			<!-- 3. Android Testing & Studio Toolset -->
+			<button
+				type="button"
+				onclick={() => handleSlideClick('f-android-tools')}
+				class="w-full text-left p-2.5 rounded-2xl border transition-all duration-200 block cursor-pointer {activeSlideId ===
+				'f-android-tools'
+					? 'border-2 border-sky-400 bg-sky-950/30 shadow-[0_0_15px_rgba(56,189,248,0.3)]'
+					: 'border-slate-800 bg-[#060910] hover:border-sky-700 hover:bg-[#09111c]'}"
+			>
+				<p class="font-bold text-white text-xs">Android Testing & Studio Toolset</p>
+				<p class="text-sky-400/80 text-[10px]">Android Studio, Logcat & ADB</p>
+			</button>
+
+			<!-- 4. iOS Testing & Xcode Toolset -->
+			<button
+				type="button"
+				onclick={() => handleSlideClick('f-ios-tools')}
+				class="w-full text-left p-2.5 rounded-2xl border transition-all duration-200 block cursor-pointer {activeSlideId ===
+				'f-ios-tools'
+					? 'border-2 border-sky-400 bg-sky-950/30 shadow-[0_0_15px_rgba(56,189,248,0.3)]'
+					: 'border-slate-800 bg-[#060910] hover:border-sky-700 hover:bg-[#09111c]'}"
+			>
+				<p class="font-bold text-white text-xs">iOS Testing & Xcode Toolset</p>
+				<p class="text-sky-400/80 text-[10px]">Xcode, TestFlight & Crash Logs</p>
+			</button>
+
+			<!-- 5. Client-Server, Postman & Sniffing -->
+			<button
+				type="button"
+				onclick={() => handleSlideClick('f-api-network')}
+				class="w-full text-left p-2.5 rounded-2xl border transition-all duration-200 block cursor-pointer {activeSlideId ===
+				'f-api-network'
+					? 'border-2 border-sky-400 bg-sky-950/30 shadow-[0_0_15px_rgba(56,189,248,0.3)]'
+					: 'border-slate-800 bg-[#060910] hover:border-sky-700 hover:bg-[#09111c]'}"
+			>
+				<p class="font-bold text-white text-xs">Client-Server & Sniffing</p>
+				<p class="text-sky-400/80 text-[10px]">REST API, Postman & Charles Proxy</p>
+			</button>
+
+			<!-- 6. Mobile Test Design & Matrix -->
+			<button
+				type="button"
+				onclick={() => handleSlideClick('f-mobile-matrix')}
+				class="w-full text-left p-2.5 rounded-2xl border transition-all duration-200 block cursor-pointer {activeSlideId ===
+				'f-mobile-matrix'
+					? 'border-2 border-sky-400 bg-sky-950/30 shadow-[0_0_15px_rgba(56,189,248,0.3)]'
+					: 'border-slate-800 bg-[#060910] hover:border-sky-700 hover:bg-[#09111c]'}"
+			>
+				<p class="font-bold text-white text-xs">Mobile Test Design & Matrix</p>
+				<p class="text-sky-400/80 text-[10px]">Тест-матриця та мобільні чек-листи</p>
+			</button>
+
+			<!-- 7. QA Process: Jira, Xray & Git -->
+			<button
+				type="button"
+				onclick={() => handleSlideClick('f-qa-process-xray')}
+				class="w-full text-left p-2.5 rounded-2xl border transition-all duration-200 block cursor-pointer {activeSlideId ===
+				'f-qa-process-xray'
+					? 'border-2 border-sky-400 bg-sky-950/30 shadow-[0_0_15px_rgba(56,189,248,0.3)]'
+					: 'border-slate-800 bg-[#060910] hover:border-sky-700 hover:bg-[#09111c]'}"
+			>
+				<p class="font-bold text-white text-xs">QA Process: Jira, Xray & Git</p>
+				<p class="text-sky-400/80 text-[10px]">Jira JQL, Xray TMS & Git</p>
+			</button>
+
+			<!-- 8. Performance Testing & Profiling -->
+			<button
+				type="button"
+				onclick={() => handleSlideClick('f-performance')}
+				class="w-full text-left p-2.5 rounded-2xl border transition-all duration-200 block cursor-pointer {activeSlideId ===
+				'f-performance'
+					? 'border-2 border-sky-400 bg-sky-950/30 shadow-[0_0_15px_rgba(56,189,248,0.3)]'
+					: 'border-slate-800 bg-[#060910] hover:border-sky-700 hover:bg-[#09111c]'}"
+			>
+				<p class="font-bold text-white text-xs">Performance Testing & Profiling</p>
+				<p class="text-sky-400/80 text-[10px]">Клієнтський перформанс & API KPI</p>
+			</button>
+
+			<!-- 9. Nayax Middle QA Interview Q&A -->
+			<button
+				type="button"
+				onclick={() => handleSlideClick('f-interview-qa')}
+				class="w-full text-left p-2.5 rounded-2xl border transition-all duration-200 block cursor-pointer {activeSlideId ===
+				'f-interview-qa'
+					? 'border-2 border-sky-400 bg-sky-950/30 shadow-[0_0_15px_rgba(56,189,248,0.3)]'
+					: 'border-slate-800 bg-[#060910] hover:border-sky-700 hover:bg-[#09111c]'}"
+			>
+				<p class="font-bold text-white text-xs">Nayax Middle QA Interview Q&A</p>
+				<p class="text-sky-400/80 text-[10px]">Топ питань та готові відповіді</p>
 			</button>
 		{/if}
 	</nav>
