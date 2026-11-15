@@ -1,0 +1,9 @@
+# AQA Interview Dashboard & Cheat Sheet
+
+> Інтерактивний дашборд та база знань для підготовки до технічних співбесід з тестування програмного забезпечення.
+
+## Категорії знань
+- Manual QA (Теорія тестування, рівні, типи, STLC, тест-дизайн)
+- Automation QA .NET / C# (Архітектура тестових рішень, патерни проектування, CI/CD)
+- Senior Consultant Desktop / Windows (Стратегія автоматизації, Playwright vs FlaUI, тестування оновлень)
+- Middle QA Mobile / Flutter (Мобільне тестування, Charles Proxy, Logcat, Xcode, платіжні протоколи Nayax)

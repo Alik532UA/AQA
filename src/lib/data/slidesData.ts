@@ -1342,7 +1342,7 @@ ORDER BY customers.name;</pre>
 		id: 'c-visual-ocr',
 		category: 'C',
 		menuTitle: 'Visual Regression & OCR',
-		menuSub: 'Тестування скріншотами, OCR та комп\'ютерний зір',
+		menuSub: "Тестування скріншотами, OCR та комп'ютерний зір",
 		layout: 'grid-2',
 		cards: [
 			{
@@ -1689,7 +1689,7 @@ ORDER BY customers.name;</pre>
 		layout: 'grid-2',
 		cards: [
 			{
-				title: 'Архітектура Flutter: що обов\'язково знати QA',
+				title: "Архітектура Flutter: що обов'язково знати QA",
 				contentHtml: `
 					<p class="text-xs text-slate-300 mb-2">Flutter не компілюється у нативні UI-компоненти платформи (як React Native), а <strong>малює весь інтерфейс самостійно піксель-у-піксель</strong> на полотні (Canvas) через власний графічний двигун (Impeller на iOS/сучасних Android або Skia).</p>
 					

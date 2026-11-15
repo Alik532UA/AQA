@@ -1,6 +1,6 @@
 <script lang="ts">
 	import { onMount } from 'svelte';
-	import { slidesData, type Slide } from '#lib/data/slidesData';
+	import { slidesData } from '#lib/data/slidesData';
 	import Sidebar from '#lib/components/Sidebar.svelte';
 	import SlideView from '#lib/components/SlideView.svelte';
 	import PrintBooklet from '#lib/components/PrintBooklet.svelte';
@@ -15,9 +15,7 @@
 		Minimize2,
 		Copy,
 		Check,
-		Printer,
-		Type,
-		Sparkles
+		Printer
 	} from '@lucide/svelte';
 
 	let activeCategory = $state<'M' | 'A' | 'C' | 'F'>('M');
@@ -228,7 +226,9 @@
 </svelte:head>
 
 <!-- Interactive App Container (Hidden during Print) -->
-<div class="no-print h-screen w-screen bg-black text-slate-100 flex overflow-hidden font-sans select-none">
+<div
+	class="no-print h-screen w-screen bg-black text-slate-100 flex overflow-hidden font-sans select-none"
+>
 	<!-- Left Navigation Sidebar -->
 	<Sidebar
 		{activeCategory}
@@ -282,12 +282,18 @@
 						'M'
 							? 'bg-cyan-950 text-cyan-300 border border-cyan-700/60'
 							: activeCategory === 'A'
-							? 'bg-purple-950 text-purple-300 border border-purple-700/60'
-							: activeCategory === 'C'
-							? 'bg-emerald-950 text-emerald-300 border border-emerald-700/60'
-							: 'bg-sky-950 text-sky-300 border border-sky-700/60'}"
+								? 'bg-purple-950 text-purple-300 border border-purple-700/60'
+								: activeCategory === 'C'
+									? 'bg-emerald-950 text-emerald-300 border border-emerald-700/60'
+									: 'bg-sky-950 text-sky-300 border border-sky-700/60'}"
 					>
-						{activeCategory === 'M' ? 'Manual QA' : activeCategory === 'A' ? 'Automation QA' : activeCategory === 'C' ? 'Senior AQA Consultant' : 'Middle Flutter QA'}
+						{activeCategory === 'M'
+							? 'Manual QA'
+							: activeCategory === 'A'
+								? 'Automation QA'
+								: activeCategory === 'C'
+									? 'Senior AQA Consultant'
+									: 'Middle Flutter QA'}
 					</span>
 					<span class="font-bold text-xs text-white truncate hidden sm:inline">
 						{currentSlide.menuTitle}
@@ -330,7 +336,9 @@
 					<div
 						class="absolute top-full left-0 right-0 mt-1.5 bg-[#060c18] border border-cyan-500/80 rounded-xl shadow-[0_10px_30px_rgba(0,0,0,0.9)] p-2 z-50 max-h-72 overflow-y-auto space-y-1"
 					>
-						<div class="text-[10px] font-mono text-cyan-400 px-2 py-0.5 flex items-center justify-between">
+						<div
+							class="text-[10px] font-mono text-cyan-400 px-2 py-0.5 flex items-center justify-between"
+						>
 							<span>Знайдено у {matchingSlides.length} слайдах:</span>
 							<button
 								type="button"
@@ -360,7 +368,13 @@
 									{/if}
 								</div>
 								<span class="text-[10px] font-mono text-cyan-400 shrink-0 ml-2">
-									{match.category === 'M' ? 'Manual' : match.category === 'A' ? 'Auto' : match.category === 'C' ? 'Consultant' : 'Flutter'}
+									{match.category === 'M'
+										? 'Manual'
+										: match.category === 'A'
+											? 'Auto'
+											: match.category === 'C'
+												? 'Consultant'
+												: 'Flutter'}
 								</span>
 							</button>
 						{/each}
@@ -371,7 +385,9 @@
 			<!-- Right: Controls & Actions (Font Size, Export, Navigation, Fullscreen) -->
 			<div class="flex items-center gap-1.5 shrink-0">
 				<!-- Font Scaling Switcher (A- / 100% / A+) -->
-				<div class="hidden sm:flex items-center border border-cyan-950 bg-[#070d18] rounded-md overflow-hidden text-[10px] font-mono">
+				<div
+					class="hidden sm:flex items-center border border-cyan-950 bg-[#070d18] rounded-md overflow-hidden text-[10px] font-mono"
+				>
 					<button
 						type="button"
 						onclick={() => changeFontScale(-10)}

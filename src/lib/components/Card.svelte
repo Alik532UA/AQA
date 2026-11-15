@@ -31,10 +31,25 @@
 		setTimeout(() => (codeCopied = false), 2000);
 	}
 
+	function escapeHtml(str: string): string {
+		return str
+			.replace(/&/g, '&amp;')
+			.replace(/</g, '&lt;')
+			.replace(/>/g, '&gt;')
+			.replace(/"/g, '&quot;')
+			.replace(/'/g, '&#039;');
+	}
+
 	function highlightText(text: string, query: string) {
-		if (!query || !query.trim()) return text;
-		const regex = new RegExp(`(${query.replace(/[.*+?^${}()|[\]\\]/g, '\\$&')})`, 'gi');
-		return text.replace(regex, '<mark class="bg-cyan-500/30 text-cyan-200 px-1 py-0.5 rounded font-semibold">$1</mark>');
+		if (!text) return '';
+		const safeText = escapeHtml(text);
+		if (!query || !query.trim()) return safeText;
+		const safeQuery = query.trim().replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
+		const regex = new RegExp(`(${safeQuery})`, 'gi');
+		return safeText.replace(
+			regex,
+			'<mark class="bg-cyan-500/30 text-cyan-200 px-1 py-0.5 rounded font-semibold">$1</mark>'
+		);
 	}
 </script>
 
@@ -52,7 +67,10 @@
 		<div class="flex items-start justify-between gap-3 mb-3">
 			<div class="flex flex-wrap items-center gap-2">
 				<span
-					class="inline-flex items-center justify-center w-6 h-6 rounded-full text-xs font-mono font-bold tracking-wider {card.category === 'manual' ? 'bg-cyan-950/80 text-cyan-400 border border-cyan-500/40' : 'bg-purple-950/80 text-purple-300 border border-purple-500/40'}"
+					class="inline-flex items-center justify-center w-6 h-6 rounded-full text-xs font-mono font-bold tracking-wider {card.category ===
+					'manual'
+						? 'bg-cyan-950/80 text-cyan-400 border border-cyan-500/40'
+						: 'bg-purple-950/80 text-purple-300 border border-purple-500/40'}"
 				>
 					{card.category === 'manual' ? 'M' : 'A'}
 				</span>
@@ -91,7 +109,9 @@
 		</div>
 
 		<!-- Title & Subtitle -->
-		<h3 class="text-lg md:text-xl font-bold text-white tracking-tight mb-1 group-hover:text-cyan-300 transition-colors">
+		<h3
+			class="text-lg md:text-xl font-bold text-white tracking-tight mb-1 group-hover:text-cyan-300 transition-colors"
+		>
 			{@html highlightText(card.title, searchQuery)}
 		</h3>
 
@@ -111,7 +131,9 @@
 			<ul class="space-y-2 mb-4 text-sm text-slate-300/90">
 				{#each card.points as point}
 					<li class="flex items-start gap-2">
-						<span class="w-1.5 h-1.5 rounded-full bg-cyan-400 mt-2 shrink-0 shadow-[0_0_6px_#00f0ff]"></span>
+						<span
+							class="w-1.5 h-1.5 rounded-full bg-cyan-400 mt-2 shrink-0 shadow-[0_0_6px_#00f0ff]"
+						></span>
 						<span class="leading-relaxed">{@html highlightText(point, searchQuery)}</span>
 					</li>
 				{/each}
@@ -122,7 +144,9 @@
 		{#if card.concepts && card.concepts.length > 0}
 			<div class="space-y-2 mb-4">
 				{#each card.concepts as concept}
-					<div class="p-2.5 rounded-lg bg-[#0b1320]/80 border border-cyan-900/40 hover:border-cyan-500/40 transition-colors">
+					<div
+						class="p-2.5 rounded-lg bg-[#0b1320]/80 border border-cyan-900/40 hover:border-cyan-500/40 transition-colors"
+					>
 						<div class="text-xs md:text-sm font-semibold text-cyan-300 mb-0.5">
 							{@html highlightText(concept.title, searchQuery)}
 						</div>
@@ -137,7 +161,9 @@
 		<!-- Code Snippet (if any) -->
 		{#if card.codeSnippet}
 			<div class="relative my-3 rounded-lg overflow-hidden border border-cyan-900/60 bg-[#060a12]">
-				<div class="flex items-center justify-between px-3 py-1.5 bg-[#09111c] border-b border-cyan-950 text-xs font-mono text-cyan-400">
+				<div
+					class="flex items-center justify-between px-3 py-1.5 bg-[#09111c] border-b border-cyan-950 text-xs font-mono text-cyan-400"
+				>
 					<div class="flex items-center gap-1.5">
 						<Code2 class="w-3.5 h-3.5 text-cyan-400" />
 						<span>{card.codeSnippet.language.toUpperCase()}</span>
@@ -156,13 +182,17 @@
 						{/if}
 					</button>
 				</div>
-				<pre class="p-3 text-xs font-mono text-slate-200 overflow-x-auto leading-relaxed"><code>{card.codeSnippet.code}</code></pre>
+				<pre class="p-3 text-xs font-mono text-slate-200 overflow-x-auto leading-relaxed"><code
+						>{card.codeSnippet.code}</code
+					></pre>
 			</div>
 		{/if}
 
 		<!-- Interview Tip Box -->
 		{#if card.interviewTip}
-			<div class="mt-4 p-3 rounded-lg bg-cyan-950/25 border border-cyan-500/30 text-xs text-cyan-200/95 leading-relaxed flex items-start gap-2.5">
+			<div
+				class="mt-4 p-3 rounded-lg bg-cyan-950/25 border border-cyan-500/30 text-xs text-cyan-200/95 leading-relaxed flex items-start gap-2.5"
+			>
 				<Lightbulb class="w-4 h-4 text-cyan-400 shrink-0 mt-0.5" />
 				<div>
 					<span class="font-bold text-cyan-300 block mb-0.5">Порада для співбесіди:</span>

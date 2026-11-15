@@ -116,7 +116,6 @@
 				</div>
 			</div>
 		</div>
-
 	{:else if slide.layout === 'custom-m3'}
 		<!-- 3-column layout matching Screenshot 102104 -->
 		<div class="grid grid-cols-1 md:grid-cols-3 gap-2.5 h-full items-stretch">
@@ -133,18 +132,21 @@
 			</div>
 
 			<!-- Col 2: Test Design Techniques -->
-			<div class="border border-cyan-400 bg-black/80 rounded-lg p-3 text-xs text-white flex flex-col">
+			<div
+				class="border border-cyan-400 bg-black/80 rounded-lg p-3 text-xs text-white flex flex-col"
+			>
 				<h3 class="font-bold text-sm text-cyan-300 mb-2">{slide.cards[2]?.title}</h3>
 				{@html highlightText(slide.cards[2]?.contentHtml || '', searchQuery)}
 			</div>
 
 			<!-- Col 3: Severity vs Priority -->
-			<div class="border border-cyan-400 bg-black/80 rounded-lg p-3 text-xs text-white flex flex-col">
+			<div
+				class="border border-cyan-400 bg-black/80 rounded-lg p-3 text-xs text-white flex flex-col"
+			>
 				<h3 class="font-bold text-sm text-cyan-300 mb-2">{slide.cards[3]?.title}</h3>
 				{@html highlightText(slide.cards[3]?.contentHtml || '', searchQuery)}
 			</div>
 		</div>
-
 	{:else if slide.layout === 'custom-m4'}
 		<!-- 3-column layout matching Screenshot 102107 -->
 		<div class="grid grid-cols-1 md:grid-cols-3 gap-2.5 h-full items-stretch">
@@ -161,18 +163,21 @@
 			</div>
 
 			<!-- Col 2: Defect / Error / Bug / Failure -->
-			<div class="border border-cyan-400 bg-black/80 rounded-lg p-3 text-xs text-white flex flex-col">
+			<div
+				class="border border-cyan-400 bg-black/80 rounded-lg p-3 text-xs text-white flex flex-col"
+			>
 				<h3 class="font-bold text-sm text-cyan-300 mb-2">{slide.cards[2]?.title}</h3>
 				{@html highlightText(slide.cards[2]?.contentHtml || '', searchQuery)}
 			</div>
 
 			<!-- Col 3: Bug Report -->
-			<div class="border border-cyan-400 bg-black/80 rounded-lg p-3 text-xs text-white flex flex-col">
+			<div
+				class="border border-cyan-400 bg-black/80 rounded-lg p-3 text-xs text-white flex flex-col"
+			>
 				<h3 class="font-bold text-sm text-cyan-300 mb-2">{slide.cards[3]?.title}</h3>
 				{@html highlightText(slide.cards[3]?.contentHtml || '', searchQuery)}
 			</div>
 		</div>
-
 	{:else if slide.layout === 'custom-solid'}
 		<!-- 2-column layout matching Screenshot 102131 (SOLID) -->
 		<div class="grid grid-cols-1 md:grid-cols-2 gap-2.5 h-full items-stretch">
@@ -204,12 +209,13 @@
 				</div>
 			</div>
 		</div>
-
 	{:else if slide.layout === 'grid-2'}
 		<!-- 2-column layout for standard 2-card slides -->
 		<div class="grid grid-cols-1 md:grid-cols-2 gap-2.5 h-full items-stretch">
 			{#each slide.cards as card}
-				<div class="border border-cyan-400 bg-black/80 rounded-lg p-3 lg:p-4 text-xs text-white flex flex-col">
+				<div
+					class="border border-cyan-400 bg-black/80 rounded-lg p-3 lg:p-4 text-xs text-white flex flex-col"
+				>
 					{#if card.title}
 						<h3 class="font-bold text-sm text-cyan-300 mb-2 leading-tight">
 							{@html highlightText(card.title, searchQuery)}
@@ -221,12 +227,13 @@
 				</div>
 			{/each}
 		</div>
-
 	{:else}
 		<!-- 1-card full slide (grid-1) -->
 		<div class="h-full flex flex-col">
 			{#each slide.cards as card}
-				<div class="border border-cyan-400 bg-black/80 rounded-lg p-3 lg:p-4 text-xs text-white h-full flex flex-col">
+				<div
+					class="border border-cyan-400 bg-black/80 rounded-lg p-3 lg:p-4 text-xs text-white h-full flex flex-col"
+				>
 					{#if card.title}
 						<h3 class="font-bold text-base text-cyan-300 mb-2 leading-tight">
 							{@html highlightText(card.title, searchQuery)}

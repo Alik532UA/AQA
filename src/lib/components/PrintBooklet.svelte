@@ -10,8 +10,12 @@
 
 <div class="print-booklet-container hidden print:block bg-white text-black p-4">
 	<!-- Cover Page -->
-	<section class="print-page flex flex-col justify-center items-center text-center min-h-[90vh] p-8 border-4 border-slate-900 rounded-2xl mb-8">
-		<div class="mb-4 inline-block px-4 py-1 rounded-full border border-slate-700 text-xs font-mono font-bold tracking-widest uppercase">
+	<section
+		class="print-page flex flex-col justify-center items-center text-center min-h-[90vh] p-8 border-4 border-slate-900 rounded-2xl mb-8"
+	>
+		<div
+			class="mb-4 inline-block px-4 py-1 rounded-full border border-slate-700 text-xs font-mono font-bold tracking-widest uppercase"
+		>
 			Comprehensive Interview Guide • .NET & ISTQB
 		</div>
 		<h1 class="text-4xl font-extrabold text-slate-950 mb-3 tracking-tight">
@@ -25,12 +29,16 @@
 
 		<!-- Table of Contents -->
 		<div class="w-full max-w-xl text-left bg-slate-50 border border-slate-300 rounded-xl p-6">
-			<h3 class="text-sm font-bold uppercase tracking-wider text-slate-800 mb-4 pb-2 border-b border-slate-200">
+			<h3
+				class="text-sm font-bold uppercase tracking-wider text-slate-800 mb-4 pb-2 border-b border-slate-200"
+			>
 				Зміст друкованого буклету
 			</h3>
 			<div class="grid grid-cols-1 md:grid-cols-3 gap-x-4 gap-y-3 text-[11px]">
 				<div>
-					<p class="font-bold text-slate-900 mb-1 border-b border-slate-300 pb-0.5">Manual QA (M):</p>
+					<p class="font-bold text-slate-900 mb-1 border-b border-slate-300 pb-0.5">
+						Manual QA (M):
+					</p>
 					<ol class="list-decimal list-inside space-y-0.5 text-slate-700">
 						<li>Основи тестування & STLC</li>
 						<li>Види (типи) тестування</li>
@@ -40,7 +48,9 @@
 					</ol>
 				</div>
 				<div>
-					<p class="font-bold text-slate-900 mb-1 border-b border-slate-300 pb-0.5">Automation QA (A):</p>
+					<p class="font-bold text-slate-900 mb-1 border-b border-slate-300 pb-0.5">
+						Automation QA (A):
+					</p>
 					<ol class="list-decimal list-inside space-y-0.5 text-slate-700" start="6">
 						<li>CI/CD Practices</li>
 						<li>Design Principles & Approaches</li>
@@ -56,7 +66,9 @@
 					</ol>
 				</div>
 				<div>
-					<p class="font-bold text-emerald-800 mb-1 border-b border-emerald-300 pb-0.5">Senior Consultant (C):</p>
+					<p class="font-bold text-emerald-800 mb-1 border-b border-emerald-300 pb-0.5">
+						Senior Consultant (C):
+					</p>
 					<ol class="list-decimal list-inside space-y-0.5 text-slate-700" start="17">
 						<li>Consulting Strategy & PoC</li>
 						<li>Electron vs Native Windows</li>
@@ -79,12 +91,29 @@
 
 	<!-- All Slides Pages -->
 	{#each slides as slide, idx}
-		<section class="print-page min-h-[92vh] flex flex-col justify-between p-6 border-2 border-slate-800 rounded-xl mb-8 bg-white">
+		<section
+			class="print-page min-h-[92vh] flex flex-col justify-between p-6 border-2 border-slate-800 rounded-xl mb-8 bg-white"
+		>
 			<!-- Slide Header -->
 			<header class="pb-3 mb-4 border-b-2 border-slate-900 flex items-center justify-between">
 				<div>
-					<span class="inline-block px-2 py-0.5 rounded text-[10px] font-mono font-bold uppercase border border-slate-700 {slide.category === 'M' ? 'bg-slate-100 text-slate-800' : slide.category === 'A' ? 'bg-slate-800 text-white' : slide.category === 'C' ? 'bg-emerald-800 text-white' : 'bg-sky-800 text-white'}">
-						{slide.category === 'M' ? 'Manual QA' : slide.category === 'A' ? 'Automation QA' : slide.category === 'C' ? 'Senior AQA Consultant' : 'Middle Flutter QA (Nayax)'}
+					<span
+						class="inline-block px-2 py-0.5 rounded text-[10px] font-mono font-bold uppercase border border-slate-700 {slide.category ===
+						'M'
+							? 'bg-slate-100 text-slate-800'
+							: slide.category === 'A'
+								? 'bg-slate-800 text-white'
+								: slide.category === 'C'
+									? 'bg-emerald-800 text-white'
+									: 'bg-sky-800 text-white'}"
+					>
+						{slide.category === 'M'
+							? 'Manual QA'
+							: slide.category === 'A'
+								? 'Automation QA'
+								: slide.category === 'C'
+									? 'Senior AQA Consultant'
+									: 'Middle Flutter QA (Nayax)'}
 					</span>
 					<h2 class="text-xl font-bold text-slate-950 mt-1">
 						{slide.menuTitle}
@@ -101,7 +130,15 @@
 			</header>
 
 			<!-- Slide Cards Grid -->
-			<div class="flex-1 grid {slide.layout === 'custom-m1' || slide.layout === 'custom-m3' || slide.layout === 'custom-m4' ? 'grid-cols-3' : slide.layout === 'grid-1' ? 'grid-cols-1' : 'grid-cols-2'} gap-3 text-[11px] leading-relaxed">
+			<div
+				class="flex-1 grid {slide.layout === 'custom-m1' ||
+				slide.layout === 'custom-m3' ||
+				slide.layout === 'custom-m4'
+					? 'grid-cols-3'
+					: slide.layout === 'grid-1'
+						? 'grid-cols-1'
+						: 'grid-cols-2'} gap-3 text-[11px] leading-relaxed"
+			>
 				{#each slide.cards as card}
 					<div class="border border-slate-400 rounded-lg p-3 bg-slate-50/50 flex flex-col">
 						{#if card.title}
@@ -117,7 +154,9 @@
 			</div>
 
 			<!-- Slide Footer -->
-			<footer class="pt-3 mt-4 border-t border-slate-200 flex items-center justify-between text-[10px] text-slate-500 font-mono">
+			<footer
+				class="pt-3 mt-4 border-t border-slate-200 flex items-center justify-between text-[10px] text-slate-500 font-mono"
+			>
 				<span>QA Interview Cheat Sheet</span>
 				<span>{slide.menuTitle}</span>
 				<span>Стор. {idx + 2}</span>

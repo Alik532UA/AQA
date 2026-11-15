@@ -67,13 +67,34 @@ export const qaCards: QACard[] = [
 		tags: ['Етапи', 'SDLC', 'Процеси'],
 		concepts: [
 			{ title: '1. Product analysis', desc: 'Глибокий аналіз предметної області та продукту.' },
-			{ title: '2. Working with Requirements', desc: 'Аналіз вимог на повноту, несуперечливість, однозначність та тестованість.' },
-			{ title: '3. Strategy & Planning', desc: 'Розробка тестової стратегії та планування процедур контролю якості.' },
-			{ title: '4. Test Documentation', desc: 'Створення чек-листів, тест-кейсів, матриць трасування (RTM).' },
-			{ title: '5. Prototype testing', desc: 'Тестування прототипів, ранніх концепцій та UI/UX макетів.' },
-			{ title: '6. Basic testing', desc: 'Основний раунд виконання тест-кейсів (димове, функціональне, інтеграційне).' },
-			{ title: '7. Stabilization', desc: 'Регресійне тестування, ре-тести, підтвердження виправлених багів перед релізом.' },
-			{ title: '8. Exploitation', desc: 'Підтримка у продакшені, пост-релізні перевірки, аналіз відгуків користувачів.' }
+			{
+				title: '2. Working with Requirements',
+				desc: 'Аналіз вимог на повноту, несуперечливість, однозначність та тестованість.'
+			},
+			{
+				title: '3. Strategy & Planning',
+				desc: 'Розробка тестової стратегії та планування процедур контролю якості.'
+			},
+			{
+				title: '4. Test Documentation',
+				desc: 'Створення чек-листів, тест-кейсів, матриць трасування (RTM).'
+			},
+			{
+				title: '5. Prototype testing',
+				desc: 'Тестування прототипів, ранніх концепцій та UI/UX макетів.'
+			},
+			{
+				title: '6. Basic testing',
+				desc: 'Основний раунд виконання тест-кейсів (димове, функціональне, інтеграційне).'
+			},
+			{
+				title: '7. Stabilization',
+				desc: 'Регресійне тестування, ре-тести, підтвердження виправлених багів перед релізом.'
+			},
+			{
+				title: '8. Exploitation',
+				desc: 'Підтримка у продакшені, пост-релізні перевірки, аналіз відгуків користувачів.'
+			}
 		]
 	},
 	{
@@ -90,12 +111,30 @@ export const qaCards: QACard[] = [
 			'В Agile-підходах STLC є ітеративним та інкрементальним: тестування йде паралельно з розробкою в кожному спринті.'
 		],
 		concepts: [
-			{ title: 'Планування тестування', desc: 'Визначення цілей, обсягу робіт, критеріїв початку/завершення, оцінка ризиків та ресурсів.' },
-			{ title: 'Аналіз вимог', desc: 'Оцінка специфікації вимог, виявлення прогалин, створення переліку об’єктів тестування.' },
-			{ title: 'Дизайн тестів (Test Design)', desc: 'Розробка сценаріїв перевірки, тестових наборів, підготовка тестових даних.' },
-			{ title: 'Виконання тестів (Execution)', desc: 'Запуск тестів, документування результатів, заведення баг-репортів.' },
-			{ title: 'Аналіз результатів', desc: 'Аналіз знайдених дефектів, класифікація за критичністю, відстеження статусів.' },
-			{ title: 'Закриття тестування (Test Closure)', desc: 'Підготовка фінального звіту (Test Summary Report), аналіз метрик і уроків спринта.' }
+			{
+				title: 'Планування тестування',
+				desc: 'Визначення цілей, обсягу робіт, критеріїв початку/завершення, оцінка ризиків та ресурсів.'
+			},
+			{
+				title: 'Аналіз вимог',
+				desc: 'Оцінка специфікації вимог, виявлення прогалин, створення переліку об’єктів тестування.'
+			},
+			{
+				title: 'Дизайн тестів (Test Design)',
+				desc: 'Розробка сценаріїв перевірки, тестових наборів, підготовка тестових даних.'
+			},
+			{
+				title: 'Виконання тестів (Execution)',
+				desc: 'Запуск тестів, документування результатів, заведення баг-репортів.'
+			},
+			{
+				title: 'Аналіз результатів',
+				desc: 'Аналіз знайдених дефектів, класифікація за критичністю, відстеження статусів.'
+			},
+			{
+				title: 'Закриття тестування (Test Closure)',
+				desc: 'Підготовка фінального звіту (Test Summary Report), аналіз метрик і уроків спринта.'
+			}
 		],
 		interviewTip:
 			'Вас запитають: «Чим STLC відрізняється від SDLC?». STLC — це підмножина SDLC, що фокусується суто на активностях тестування якості.'
@@ -113,8 +152,14 @@ export const qaCards: QACard[] = [
 			'Дає відповіді на 6 ключових питань: Що потрібно тестувати? Що (по факту) будемо тестувати? Як будемо тестувати? Коли будемо тестувати? Критерії початку? Критерії закінчення?'
 		],
 		concepts: [
-			{ title: 'Критерії початку (Entry Criteria)', desc: 'Умови, за яких починається тестування (наприклад, білд розгорнуто, димовий тест пройдено, документація готова).' },
-			{ title: 'Критерії закінчення (Exit Criteria)', desc: 'Умови завершення тестування (наприклад, 100% тестів виконано, 0 блокуючих або критичних багів, тест-покриття досягнуто).' }
+			{
+				title: 'Критерії початку (Entry Criteria)',
+				desc: 'Умови, за яких починається тестування (наприклад, білд розгорнуто, димовий тест пройдено, документація готова).'
+			},
+			{
+				title: 'Критерії закінчення (Exit Criteria)',
+				desc: 'Умови завершення тестування (наприклад, 100% тестів виконано, 0 блокуючих або критичних багів, тест-покриття досягнуто).'
+			}
 		]
 	},
 	{
@@ -130,14 +175,32 @@ export const qaCards: QACard[] = [
 			{ title: 'A. Test plan identifier', desc: 'Унікальний ідентифікатор документу та версія.' },
 			{ title: 'B. Introduction', desc: 'Вступ, цілі та огляд проекту.' },
 			{ title: 'C. Test items', desc: 'Тестові об’єкти (модулі, компоненти, релізи).' },
-			{ title: 'D. Features to be tested', desc: 'Функціонал та характеристики, що підлягають перевірці (In Scope).' },
-			{ title: 'E. Features not to be tested', desc: 'Функції, які НЕ підлягають тестуванню (Out of Scope).' },
+			{
+				title: 'D. Features to be tested',
+				desc: 'Функціонал та характеристики, що підлягають перевірці (In Scope).'
+			},
+			{
+				title: 'E. Features not to be tested',
+				desc: 'Функції, які НЕ підлягають тестуванню (Out of Scope).'
+			},
 			{ title: 'F. Approach', desc: 'Загальний підхід, методологія та рівні тестування.' },
-			{ title: 'G. Item pass/fail criteria', desc: 'Критерії проходження/непроходження для кожного пункту.' },
-			{ title: 'H. Suspension & resumption', desc: 'Критерії призупинення робіт та вимоги до відновлення.' },
-			{ title: 'I. Test deliverables', desc: 'Артефакти тестування (тест-кейси, баг-репорти, звіт про тестування).' },
+			{
+				title: 'G. Item pass/fail criteria',
+				desc: 'Критерії проходження/непроходження для кожного пункту.'
+			},
+			{
+				title: 'H. Suspension & resumption',
+				desc: 'Критерії призупинення робіт та вимоги до відновлення.'
+			},
+			{
+				title: 'I. Test deliverables',
+				desc: 'Артефакти тестування (тест-кейси, баг-репорти, звіт про тестування).'
+			},
 			{ title: 'J. Testing tasks', desc: 'Завдання та задачі для команди.' },
-			{ title: 'K. Environmental needs', desc: 'Вимоги до оточення (сервери, залізо, ОС, браузери, ліцензії).' },
+			{
+				title: 'K. Environmental needs',
+				desc: 'Вимоги до оточення (сервери, залізо, ОС, браузери, ліцензії).'
+			},
 			{ title: 'L. Responsibilities', desc: 'Матриця відповідальності ролей у команді.' },
 			{ title: 'M. Staffing & training', desc: 'Потреби в кадрах та навчанні персоналу.' },
 			{ title: 'N. Schedule', desc: 'Календарний графік та дедлайни етапів.' },
@@ -209,8 +272,7 @@ export const qaCards: QACard[] = [
 		section: 'Види та техніки',
 		title: 'Верифікація / Валідація (V&V)',
 		subtitle: 'Verification vs Validation',
-		summary:
-			'Дві фундаментальні концепції забезпечення якості з різним вектором перевірки.',
+		summary: 'Дві фундаментальні концепції забезпечення якості з різним вектором перевірки.',
 		tags: ['V&V', 'IEEE', 'Концепції'],
 		concepts: [
 			{
@@ -348,14 +410,29 @@ PostConditions: Вийти з акаунту (Logout)
 			'Документ, що описує ситуацію та послідовність дій, які призвели до некоректної поведінки системи, з точним описом фактичного та очікуваного результатів.',
 		tags: ['Jira', 'Баг-репорт', 'Шаблон'],
 		concepts: [
-			{ title: 'Summary (Заголовок)', desc: 'Формула: Що? Де? Коли? (Коротко, інформативно, однозначно).' },
+			{
+				title: 'Summary (Заголовок)',
+				desc: 'Формула: Що? Де? Коли? (Коротко, інформативно, однозначно).'
+			},
 			{ title: 'Project / Component', desc: 'Назва проєкту та конкретного модулю/сервісу.' },
-			{ title: 'Version / Environment', desc: 'Версія білда, ОС, браузер + версія, дозвіл екрану, девайс.' },
-			{ title: 'Severity & Priority', desc: 'Технічна критичність (S1-S5) та черговість виправлення (P1-P3).' },
-			{ title: 'Steps to Reproduce', desc: 'Нумеровані мінімально достатні кроки для повторення помилки.' },
+			{
+				title: 'Version / Environment',
+				desc: 'Версія білда, ОС, браузер + версія, дозвіл екрану, девайс.'
+			},
+			{
+				title: 'Severity & Priority',
+				desc: 'Технічна критичність (S1-S5) та черговість виправлення (P1-P3).'
+			},
+			{
+				title: 'Steps to Reproduce',
+				desc: 'Нумеровані мінімально достатні кроки для повторення помилки.'
+			},
 			{ title: 'Actual Result', desc: 'Що насправді сталося (фактична поведінка програми).' },
 			{ title: 'Expected Result', desc: 'Як система повинна поводитися згідно з вимогами.' },
-			{ title: 'Attachments', desc: 'Скріншоти з виділеними помилками, відеозапис, логи консолі, мережеві дампи (HAR).' }
+			{
+				title: 'Attachments',
+				desc: 'Скріншоти з виділеними помилками, відеозапис, логи консолі, мережеві дампи (HAR).'
+			}
 		]
 	},
 	{
@@ -408,9 +485,18 @@ PostConditions: Вийти з акаунту (Logout)
 			'DRY (Don’t Repeat Yourself), KISS (Keep It Simple, Stupid), YAGNI (You Aren’t Gonna Need It).'
 		],
 		concepts: [
-			{ title: 'Data-Driven Testing (DDT)', desc: 'Відокремлення тестових даних (CSV, JSON, DB) від коду тесту для багаторазового прогону з різними наборами.' },
-			{ title: 'Keyword-Driven Testing (KDT)', desc: 'Опис дій за допомогою ключових слів (Click, Type, Verify), зрозумілих нетехнічним спеціалістам.' },
-			{ title: 'Behavior-Driven Development (BDD)', desc: 'Опис поведінки системи мовою Gherkin (Given-When-Then), наприклад SpecFlow / Reqnroll.' }
+			{
+				title: 'Data-Driven Testing (DDT)',
+				desc: 'Відокремлення тестових даних (CSV, JSON, DB) від коду тесту для багаторазового прогону з різними наборами.'
+			},
+			{
+				title: 'Keyword-Driven Testing (KDT)',
+				desc: 'Опис дій за допомогою ключових слів (Click, Type, Verify), зрозумілих нетехнічним спеціалістам.'
+			},
+			{
+				title: 'Behavior-Driven Development (BDD)',
+				desc: 'Опис поведінки системи мовою Gherkin (Given-When-Then), наприклад SpecFlow / Reqnroll.'
+			}
 		]
 	},
 	{
@@ -491,10 +577,22 @@ public class BaseTest {
 			'Набір стандартів, інструментів, бібліотек і практик, які надають єдину структуру для створення, запуску та аналізу автоматизованих тестів.',
 		tags: ['Framework', 'Architecture', 'NUnit', 'Playwright'],
 		concepts: [
-			{ title: 'Тестові скрипти (Test Scripts)', desc: 'Набір тестів з асертами (NUnit, xUnit, MSTest).' },
-			{ title: 'Тестові дані (Test Data)', desc: 'Керування параметрами (JSON, Faker, DB fixtures).' },
-			{ title: 'Page Objects / UI Locators', desc: 'Ізоляція веб-елементів та методів взаємодії з ними.' },
-			{ title: 'Звітність (Reporting & Logging)', desc: 'Інтеграція з Allure Reports, ExtentReports або консольними логами.' },
+			{
+				title: 'Тестові скрипти (Test Scripts)',
+				desc: 'Набір тестів з асертами (NUnit, xUnit, MSTest).'
+			},
+			{
+				title: 'Тестові дані (Test Data)',
+				desc: 'Керування параметрами (JSON, Faker, DB fixtures).'
+			},
+			{
+				title: 'Page Objects / UI Locators',
+				desc: 'Ізоляція веб-елементів та методів взаємодії з ними.'
+			},
+			{
+				title: 'Звітність (Reporting & Logging)',
+				desc: 'Інтеграція з Allure Reports, ExtentReports або консольними логами.'
+			},
 			{ title: 'CI/CD runner', desc: 'Можливість запуску в headless режимі у контейнерах Docker.' }
 		],
 		points: [
@@ -513,9 +611,15 @@ public class BaseTest {
 		concepts: [
 			{ title: 'Web Applications', desc: 'Selenium WebDriver, Playwright for .NET, Cypress.' },
 			{ title: 'API Services', desc: 'RestSharp, HttpClient, Postman, Flurl.Http.' },
-			{ title: 'Desktop Applications', desc: 'WinAppDriver, Microsoft UI Automation (UIA3), FlaUI.' },
+			{
+				title: 'Desktop Applications',
+				desc: 'WinAppDriver, Microsoft UI Automation (UIA3), FlaUI.'
+			},
 			{ title: 'Mobile Testing', desc: 'Appium (кросплатформно для iOS та Android).' },
-			{ title: 'Database Validation', desc: 'Entity Framework Core, Dapper для прямої валідації даних.' }
+			{
+				title: 'Database Validation',
+				desc: 'Entity Framework Core, Dapper для прямої валідації даних.'
+			}
 		],
 		interviewTip:
 			'Типові питання: «Чому Playwright стає популярнішим за Selenium?» (Вбудовані авто-очікування, швидкість через CDP протокол, перехоплення мережевих запитів).'
@@ -577,10 +681,22 @@ public class LoginPage {
 			'Сукупність програмних та апаратних засобів, що забезпечують стабільне, ізольоване та паралельне виконання автоматизованих тестів.',
 		tags: ['Docker', 'Grid', 'DevOps', 'Infrastructure'],
 		concepts: [
-			{ title: 'Тестові середовища (Test Envs)', desc: 'Ізоляція (Dev, QA, Staging), відтворюваність та налаштування конфігурацій.' },
-			{ title: 'Контейнеризація', desc: 'Docker та Kubernetes — запуск браузерів у легких контейнерах без візуального інтерфейсу.' },
-			{ title: 'Розподілені гріди (Selenium Grid / Selenoid / Moon)', desc: 'Паралельний запуск сотень тестів на кластері машин.' },
-			{ title: 'Device Farms', desc: 'Хмарні ферми реальних пристроїв для мобільного тестування (BrowserStack, SauceLabs).' }
+			{
+				title: 'Тестові середовища (Test Envs)',
+				desc: 'Ізоляція (Dev, QA, Staging), відтворюваність та налаштування конфігурацій.'
+			},
+			{
+				title: 'Контейнеризація',
+				desc: 'Docker та Kubernetes — запуск браузерів у легких контейнерах без візуального інтерфейсу.'
+			},
+			{
+				title: 'Розподілені гріди (Selenium Grid / Selenoid / Moon)',
+				desc: 'Паралельний запуск сотень тестів на кластері машин.'
+			},
+			{
+				title: 'Device Farms',
+				desc: 'Хмарні ферми реальних пристроїв для мобільного тестування (BrowserStack, SauceLabs).'
+			}
 		]
 	},
 	{
@@ -623,14 +739,32 @@ public class LoginPage {
 			'Розподілена система контролю версій для відстеження змін у коді, співпраці та управління гілками в тестовому проєкті.',
 		tags: ['Git', 'VCS', 'Команди', 'Workflow'],
 		concepts: [
-			{ title: 'git init / clone', desc: 'Ініціалізація нового або клонування віддаленого репозиторію.' },
-			{ title: 'git add & commit -m', desc: 'Індексація файлів та фіксація змін у локальному репозиторії.' },
+			{
+				title: 'git init / clone',
+				desc: 'Ініціалізація нового або клонування віддаленого репозиторію.'
+			},
+			{
+				title: 'git add & commit -m',
+				desc: 'Індексація файлів та фіксація змін у локальному репозиторії.'
+			},
 			{ title: 'git status & diff', desc: 'Перегляд змінених файлів та конкретних рядків коду.' },
-			{ title: 'git branch & checkout -b', desc: 'Створення нової гілки (наприклад, feature/cart-tests).' },
-			{ title: 'git push & pull', desc: 'Відправка локальних комітів на сервер та отримання оновлень з віддаленого репозиторію.' },
-			{ title: 'git merge & rebase', desc: 'Злиття змін між гілками або перебазування комітів поверх поточної гілки.' },
+			{
+				title: 'git branch & checkout -b',
+				desc: 'Створення нової гілки (наприклад, feature/cart-tests).'
+			},
+			{
+				title: 'git push & pull',
+				desc: 'Відправка локальних комітів на сервер та отримання оновлень з віддаленого репозиторію.'
+			},
+			{
+				title: 'git merge & rebase',
+				desc: 'Злиття змін між гілками або перебазування комітів поверх поточної гілки.'
+			},
 			{ title: 'git stash & pop', desc: 'Тимчасове збереження незавершених змін без коміту.' },
-			{ title: 'git reset --hard', desc: 'Відкат змін до зазначеного коміту (обережно: видаляє зміни).' }
+			{
+				title: 'git reset --hard',
+				desc: 'Відкат змін до зазначеного коміту (обережно: видаляє зміни).'
+			}
 		],
 		codeSnippet: {
 			language: 'bash',
@@ -655,10 +789,22 @@ git push -u origin feature/login-page-tests
 			'Принципи зберігання даних програми, різновиди сховищ та стратегії створення якісних тестових даних для автоматизації.',
 		tags: ['SQL', 'NoSQL', 'TDM', 'Databases'],
 		concepts: [
-			{ title: 'Реляційні бази даних (RDBMS)', desc: 'Таблиці, ключі (Primary/Foreign), зв’язки (One-to-Many, Many-to-Many): PostgreSQL, MS SQL Server, MySQL.' },
-			{ title: 'NoSQL сховища', desc: 'Документні (MongoDB), Key-Value (Redis), Графові (Neo4j) бази для високонавантажених даних.' },
-			{ title: 'Сховища даних (Data Warehouses)', desc: 'OLAP, ETL-процеси, агреговані великі дані (Snowflake, BigQuery).' },
-			{ title: 'Test Data Management (TDM)', desc: 'Генерація фейкових даних (бібліотеки Bogus / Faker), очищення даних після тестів (TearDown / DB cleanup), маскування конфіденційної інформації.' }
+			{
+				title: 'Реляційні бази даних (RDBMS)',
+				desc: 'Таблиці, ключі (Primary/Foreign), зв’язки (One-to-Many, Many-to-Many): PostgreSQL, MS SQL Server, MySQL.'
+			},
+			{
+				title: 'NoSQL сховища',
+				desc: 'Документні (MongoDB), Key-Value (Redis), Графові (Neo4j) бази для високонавантажених даних.'
+			},
+			{
+				title: 'Сховища даних (Data Warehouses)',
+				desc: 'OLAP, ETL-процеси, агреговані великі дані (Snowflake, BigQuery).'
+			},
+			{
+				title: 'Test Data Management (TDM)',
+				desc: 'Генерація фейкових даних (бібліотеки Bogus / Faker), очищення даних після тестів (TearDown / DB cleanup), маскування конфіденційної інформації.'
+			}
 		]
 	},
 	{

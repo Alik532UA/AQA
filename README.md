@@ -1,56 +1,65 @@
-# sv
+# AQA Interview Dashboard & Presentation Platform
 
-Everything you need to build a Svelte project, powered by [`sv`](https://github.com/sveltejs/cli).
+> Інтерактивний веб-дашборд, база знань та презентаційна шпаргалка для підготовки до технічних співбесід за напрямками QA (Manual QA, Test Automation .NET, Senior Consultant, Flutter/Mobile QA).
 
-## Creating a project
+---
 
-If you're seeing this, you've probably already done this step. Congrats!
+## 🚀 Стек технологій
 
-```sh
-# create a new project
-npx sv create my-app
-```
+- **Frontend**: [SvelteKit 3](https://svelte.dev/) + [Svelte 5](https://svelte.dev/docs/svelte/overview) (виключно Runes)
+- **Стилізація**: [Tailwind CSS 4](https://tailwindcss.com/)
+- **Типізація**: TypeScript 6 (`strict: true`)
+- **Іконки**: `@lucide/svelte`
+- **Тестування**: [Vitest](https://vitest.dev/)
+- **Якість коду**: ESLint 10 + Prettier 3
+- **Збірка**: `@sveltejs/adapter-static` (Single Page Application для GitHub Pages)
 
-To recreate this project with the same configuration:
+---
 
-```sh
-# recreate this project
-npx sv@1.1.1 create --template minimal --types ts --add tailwindcss="plugins:none" --install npm ./
-```
+## 📂 Категорії підготовки
 
-## Adding features
+- **`M` — Manual QA**: теорія тестування, STLC, тест-дизайн, валідація vs верифікація, чек-листи, баг-репорти.
+- **`A` — Automation QA (.NET / C#)**: архітектура фреймворків, Page Object, Factory, SOLID, CI/CD, SQL.
+- **`C` — Senior Consultant**: 4-тижнева стратегія консалтингу, демаркація Playwright vs FlaUI, тестування апдейтів (MSI/NSIS), Session 0 bypass.
+- **`F` — Middle Flutter QA (Nayax Retail)**: MDB/DEX вендингова телеметрія, архітектура Flutter, ADB/Logcat, iOS logs, Charles Proxy / SSL Pinning.
 
-Add features to your project with `sv add`:
+---
 
-```sh
-npx sv add
-```
+## 🛠 Команди розробника
 
-For example, to add Tailwind CSS:
+```bash
+# Встановлення залежностей
+npm install
 
-```sh
-npx sv add tailwindcss
-```
-
-## Developing
-
-Once you've created a project and installed dependencies with `npm install` (or `pnpm install` or `yarn`), start a development server:
-
-```sh
+# Запуск локального dev-сервера
 npm run dev
 
-# or start the server and open the app in a new browser tab
-npm run dev -- --open
-```
+# Перевірка типів
+npm run check
 
-## Building
+# Перевірка стилю та форматування
+npm run lint
 
-To create a production version of your app:
+# Автоматичне виправлення форматування
+npm run format
 
-```sh
+# Запуск тестів
+npm test
+
+# Перевірка безпеки залежностей
+npm run audit:ci
+
+# Збірка релізного SPA-пакета
 npm run build
+
+# Експорт усіх слайдів у Markdown
+npm run export:slides
 ```
 
-You can preview the production build with `npm run preview`.
+---
 
-> To deploy your app, you may need to install an [adapter](https://svelte.dev/docs/kit/adapters) for your target environment.
+## 🛡 Безпека та надійність
+
+- Повне екранування тексту `escapeHtml()` у пошуковій підсвітці карток (`Card.svelte`) для захисту від XSS.
+- Content-Security-Policy (CSP) директиви у `src/app.html`.
+- Межа помилок `<svelte:boundary>` для захисту інтерфейсу від збоїв рендерингу.

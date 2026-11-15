@@ -42,8 +42,8 @@ export function slideToMarkdown(slide: Slide): string {
 				.replace(/<p[^>]*>(.*?)<\/p>/gi, '$1\n\n')
 				.replace(/<div[^>]*>/gi, '\n')
 				.replace(/<\/div>/gi, '\n')
-				.replace(/<br\s*[\/]?>/gi, '\n')
-				.replace(/<hr\s*[\/]?>/gi, '\n---\n\n')
+				.replace(/<br\s*\/?>/gi, '\n')
+				.replace(/<hr\s*\/?>/gi, '\n---\n\n')
 				// Remove remaining tags
 				.replace(/<[^>]+>/g, '')
 				// Decode HTML entities

@@ -44,9 +44,7 @@
 <aside
 	class="fixed top-0 bottom-0 left-0 z-50 w-72 md:w-80 bg-black border-r border-cyan-950 flex flex-col justify-between transition-transform duration-300 ease-in-out {isCollapsed
 		? 'lg:-translate-x-full'
-		: 'lg:translate-x-0'} {isMobileOpen
-		? 'translate-x-0'
-		: '-translate-x-full'}"
+		: 'lg:translate-x-0'} {isMobileOpen ? 'translate-x-0' : '-translate-x-full'}"
 >
 	<!-- Top M / A / C Mode Switcher Bar -->
 	<div class="p-3 border-b border-cyan-950/60 bg-black relative">
@@ -218,7 +216,6 @@
 				<p class="font-bold text-white text-xs">Рівні тестування</p>
 				<p class="text-slate-400 text-[11px]">Levels of testing</p>
 			</button>
-
 		{:else if activeCategory === 'A'}
 			<!-- ================= AUTOMATION QA NAVIGATION ================= -->
 
@@ -363,7 +360,6 @@
 			>
 				<p class="font-bold text-white text-xs">SOLID</p>
 			</button>
-
 		{:else if activeCategory === 'C'}
 			<!-- ================= SENIOR CONSULTANT NAVIGATION ================= -->
 
@@ -483,7 +479,6 @@
 				<p class="font-bold text-white text-xs">Senior Consultant Interview Q&A</p>
 				<p class="text-emerald-400/80 text-[10px]">Топ питань та готові відповіді</p>
 			</button>
-
 		{:else}
 			<!-- ================= FLUTTER NAYAX QA NAVIGATION ================= -->
 
@@ -607,7 +602,9 @@
 	</nav>
 
 	<!-- Sidebar Footer -->
-	<div class="p-2 border-t border-cyan-950/60 bg-black text-[10px] font-mono text-cyan-600 text-center">
+	<div
+		class="p-2 border-t border-cyan-950/60 bg-black text-[10px] font-mono text-cyan-600 text-center"
+	>
 		<span>QA Presentation Dashboard</span>
 	</div>
 </aside>
