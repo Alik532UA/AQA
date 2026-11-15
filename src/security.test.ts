@@ -46,4 +46,16 @@ describe('Security Baseline (SECURITY-v10)', () => {
 		expect(appHtml).toContain("default-src 'self'");
 		expect(appHtml).toContain("font-src 'self'");
 	});
+
+	it('гарантує відсутність небезпечних інлайн-скриптів та обробників у даних слайдів', () => {
+		const categoriesDir = 'src/lib/data/categories';
+		const files = readdirSync(categoriesDir).filter((f) => f.endsWith('.ts'));
+		for (const file of files) {
+			const content = readFileSync(join(categoriesDir, file), 'utf8');
+			expect(content).not.toMatch(/<script\b/i);
+			expect(content).not.toMatch(/\bonerror\s*=/i);
+			expect(content).not.toMatch(/\bonload\s*=/i);
+			expect(content).not.toMatch(/javascript:/i);
+		}
+	});
 });

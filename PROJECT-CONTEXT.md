@@ -16,12 +16,12 @@
 | **Стек**                 | SvelteKit 3 + Svelte 5 (Runes) + Tailwind CSS 4 + TypeScript 6             | `package.json`, `src/routes/layout.css` |
 | **Хостинг та деплой**    | GitHub Pages (`adapter-static`), fallback: `404.html`                      | `vite.config.ts`, `.github/workflows/`  |
 | **Імпорти модулів**      | Subpath-імпорти: `#lib/*` (сумісність із `$lib/*`)                         | `package.json` (`imports`), `tsconfig`  |
-| **Категорії матеріалів** | 4 розділи: `M` (Manual), `A` (Automation), `C` (Consultant), `F` (Flutter) | `src/lib/data/slidesData.ts`            |
+| **Категорії матеріалів** | 4 модульні розділи: `manual.ts`, `automation.ts`, `consultant.ts`, `flutter.ts` | `src/lib/data/categories/`        |
 | **Експорт слайдів**      | Markdown генератор для конспекту та друку                                  | `scripts/export_all_slides.js`          |
 | **Безпека XSS**          | Суворе HTML-екранування перед підсвіткою пошуку                            | `src/lib/components/Card.svelte`        |
 | **Політика CSP**         | Мета-директива Content-Security-Policy                                     | `src/app.html`, `src/security.test.ts`  |
 | **Error Boundary**       | `<svelte:boundary>` + `ErrorFallback.svelte` + `hooks.client.ts`           | `src/routes/+layout.svelte`             |
-| **Контроль якості**      | ESLint 10 + Prettier 3 + svelte-check + Vitest unit-тести                  | `eslint.config.js`, `vitest.config.ts`  |
+| **Контроль якості**      | 14 Vitest тестів + Playwright E2E + @axe-core/playwright WCAG 2.2 AA       | `eslint.config.js`, `playwright.config.ts` |
 
 ---
 
@@ -84,7 +84,9 @@
 | `npm run check`         | Сувора перевірка типів TypeScript та синтаксису SvelteKit             |
 | `npm run lint`          | Перевірка стилю коду ESLint 10 та форматування Prettier 3             |
 | `npm run format`        | Автоматичне виправлення форматування коду                             |
-| `npm test`              | Запуск комплексу тестів Vitest (`security.test.ts`, `slides.test.ts`) |
+| `npm test`              | Запуск комплексу тестів Vitest (`security`, `categories`, `slides`, `markdownExporter`) |
+| `npm run test:e2e`      | Запуск Playwright E2E та валідація доступності @axe-core/playwright   |
+| `npm run bump`          | Автоматичний ESM бамп patch-версії та синхронізація артефактів        |
 | `npm run audit:ci`      | Аудит безпеки npm-залежностей на high/critical вразливості            |
 | `npm run build`         | Збірка статичного релізного SPA-пакета у папку `build/`               |
 | `npm run export:slides` | Генерація Markdown-конспекту в папку `slides-md/`                     |

@@ -62,6 +62,12 @@
 	box-shadow: 0 0 12px rgba(0, 240, 255, 0.3);
 }
 
+/* Accessible focus ring (WCAG 2.2 AA) */
+:focus-visible {
+	outline: 2px solid var(--color-cyber-cyan);
+	outline-offset: 3px;
+}
+
 @media print {
 	@page {
 		size: landscape;

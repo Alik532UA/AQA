@@ -1,9 +1,15 @@
 # AQA Interview Dashboard & Cheat Sheet
 
-> Інтерактивний дашборд та база знань для підготовки до технічних співбесід з тестування програмного забезпечення.
+> Інтерактивний дашборд та презентаційна база знань для підготовки до технічних співбесід з тестування програмного забезпечення.
 
 ## Категорії знань
-- Manual QA (Теорія тестування, рівні, типи, STLC, тест-дизайн)
-- Automation QA .NET / C# (Архітектура тестових рішень, патерни проектування, CI/CD)
-- Senior Consultant Desktop / Windows (Стратегія автоматизації, Playwright vs FlaUI, тестування оновлень)
-- Middle QA Mobile / Flutter (Мобільне тестування, Charles Proxy, Logcat, Xcode, платіжні протоколи Nayax)
+- **Manual QA (M)**: Теорія тестування, рівні, типи, STLC, тест-дизайн (еквівалентний поділ, граничні значення, pairwise), валідація vs верифікація, чек-листи, баг-репорти, Severity vs Priority.
+- **Automation QA .NET / C# (A)**: Архітектура тестових рішень, Page Object, Factory, SOLID, CI/CD пайплайни, SQL, Git branching, піраміди тестування.
+- **Senior Consultant Desktop / Windows (C)**: 4-тижнева стратегія автоматизації, Playwright vs FlaUI, тестування оновлень (MSI/NSIS), системний трей, Session 0 bypass у Windows CI, ADR.
+- **Middle QA Mobile / Flutter (F)**: Вендингова телеметрія MDB/DEX, архітектура Flutter (Dart, Impeller, Platform Channels), Android Studio/ADB, iOS Xcode Console / crash logs, Charles Proxy / SSL Pinning, Jira/Xray процеси.
+
+## Архітектура та можливості
+- **Стек**: SvelteKit 3 + Svelte 5 (Runes) + Tailwind CSS 4 + TypeScript 6
+- **Автоматизація експорту**: генератор конспектів у Markdown (`npm run export:slides`)
+- **Якість та доступність**: Vitest unit-тести + Playwright E2E з верифікацією доступності WCAG 2.2 AA (@axe-core/playwright)
+- **Безпека**: Content-Security-Policy мета-директива, санітизація пошуку escapeHtml, повна відсутність eval/new Function
