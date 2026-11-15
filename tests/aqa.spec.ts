@@ -14,12 +14,14 @@ test.describe('AQA Interview Dashboard E2E', () => {
 		expect(await cards.count()).toBeGreaterThan(0);
 	});
 
-	test('перемикає категорії M, A, C, F у бічному меню', async ({ page }) => {
+	test('перемикає категорії M, A, C, F, C# у бічному меню', async ({ page }) => {
 		await page.goto('/');
 
 		// Знаходимо кнопки перемикання категорій
-		const catButtons = page.locator('button:has-text("M"), button:has-text("A"), button:has-text("C"), button:has-text("F")');
-		expect(await catButtons.count()).toBeGreaterThanOrEqual(4);
+		const catButtons = page.locator(
+			'button:has-text("M"), button:has-text("A"), button:has-text("C"), button:has-text("F"), button:has-text("C#")'
+		);
+		expect(await catButtons.count()).toBeGreaterThanOrEqual(5);
 
 		// Клік по категорії A
 		const btnA = page.locator('button').filter({ hasText: /^A$/ }).first();
@@ -41,6 +43,13 @@ test.describe('AQA Interview Dashboard E2E', () => {
 			await btnF.click();
 			await expect(page.locator('text=Nayax').first()).toBeVisible();
 		}
+
+		// Клік по категорії C# (S)
+		const btnS = page.locator('button').filter({ hasText: /^C#$/ }).first();
+		if (await btnS.isVisible()) {
+			await btnS.click();
+			await expect(page.locator('text=Типи даних').first()).toBeVisible();
+		}
 	});
 
 	test('пошук фільтрує слайди та підсвічує результати', async ({ page }) => {
@@ -60,11 +69,17 @@ test.describe('AQA Interview Dashboard E2E', () => {
 		await page.goto('/');
 
 		// Знаходимо кнопку друку/буклету
-		const printBtn = page.locator('button:has-text("Буклет"), button:has-text("Друк"), button[title*="друк" i], button[title*="буклет" i]').first();
+		const printBtn = page
+			.locator(
+				'button:has-text("Буклет"), button:has-text("Друк"), button[title*="друк" i], button[title*="буклет" i]'
+			)
+			.first();
 		if (await printBtn.isVisible()) {
 			await printBtn.click();
 			// Повинен відобразитися контейнер буклету
-			const booklet = page.locator('.print-booklet, [data-testid="print-booklet"], .booklet-container').first();
+			const booklet = page
+				.locator('.print-booklet, [data-testid="print-booklet"], .booklet-container')
+				.first();
 			if (await booklet.isVisible()) {
 				await expect(booklet).toBeVisible();
 			}

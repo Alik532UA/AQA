@@ -5,23 +5,11 @@
 		"noImplicitReturns": true,
 		"skipLibCheck": true,
 		"paths": {
-			"$lib": [
-				"./src/lib"
-			],
-			"$lib/*": [
-				"./src/lib/*"
-			],
-			"#lib": [
-				"./src/lib"
-			],
-			"#lib/*": [
-				"./src/lib/*"
-			]
+			"$lib": ["./src/lib"],
+			"$lib/*": ["./src/lib/*"],
+			"#lib": ["./src/lib"],
+			"#lib/*": ["./src/lib/*"]
 		}
 	},
-	"include": [
-		"src",
-		"vite.config.ts",
-		"vitest.config.ts"
-	]
+	"include": ["src", "vite.config.ts", "vitest.config.ts"]
 }

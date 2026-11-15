@@ -1,7 +1,7 @@
 import type { Slide } from '../slidesData.js';
 
 export const consultantSlides: Slide[] = [
-// ==========================================
+	// ==========================================
 	// SENIOR AUTOMATION QA CONSULTANT (C) SLIDES
 	// (Native Windows, Electron, C#/.NET, Playwright, OCR, CI, Upgrades)
 	// ==========================================

@@ -18,7 +18,7 @@
 		Printer
 	} from '@lucide/svelte';
 
-	let activeCategory = $state<'M' | 'A' | 'C' | 'F'>('M');
+	let activeCategory = $state<'M' | 'A' | 'C' | 'F' | 'S'>('M');
 	let activeSlideId = $state<string>('m-basics');
 	let searchQuery = $state('');
 	let isMobileSidebarOpen = $state(false);
@@ -137,7 +137,7 @@
 		});
 	});
 
-	function handleCategoryChange(cat: 'M' | 'A' | 'C' | 'F') {
+	function handleCategoryChange(cat: 'M' | 'A' | 'C' | 'F' | 'S') {
 		activeCategory = cat;
 		const slides = slidesData.filter((s) => s.category === cat);
 		if (slides.length > 0) {
@@ -285,7 +285,9 @@
 								? 'bg-purple-950 text-purple-300 border border-purple-700/60'
 								: activeCategory === 'C'
 									? 'bg-emerald-950 text-emerald-300 border border-emerald-700/60'
-									: 'bg-sky-950 text-sky-300 border border-sky-700/60'}"
+									: activeCategory === 'F'
+										? 'bg-sky-950 text-sky-300 border border-sky-700/60'
+										: 'bg-purple-950 text-purple-300 border border-purple-700/60'}"
 					>
 						{activeCategory === 'M'
 							? 'Manual QA'
@@ -293,7 +295,9 @@
 								? 'Automation QA'
 								: activeCategory === 'C'
 									? 'Senior AQA Consultant'
-									: 'Middle Flutter QA'}
+									: activeCategory === 'F'
+										? 'Middle Flutter QA'
+										: 'C# Core & .NET'}
 					</span>
 					<span class="font-bold text-xs text-white truncate hidden sm:inline">
 						{currentSlide.menuTitle}
@@ -374,7 +378,9 @@
 											? 'Auto'
 											: match.category === 'C'
 												? 'Consultant'
-												: 'Flutter'}
+												: match.category === 'F'
+													? 'Flutter'
+													: 'C#'}
 								</span>
 							</button>
 						{/each}

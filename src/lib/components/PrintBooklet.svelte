@@ -28,13 +28,13 @@
 		<div class="w-24 h-1 bg-cyan-600 mx-auto mb-10 rounded"></div>
 
 		<!-- Table of Contents -->
-		<div class="w-full max-w-xl text-left bg-slate-50 border border-slate-300 rounded-xl p-6">
+		<div class="w-full max-w-4xl text-left bg-slate-50 border border-slate-300 rounded-xl p-6">
 			<h3
 				class="text-sm font-bold uppercase tracking-wider text-slate-800 mb-4 pb-2 border-b border-slate-200"
 			>
 				Зміст друкованого буклету
 			</h3>
-			<div class="grid grid-cols-1 md:grid-cols-3 gap-x-4 gap-y-3 text-[11px]">
+			<div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-x-6 gap-y-4 text-[11px]">
 				<div>
 					<p class="font-bold text-slate-900 mb-1 border-b border-slate-300 pb-0.5">
 						Manual QA (M):
@@ -81,6 +81,39 @@
 						<li>Senior Consultant Interview Q&A</li>
 					</ol>
 				</div>
+				<div>
+					<p class="font-bold text-sky-800 mb-1 border-b border-sky-300 pb-0.5">
+						Middle Flutter QA (F):
+					</p>
+					<ol class="list-decimal list-inside space-y-0.5 text-slate-700" start="26">
+						<li>Nayax Domain & Vending CRM</li>
+						<li>Flutter Architecture & QA Specifics</li>
+						<li>Android Testing & Studio Toolset</li>
+						<li>iOS Testing & Xcode Toolset</li>
+						<li>Client-Server, Postman & Sniffing</li>
+						<li>Mobile Test Design & Matrix</li>
+						<li>QA Process: Jira, Xray & Git</li>
+						<li>Performance Testing & Profiling</li>
+						<li>Nayax Middle QA Interview Q&A</li>
+					</ol>
+				</div>
+				<div>
+					<p class="font-bold text-purple-800 mb-1 border-b border-purple-300 pb-0.5">
+						C# Core & Advanced (.NET) (S):
+					</p>
+					<ol class="list-decimal list-inside space-y-0.5 text-slate-700" start="35">
+						<li>Типи даних & Базовий синтаксис</li>
+						<li>Керування потоком, цикли & Масиви</li>
+						<li>Методи, параметри & Рекурсія</li>
+						<li>Value vs Reference & Null</li>
+						<li>ООП: Класи, Конструктори & Властивості</li>
+						<li>static, const vs readonly & Extension</li>
+						<li>Наслідування, Поліморфізм & Інтерфейси</li>
+						<li>Generics, Делегати, Події & Лямбди</li>
+						<li>Колекції, Обробка винятків & LINQ</li>
+						<li>Асинхронність & Reflection для AQA</li>
+					</ol>
+				</div>
 			</div>
 		</div>
 
@@ -105,7 +138,9 @@
 								? 'bg-slate-800 text-white'
 								: slide.category === 'C'
 									? 'bg-emerald-800 text-white'
-									: 'bg-sky-800 text-white'}"
+									: slide.category === 'F'
+										? 'bg-sky-800 text-white'
+										: 'bg-purple-800 text-white'}"
 					>
 						{slide.category === 'M'
 							? 'Manual QA'
@@ -113,7 +148,9 @@
 								? 'Automation QA'
 								: slide.category === 'C'
 									? 'Senior AQA Consultant'
-									: 'Middle Flutter QA (Nayax)'}
+									: slide.category === 'F'
+										? 'Middle Flutter QA (Nayax)'
+										: 'C# Core & .NET'}
 					</span>
 					<h2 class="text-xl font-bold text-slate-950 mt-1">
 						{slide.menuTitle}

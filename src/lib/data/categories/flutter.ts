@@ -1,7 +1,7 @@
 import type { Slide } from '../slidesData.js';
 
 export const flutterSlides: Slide[] = [
-// ==========================================
+	// ==========================================
 	// MIDDLE MANUAL QA ENGINEER (FLUTTER / NAYAX) (F) SLIDES
 	// (Vending CRM, Flutter, Android/iOS Tools, API, Xray, Performance)
 	// ==========================================

@@ -1,7 +1,7 @@
 import type { Slide } from '../slidesData.js';
 
 export const automationSlides: Slide[] = [
-// ==========================================
+	// ==========================================
 	// AUTOMATION QA (A) SLIDES
 	// ==========================================
 	{

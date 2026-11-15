@@ -28,19 +28,21 @@
    - 4-тижнева стратегія консалтингу, демаркація Playwright vs FlaUI (.NET), тестування апдейтів (MSI/NSIS), системний трей, візуальна регресія та OCR, multi-monitor / DPI матриця, Windows CI (Session 0 bypass), Architecture Decision Records (ADR), топ Q&A.
 4. **`F` — Middle Manual QA Engineer (Flutter team — Nayax Retail):**
    - Домен вендингу та безготівкових платежів Nayax (MDB/DEX телеметрія, залишки, інкасація, помилки), архітектура Flutter (Dart, Impeller, Platform Channels), Android Studio (Logcat, ADB команди, емулятори), iOS (Xcode Console, crash logs .ips, TestFlight, сертифікати), Client-Server & API (Swagger, Postman, Charles Proxy, SSL Pinning), тест-матриця та мобільні чек-листи, процеси QA (Jira JQL, Xray Test Management, Git), клієнтський перформанс та API навантаження, готові відповіді на топ Q&A співбесіди.
+5. **`S` — C# Core & Advanced (.NET / OOP / LINQ / Async):**
+   - Типи даних CTS, Value vs Reference, пам'ять Stack/Heap, арифметичні/логічні оператори, цикли та масиви, індекси ^ та діапазони .., ref/out/in/params, рекурсія, Nullable, null-оператори (??, ??=, ?.), класи, конструктори, static, const vs readonly, extension методи, наслідування, virtual/override, abstract class vs interface, generics та constraints, делегати/Func/Action/event, колекції, try-when, LINQ Left Join, async/await, IDisposable та using, Reflection для NUnit/xUnit.
 
 ---
 
 ## 🏗 Ключові файли та де що знаходиться
 
 - `src/lib/data/slidesData.ts` — **Головне джерело даних**. Масив об'єктів `slidesData`, де кожен слайд має:
-  - `id`: унікальний ідентифікатор (наприклад, `m-basics`, `a-cicd`, `c-strategy`, `f-vending-crm`).
-  - `category`: код категорії (`'M' | 'A' | 'C' | 'F'`).
+  - `id`: унікальний ідентифікатор (наприклад, `m-basics`, `a-cicd`, `c-strategy`, `f-vending-crm`, `s-types-syntax`).
+  - `category`: код категорії (`'M' | 'A' | 'C' | 'F' | 'S'`).
   - `menuTitle`: назва у бічному меню.
   - `menuSub`: короткий опис підзаголовка.
   - `layout`: тип розмітки (`'grid-2'`, `'grid-3'` тощо).
   - `cards`: картки з заголовками та `contentHtml`.
-- `src/lib/components/Sidebar.svelte` — бічна навігація з круглими табами-перемикачами категорій (`M`, `A`, `C`, `F`) та списком слайдів активної категорії.
+- `src/lib/components/Sidebar.svelte` — бічна навігація з круглими табами-перемикачами категорій (`M`, `A`, `C`, `F`, `S`) та списком слайдів активної категорії.
 - `src/routes/+page.svelte` — головна сторінка додатку (пошук, перегляд слайдів, гарячі клавіші, масштаб).
 - `src/lib/components/PrintBooklet.svelte` — режим буклету для друку / PDF.
 - `src/lib/utils/markdownExporter.ts` — утиліта форматування слайда в Markdown.

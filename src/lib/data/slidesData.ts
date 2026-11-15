@@ -6,7 +6,7 @@ export interface SlideCard {
 
 export interface Slide {
 	id: string;
-	category: 'M' | 'A' | 'C' | 'F';
+	category: 'M' | 'A' | 'C' | 'F' | 'S';
 	menuGroup?: string;
 	menuTitle: string;
 	menuSub?: string;
@@ -22,12 +22,14 @@ import { manualSlides } from './categories/manual.ts';
 import { automationSlides } from './categories/automation.ts';
 import { consultantSlides } from './categories/consultant.ts';
 import { flutterSlides } from './categories/flutter.ts';
+import { csharpSlides } from './categories/csharp.ts';
 
-export { manualSlides, automationSlides, consultantSlides, flutterSlides };
+export { manualSlides, automationSlides, consultantSlides, flutterSlides, csharpSlides };
 
 export const slidesData: Slide[] = [
 	...manualSlides,
 	...automationSlides,
 	...consultantSlides,
-	...flutterSlides
+	...flutterSlides,
+	...csharpSlides
 ];

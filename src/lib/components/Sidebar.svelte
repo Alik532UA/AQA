@@ -2,8 +2,8 @@
 	import { ChevronLeft } from '@lucide/svelte';
 
 	interface Props {
-		activeCategory: 'M' | 'A' | 'C' | 'F';
-		onCategoryChange: (cat: 'M' | 'A' | 'C' | 'F') => void;
+		activeCategory: 'M' | 'A' | 'C' | 'F' | 'S';
+		onCategoryChange: (cat: 'M' | 'A' | 'C' | 'F' | 'S') => void;
 		activeSlideId: string;
 		onSelectSlide: (slideId: string) => void;
 		isMobileOpen: boolean;
@@ -124,6 +124,23 @@
 						: 'border border-cyan-900/60 text-slate-400 hover:border-sky-500 hover:text-sky-300'}"
 				>
 					F
+				</div>
+			</button>
+
+			<!-- C# QA Button 'S' -->
+			<button
+				type="button"
+				onclick={() => onCategoryChange('S')}
+				title="C# Core & Advanced (.NET)"
+				class="relative group cursor-pointer"
+			>
+				<div
+					class="w-10 h-10 md:w-11 md:h-11 rounded-full flex items-center justify-center text-xs md:text-sm font-bold font-mono transition-all duration-300 {activeCategory ===
+					'S'
+						? 'border-2 border-purple-400 text-white shadow-[0_0_15px_#c084fc]'
+						: 'border border-cyan-900/60 text-slate-400 hover:border-purple-500 hover:text-purple-300'}"
+				>
+					C#
 				</div>
 			</button>
 		</div>
@@ -479,7 +496,7 @@
 				<p class="font-bold text-white text-xs">Senior Consultant Interview Q&A</p>
 				<p class="text-emerald-400/80 text-[10px]">Топ питань та готові відповіді</p>
 			</button>
-		{:else}
+		{:else if activeCategory === 'F'}
 			<!-- ================= FLUTTER NAYAX QA NAVIGATION ================= -->
 
 			<!-- 1. Nayax Domain & Vending CRM -->
@@ -597,6 +614,144 @@
 			>
 				<p class="font-bold text-white text-xs">Nayax Middle QA Interview Q&A</p>
 				<p class="text-sky-400/80 text-[10px]">Топ питань та готові відповіді</p>
+			</button>
+		{:else if activeCategory === 'S'}
+			<!-- ================= C# CORE & ADVANCED (.NET) NAVIGATION ================= -->
+
+			<!-- 1. Data Types & Basic Syntax -->
+			<button
+				type="button"
+				onclick={() => handleSlideClick('s-types-syntax')}
+				class="w-full text-left p-2.5 rounded-2xl border transition-all duration-200 block cursor-pointer {activeSlideId ===
+				's-types-syntax'
+					? 'border-2 border-purple-400 bg-purple-950/30 shadow-[0_0_15px_rgba(192,132,252,0.3)]'
+					: 'border-slate-800 bg-[#060910] hover:border-purple-700 hover:bg-[#09111c]'}"
+			>
+				<p class="font-bold text-white text-xs">Типи даних & Базовий синтаксис</p>
+				<p class="text-purple-400/80 text-[10px]">CTS типи, розрядність, & vs &&, ++i</p>
+			</button>
+
+			<!-- 2. Control Flow, Loops & Arrays -->
+			<button
+				type="button"
+				onclick={() => handleSlideClick('s-control-flow-arrays')}
+				class="w-full text-left p-2.5 rounded-2xl border transition-all duration-200 block cursor-pointer {activeSlideId ===
+				's-control-flow-arrays'
+					? 'border-2 border-purple-400 bg-purple-950/30 shadow-[0_0_15px_rgba(192,132,252,0.3)]'
+					: 'border-slate-800 bg-[#060910] hover:border-purple-700 hover:bg-[#09111c]'}"
+			>
+				<p class="font-bold text-white text-xs">Керування потоком, цикли & Масиви</p>
+				<p class="text-purple-400/80 text-[10px]">if/else, switch expressions, масиви, ^1 та ..</p>
+			</button>
+
+			<!-- 3. Methods, Parameters & Recursion -->
+			<button
+				type="button"
+				onclick={() => handleSlideClick('s-methods-params')}
+				class="w-full text-left p-2.5 rounded-2xl border transition-all duration-200 block cursor-pointer {activeSlideId ===
+				's-methods-params'
+					? 'border-2 border-purple-400 bg-purple-950/30 shadow-[0_0_15px_rgba(192,132,252,0.3)]'
+					: 'border-slate-800 bg-[#060910] hover:border-purple-700 hover:bg-[#09111c]'}"
+			>
+				<p class="font-bold text-white text-xs">Методи, параметри & Рекурсія</p>
+				<p class="text-purple-400/80 text-[10px]">ref, out, in, params, optional, рекурсія</p>
+			</button>
+
+			<!-- 4. Value vs Reference & Null -->
+			<button
+				type="button"
+				onclick={() => handleSlideClick('s-types-memory-null')}
+				class="w-full text-left p-2.5 rounded-2xl border transition-all duration-200 block cursor-pointer {activeSlideId ===
+				's-types-memory-null'
+					? 'border-2 border-purple-400 bg-purple-950/30 shadow-[0_0_15px_rgba(192,132,252,0.3)]'
+					: 'border-slate-800 bg-[#060910] hover:border-purple-700 hover:bg-[#09111c]'}"
+			>
+				<p class="font-bold text-white text-xs">Value vs Reference & Null</p>
+				<p class="text-purple-400/80 text-[10px]">Stack/Heap, struct/class, ??, ??=, ?., checked</p>
+			</button>
+
+			<!-- 5. OOP: Classes, Constructors & Properties -->
+			<button
+				type="button"
+				onclick={() => handleSlideClick('s-oop-classes')}
+				class="w-full text-left p-2.5 rounded-2xl border transition-all duration-200 block cursor-pointer {activeSlideId ===
+				's-oop-classes'
+					? 'border-2 border-purple-400 bg-purple-950/30 shadow-[0_0_15px_rgba(192,132,252,0.3)]'
+					: 'border-slate-800 bg-[#060910] hover:border-purple-700 hover:bg-[#09111c]'}"
+			>
+				<p class="font-bold text-white text-xs">ООП: Класи, Конструктори & Властивості</p>
+				<p class="text-purple-400/80 text-[10px]">інкапсуляція, конструктори, this, init, record</p>
+			</button>
+
+			<!-- 6. static, const vs readonly & Extension -->
+			<button
+				type="button"
+				onclick={() => handleSlideClick('s-static-const-advanced')}
+				class="w-full text-left p-2.5 rounded-2xl border transition-all duration-200 block cursor-pointer {activeSlideId ===
+				's-static-const-advanced'
+					? 'border-2 border-purple-400 bg-purple-950/30 shadow-[0_0_15px_rgba(192,132,252,0.3)]'
+					: 'border-slate-800 bg-[#060910] hover:border-purple-700 hover:bg-[#09111c]'}"
+			>
+				<p class="font-bold text-white text-xs">static, const vs readonly & Extension</p>
+				<p class="text-purple-400/80 text-[10px]">
+					статичний конструктор, extension методи, partial
+				</p>
+			</button>
+
+			<!-- 7. Inheritance, Polymorphism & Interfaces -->
+			<button
+				type="button"
+				onclick={() => handleSlideClick('s-oop-inheritance-polymorphism')}
+				class="w-full text-left p-2.5 rounded-2xl border transition-all duration-200 block cursor-pointer {activeSlideId ===
+				's-oop-inheritance-polymorphism'
+					? 'border-2 border-purple-400 bg-purple-950/30 shadow-[0_0_15px_rgba(192,132,252,0.3)]'
+					: 'border-slate-800 bg-[#060910] hover:border-purple-700 hover:bg-[#09111c]'}"
+			>
+				<p class="font-bold text-white text-xs">Наслідування, Поліморфізм & Інтерфейси</p>
+				<p class="text-purple-400/80 text-[10px]">
+					: base, virtual, override, abstract vs interface
+				</p>
+			</button>
+
+			<!-- 8. Generics, Delegates, Events & Lambdas -->
+			<button
+				type="button"
+				onclick={() => handleSlideClick('s-generics-delegates-events')}
+				class="w-full text-left p-2.5 rounded-2xl border transition-all duration-200 block cursor-pointer {activeSlideId ===
+				's-generics-delegates-events'
+					? 'border-2 border-purple-400 bg-purple-950/30 shadow-[0_0_15px_rgba(192,132,252,0.3)]'
+					: 'border-slate-800 bg-[#060910] hover:border-purple-700 hover:bg-[#09111c]'}"
+			>
+				<p class="font-bold text-white text-xs">Generics, Делегати, Події & Лямбди</p>
+				<p class="text-purple-400/80 text-[10px]">where T, Action, Func, Predicate, event, =></p>
+			</button>
+
+			<!-- 9. Collections, Exceptions & LINQ -->
+			<button
+				type="button"
+				onclick={() => handleSlideClick('s-collections-linq')}
+				class="w-full text-left p-2.5 rounded-2xl border transition-all duration-200 block cursor-pointer {activeSlideId ===
+				's-collections-linq'
+					? 'border-2 border-purple-400 bg-purple-950/30 shadow-[0_0_15px_rgba(192,132,252,0.3)]'
+					: 'border-slate-800 bg-[#060910] hover:border-purple-700 hover:bg-[#09111c]'}"
+			>
+				<p class="font-bold text-white text-xs">Колекції, Обробка винятків & LINQ</p>
+				<p class="text-purple-400/80 text-[10px]">List, Dictionary, try-when, LINQ Left Join</p>
+			</button>
+
+			<!-- 10. Async, IDisposable & Reflection for AQA -->
+			<button
+				type="button"
+				onclick={() => handleSlideClick('s-async-reflection-qa')}
+				class="w-full text-left p-2.5 rounded-2xl border transition-all duration-200 block cursor-pointer {activeSlideId ===
+				's-async-reflection-qa'
+					? 'border-2 border-purple-400 bg-purple-950/30 shadow-[0_0_15px_rgba(192,132,252,0.3)]'
+					: 'border-slate-800 bg-[#060910] hover:border-purple-700 hover:bg-[#09111c]'}"
+			>
+				<p class="font-bold text-white text-xs">Асинхронність & Reflection для AQA</p>
+				<p class="text-purple-400/80 text-[10px]">
+					async/await, Task, IDisposable, using, NUnit/xUnit
+				</p>
 			</button>
 		{/if}
 	</nav>

@@ -1,7 +1,7 @@
 import type { Slide } from '../slidesData.js';
 
 export const manualSlides: Slide[] = [
-// ==========================================
+	// ==========================================
 	// MANUAL QA (M) SLIDES
 	// ==========================================
 	{

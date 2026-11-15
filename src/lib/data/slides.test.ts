@@ -10,7 +10,7 @@ describe('AQA Dashboard Slides & Data Integrity', () => {
 
 	it('кожен слайд має унікальний id, валідну категорію та назву в меню', () => {
 		const seenIds = new Set<string>();
-		const validCategories = new Set(['M', 'A', 'C', 'F']);
+		const validCategories = new Set(['M', 'A', 'C', 'F', 'S']);
 
 		for (const slide of slidesData) {
 			expect(seenIds.has(slide.id)).toBe(false);

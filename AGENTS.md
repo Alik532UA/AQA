@@ -13,7 +13,7 @@
 
 Інтерактивний веб-дашборд та презентаційна база знань для підготовки до технічних співбесід QA:
 
-- **Категорії**: `M` (Manual QA), `A` (Automation QA .NET/C#), `C` (Senior Consultant Desktop/Windows), `F` (Middle QA Flutter/Nayax).
+- **Категорії**: `M` (Manual QA), `A` (Automation QA .NET/C#), `C` (Senior Consultant Desktop/Windows), `F` (Middle QA Flutter/Nayax), `S` (C# Core & Advanced .NET).
 - **Стек**: SvelteKit 3 + Svelte 5 (Runes), Tailwind CSS 4, TypeScript 6, `@sveltejs/adapter-static`.
 
 ---

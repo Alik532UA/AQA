@@ -30,6 +30,11 @@ const CATEGORIES = {
 		folder: '04_flutter_nayax_qa',
 		title: 'Middle Manual QA Engineer (Flutter / Mobile — Nayax)',
 		prefix: 'F'
+	},
+	S: {
+		folder: '05_csharp_core',
+		title: 'C# Core & Advanced (.NET / OOP / LINQ / Async)',
+		prefix: 'S'
 	}
 };
 
@@ -56,7 +61,8 @@ const grouped = {
 	M: [],
 	A: [],
 	C: [],
-	F: []
+	F: [],
+	S: []
 };
 
 slidesData.forEach((slide) => {

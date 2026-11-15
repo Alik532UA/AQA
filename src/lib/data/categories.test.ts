@@ -1,5 +1,12 @@
 import { describe, it, expect } from 'vitest';
-import { slidesData, manualSlides, automationSlides, consultantSlides, flutterSlides } from './slidesData.js';
+import {
+	slidesData,
+	manualSlides,
+	automationSlides,
+	consultantSlides,
+	flutterSlides,
+	csharpSlides
+} from './slidesData.js';
 
 describe('AQA Categories Data Integrity', () => {
 	it('усі категорії містять слайди', () => {
@@ -7,8 +14,13 @@ describe('AQA Categories Data Integrity', () => {
 		expect(automationSlides.length).toBeGreaterThan(0);
 		expect(consultantSlides.length).toBeGreaterThan(0);
 		expect(flutterSlides.length).toBeGreaterThan(0);
+		expect(csharpSlides.length).toBeGreaterThan(0);
 		expect(slidesData.length).toBe(
-			manualSlides.length + automationSlides.length + consultantSlides.length + flutterSlides.length
+			manualSlides.length +
+				automationSlides.length +
+				consultantSlides.length +
+				flutterSlides.length +
+				csharpSlides.length
 		);
 	});
 
@@ -19,10 +31,15 @@ describe('AQA Categories Data Integrity', () => {
 	});
 
 	it('кожен слайд має валідну категорію та заголовок', () => {
-		const validCategories = new Set(['M', 'A', 'C', 'F']);
+		const validCategories = new Set(['M', 'A', 'C', 'F', 'S']);
 		for (const slide of slidesData) {
-			expect(validCategories.has(slide.category), `Слайд ${slide.id} має невідому категорію`).toBe(true);
-			expect(slide.menuTitle.trim().length, `Слайд ${slide.id} має порожній заголовок`).toBeGreaterThan(0);
+			expect(validCategories.has(slide.category), `Слайд ${slide.id} має невідому категорію`).toBe(
+				true
+			);
+			expect(
+				slide.menuTitle.trim().length,
+				`Слайд ${slide.id} має порожній заголовок`
+			).toBeGreaterThan(0);
 			expect(slide.cards.length, `Слайд ${slide.id} не має карток`).toBeGreaterThan(0);
 		}
 	});
