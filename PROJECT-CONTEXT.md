@@ -11,17 +11,19 @@
 > [!NOTE]
 > Цей документ є архітектурним компасом та єдиним джерелом правди (Single Source of Truth) для розробників та автономних AI-агентів у проєкті AQA.
 
-| Параметр / Інваріант     | Значення                                                                                       | Локація у коді / Примітка                  |
-| :----------------------- | :--------------------------------------------------------------------------------------------- | :----------------------------------------- |
-| **Стек**                 | SvelteKit 3 + Svelte 5 (Runes) + Tailwind CSS 4 + TypeScript 6                                 | `package.json`, `src/routes/layout.css`    |
-| **Хостинг та деплой**    | GitHub Pages (`adapter-static`), fallback: `404.html`                                          | `vite.config.ts`, `.github/workflows/`     |
-| **Імпорти модулів**      | Subpath-імпорти: `#lib/*` (сумісність із `$lib/*`)                                             | `package.json` (`imports`), `tsconfig`     |
-| **Категорії матеріалів** | 5 модульних розділів: `manual.ts`, `automation.ts`, `consultant.ts`, `flutter.ts`, `csharp.ts` | `src/lib/data/categories/`                 |
-| **Експорт слайдів**      | Markdown генератор для конспекту та друку                                                      | `scripts/export_all_slides.js`             |
-| **Безпека XSS**          | Суворе HTML-екранування перед підсвіткою пошуку                                                | `src/lib/components/Card.svelte`           |
-| **Політика CSP**         | Мета-директива Content-Security-Policy                                                         | `src/app.html`, `src/security.test.ts`     |
-| **Error Boundary**       | `<svelte:boundary>` + `ErrorFallback.svelte` + `hooks.client.ts`                               | `src/routes/+layout.svelte`                |
-| **Контроль якості**      | 14 Vitest тестів + Playwright E2E + @axe-core/playwright WCAG 2.2 AA                           | `eslint.config.js`, `playwright.config.ts` |
+| Параметр / Інваріант     | Значення                                                                                                       | Локація у коді / Примітка                    |
+| :----------------------- | :------------------------------------------------------------------------------------------------------------- | :------------------------------------------- |
+| **Стек**                 | SvelteKit 3 + Svelte 5 (Runes) + Tailwind CSS 4 (`@tailwindcss/vite`) + TypeScript 6                           | `package.json`, `src/routes/layout.css`      |
+| **Хостинг та деплой**    | GitHub Pages (`@sveltejs/adapter-static`), fallback: `404.html`                                                | `vite.config.ts`, `.github/workflows/`       |
+| **Імпорти модулів**      | Subpath-імпорти: `#lib/*` (сумісність із `$lib/*`)                                                             | `package.json` (`imports`), `tsconfig`       |
+| **Архітектура стану**    | `PresentationController` (Svelte 5 `$state`, `$derived`, a11y ARIA-live)                                       | `src/lib/controllers/presentation.svelte.ts` |
+| **Сховище даних**        | Безпечний фасад `storage` з ізольованим простором імен `aqa_` (STORAGE-NAMESPACE-v10)                          | `src/lib/services/storage.ts`                |
+| **Категорії матеріалів** | 5 модульних розділів: `manual.ts`, `automation.ts`, `consultant.ts`, `flutter.ts`, `csharp.ts`                 | `src/lib/data/categories/`                   |
+| **Експорт слайдів**      | Markdown генератор для конспекту та друку                                                                      | `scripts/export_all_slides.js`               |
+| **Безпека XSS**          | Суворе HTML-екранування `escapeHtml()` перед підсвіткою пошуку                                                 | `src/lib/components/Card.svelte`             |
+| **Політика CSP**         | SvelteKit CSP `mode: 'hash'`, автоматичне обчислення sha256 інлайн-скриптів, повна відсутність `unsafe-inline` | `vite.config.ts`, `src/csp-hash.test.ts`     |
+| **Error Boundary**       | `<svelte:boundary>` + `ErrorFallback.svelte` + `hooks.client.ts`                                               | `src/routes/+layout.svelte`                  |
+| **Контроль якості**      | 33+ Vitest тестів у 8 тестових файлах + Playwright E2E + @axe-core/playwright WCAG 2.2 AA                      | `eslint.config.js`, `playwright.config.ts`   |
 
 ---
 
@@ -36,40 +38,72 @@
 
 ---
 
-## 2. Структура категорій та модель даних
+## 2. Базові параметри та адресація (SEO-v10 § 1.2)
 
-### 2.1 Категорії підготовки:
-
-1. **`M` — Manual QA (Теорія тестування)**: STLC, рівні/типи тестування, тест-дизайн (еквівалентні класи, граничні значення, pairwise), валідація vs верифікація, чек-листи, баг-репорти, Severity vs Priority.
-2. **`A` — Automation QA (.NET / C#)**: Архітектура тестових фреймворків, Page Object, Factory, SOLID, CI/CD пайплайни, SQL, Git branching, тестові піраміди.
-3. **`C` — Senior AQA Consultant (Desktop / Electron / Windows)**: 4-тижнева стратегія консалтингу, демаркація Playwright vs FlaUI, тестування апдейтів (MSI/NSIS), системний трей, Session 0 bypass у Windows CI, ADR.
-4. **`F` — Middle Manual QA (Flutter / Nayax Retail Team)**: Вендингова телеметрія MDB/DEX, архітектура Flutter (Dart, Impeller, Platform Channels), Android Studio/ADB, iOS Xcode Console / crash logs, Charles Proxy / SSL Pinning, Jira/Xray процеси.
-5. **`S` — C# Core & Advanced (.NET / OOP / LINQ / Async)**: CTS типи даних, Value vs Reference, пам'ять Stack/Heap, ref/out/in, Nullable, OOP (модифікатори, інкапсуляція, конструктори, static, const/readonly, наслідування, virtual/override, abstract/interface), Generics, делегати/Func/Action/event, колекції, try-when, LINQ Left Join, async/await, IDisposable, Reflection для NUnit/xUnit.
-
-### 2.2 Модель слайда (`Slide` у `src/lib/data/slidesData.ts`):
-
-- `id`: унікальний ідентифікатор слайда (`m-basics`, `a-cicd`, тощо).
-- `category`: `'M' | 'A' | 'C' | 'F' | 'S'`.
-- `menuTitle`: заголовок у бічному меню навігації.
-- `menuSub`: короткий опис підтем для пошуку.
-- `layout`: тип сітки (`'grid-1'`, `'grid-2'`, `'grid-3'`, `'custom-*'`).
-- `cards`: масив карток із вмістом (`title`, `contentHtml`, `points`, `concepts`, `codeSnippet`, `interviewTip`, `tags`).
+| Параметр                       | Значення                                                          |
+| :----------------------------- | :---------------------------------------------------------------- |
+| **Профіль розгортання**        | `static` (`@sveltejs/adapter-static`)                             |
+| **Хостинг**                    | GitHub Pages                                                      |
+| **Основна адреса**             | `https://alik532ua.github.io/AQA/` (або власний домен)            |
+| **Базовий шлях (`BASE_PATH`)** | Динамічний: `/AQA` у production GitHub Pages; порожній у dev      |
+| **Гілка деплою**               | `main`                                                            |
+| **Мова інтерфейсу**            | `uk` (Українська) з термінологією англійською мовою (IT-стандарт) |
+| **Бекенд**                     | Відсутній (100% клієнтська автономна робота)                      |
 
 ---
 
-## 3. Безпека (SECURITY-v10)
+## 3. Реєстр префіксів сховища (STORAGE-NAMESPACE-v10 § 1)
 
-1. **Захист від XSS при підсвітці пошуку**:
+Сайт розміщено на спільному домені `alik532ua.github.io`, тому всі ключі веб-сховища мають суворий ізольований префікс:
+
+- **Префікс сховища**: `aqa_`
+
+### Реєстр ключів сховища:
+
+| Ключ (без префікса) | Повний ключ у сховищі   | Призначення                         | Дозволені значення                |
+| :------------------ | :---------------------- | :---------------------------------- | :-------------------------------- |
+| `active_category`   | `aqa_active_category`   | Остання обрана категорія підготовки | `'M' \| 'A' \| 'C' \| 'F' \| 'S'` |
+| `font_scale`        | `aqa_font_scale`        | Масштаб шрифту презентації          | Число від 75 до 140               |
+| `sidebar_collapsed` | `aqa_sidebar_collapsed` | Стан бічного навігаційного меню     | `'true' \| 'false'`               |
+
+- Прямий доступ до `localStorage` поза фасадом `src/lib/services/storage.ts` заборонено (STORAGE-NAMESPACE § 4).
+- Метод `storage.clear()` очищує виключно власні ключі з префіксом `aqa_` (STORAGE-NAMESPACE § 3).
+
+---
+
+## 4. Архітектура та контролер стану (PresentationController)
+
+1. **Реактивний контролер (`src/lib/controllers/presentation.svelte.ts`)**:
+   - Повністю інкапсулює стан навігації, вибору категорії, активного слайда та повнотекстового пошуку.
+   - Створений на базі чистих Svelte 5 Runes (`$state`, `$derived`).
+   - Автоматично формує текстові сповіщення для доступності (`announcement`).
+2. **Ізоляція даних**:
+   - `src/lib/data/categories/`: розділи `manual.ts`, `automation.ts`, `consultant.ts`, `flutter.ts`, `csharp.ts`.
+   - `src/lib/data/slidesData.ts`: агрегатор слайдів із суворою типізацією `Slide` та `Card`.
+3. **Експортер конспекту**:
+   - `src/lib/utils/markdownExporter.ts`: чиста функція перетворення моделі слайда у валідний Markdown.
+
+---
+
+## 5. Безпека (SECURITY-v10 & CSP-v10)
+
+1. **Content-Security-Policy (CSP) hash mode**:
+   - У `vite.config.ts` налаштовано суворий режим `mode: 'hash'`.
+   - Інлайн-скрипти з `src/app.html` хешуються функцією `inlineScriptHashes` із нормалізацією CRLF -> LF.
+   - Повна відсутність `'unsafe-inline'` у директиві `script-src`.
+   - Суворі директиви: `'default-src': ['self']`, `'frame-ancestors': ['none']`, `'base-uri': ['self']`, `'form-action': ['none']`.
+   - Інваріант перевіряється тестом `src/csp-hash.test.ts`.
+2. **Захист від XSS при підсвітці пошуку**:
    - Функція `escapeHtml()` у `src/lib/components/Card.svelte` повністю екранує символи `&`, `<`, `>`, `"`, `'` перед підстановкою тегів `<mark>` підсвічування.
-   - Заборонено вставляти сирий користувацький ввід у `{@html}` без санітизації. Інваріант контролюється тестом `src/security.test.ts`.
-2. **Content-Security-Policy (CSP)**:
-   - У `src/app.html` налаштовано сувору директиву CSP, що блокує несанкціоновані зовнішні скрипти, підключення та фрейми.
+   - Заборонено вставляти сирий користувацький ввід у `{@html}` без санітизації.
 3. **Заборона небезпечних викликів**:
-   - Статичний тест перевіряє повну відсутність викликів `eval()`, `new Function()` та `document.write()` у вихідному коді проєкту.
+   - Статичний тест `src/security.test.ts` перевіряє повну відсутність викликів `eval()`, `new Function()` та `document.write()`.
+4. **Аудит залежностей**:
+   - Автоматичний скрипт `scripts/check-audit.mjs` викликається у `npm run audit:ci`.
 
 ---
 
-## 4. Обробка помилок та стійкість (ERROR-HANDLING-v10)
+## 6. Обробка помилок та стійкість (ERROR-HANDLING-v10)
 
 - **Межа помилок (`<svelte:boundary>`)**: Усі слайди та компоненти у `src/routes/+layout.svelte` огорнуті в `<svelte:boundary>`, що запобігає білому екрану смерті при збоях рендерингу складного HTML.
 - **Резервний компонент (`ErrorFallback.svelte`)**: Дозволяє миттєво перезапустити рендеринг слайда однією кнопкою.
@@ -78,16 +112,50 @@
 
 ---
 
-## 5. Матриця перевірок якості коду (CODE-QUALITY-v10)
+## 7. Доступність (ACCESSIBILITY-v10) та гарячі клавіші
 
-| Команда                 | Опис перевірки                                                                          |
-| :---------------------- | :-------------------------------------------------------------------------------------- |
-| `npm run check`         | Сувора перевірка типів TypeScript та синтаксису SvelteKit                               |
-| `npm run lint`          | Перевірка стилю коду ESLint 10 та форматування Prettier 3                               |
-| `npm run format`        | Автоматичне виправлення форматування коду                                               |
-| `npm test`              | Запуск комплексу тестів Vitest (`security`, `categories`, `slides`, `markdownExporter`) |
-| `npm run test:e2e`      | Запуск Playwright E2E та валідація доступності @axe-core/playwright                     |
-| `npm run bump`          | Автоматичний ESM бамп patch-версії та синхронізація артефактів                          |
-| `npm run audit:ci`      | Аудит безпеки npm-залежностей на high/critical вразливості                              |
-| `npm run build`         | Збірка статичного релізного SPA-пакета у папку `build/`                                 |
-| `npm run export:slides` | Генерація Markdown-конспекту в папку `slides-md/`                                       |
+- **ARIA Live Region**: Контролер `presentation` транслює всі зміни слайдів, вибір категорій та результати пошуку в прихований блок `role="status"` `aria-live="polite"` (`aria-atomic="true"`).
+- **Гарячі клавіші**:
+  - `ArrowRight` / `ArrowDown` / `Space` — Наступний слайд.
+  - `ArrowLeft` / `ArrowUp` — Попередній слайд.
+  - `Ctrl + B` / `[` / `]` — Згорнути / розгорнути бічну панель.
+  - `F` — Повноекранний режим презентації.
+  - `Esc` — Очистити пошуковий рядок та закрити підказки.
+
+---
+
+## 8. Матриця перевірок якості коду (CODE-QUALITY-v10)
+
+| Команда                 | Гейт canon.json   | Опис перевірки                                                           |
+| :---------------------- | :---------------- | :----------------------------------------------------------------------- |
+| `npm run check`         | GATE-SVELTE-CHECK | Сувора перевірка типів TypeScript та синтаксису SvelteKit                |
+| `npm run lint`          | GATE-ESLINT       | Перевірка стилю коду ESLint 10 та форматування Prettier 3                |
+| `npm run format`        | —                 | Автоматичне виправлення форматування коду                                |
+| `npm test`              | GATE-TEST-RUNNERS | Запуск комплексу тестів Vitest (8 файлів, 33+ тести)                     |
+| `npm run test:unit`     | GATE-TEST-RUNNERS | Модульні та інваріантні тести контролерів, безпеки, сховища та структури |
+| `npm run test:e2e`      | GATE-A11Y-AXE     | Запуск Playwright E2E та валідація доступності @axe-core/playwright      |
+| `npm run bump`          | GATE-VERSIONING   | Автоматичний ESM бамп patch-версії та синхронізація артефактів           |
+| `npm run audit:ci`      | GATE-AUDIT        | Аудит безпеки npm-залежностей на high/critical вразливості               |
+| `npm run build`         | GATE-BUILD-OUTPUT | Збірка статичного релізного SPA-пакета у папку `build/`                  |
+| `npm run check:build`   | GATE-BUILD-OUTPUT | Валідація цілісності згенерованих файлів `build/index.html`              |
+| `npm run export:slides` | —                 | Генерація Markdown-конспекту в папку `slides-md/`                        |
+
+---
+
+## 9. Прийняті рішення (Decisions)
+
+| Питання                  | Обрано                                | Причина                                                                    | Дата       |
+| :----------------------- | :------------------------------------ | :------------------------------------------------------------------------- | :--------- |
+| **Архітектура стану**    | `PresentationController` на Runes     | Централізація бізнес-логіки та доступності поза розміткою Svelte           | 2026-11-15 |
+| **Політика CSP**         | `mode: 'hash'` у `vite.config.ts`     | Забезпечення захисту від XSS без використання небезпечного `unsafe-inline` | 2026-11-15 |
+| **Ізоляція Web Storage** | Префікс `aqa_`                        | Запобігання конфліктам на спільному хостингу `github.io`                   | 2026-11-15 |
+| **Формат стилізації**    | Tailwind CSS v4 (`@tailwindcss/vite`) | Висока швидкість компіляції та сучасна адаптивна сітка карток              | 2026-11-15 |
+
+---
+
+## 10. Свідомі відхилення від канону
+
+1. **Одномовний інтерфейс з двомовною термінологією**:
+   - _Причина_: Оскільки підготовка до співбесід в українських та міжнародних компаніях вимагає знання оригінальної англійської термінології (ISTQB, STLC, C#, .NET, SOLID), мовою опису обрано українську, а назви концепцій та код наведено англійською без дублювання словників i18n.
+2. **Модульна статична база знань замість віддаленої БД**:
+   - _Причина_: Розміщення запитань у типізованих TypeScript-файлах усуває необхідність мережевих запитів, забезпечує миттєвий офлайн-доступ та повну безпеку даних.

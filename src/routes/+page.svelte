@@ -5,6 +5,7 @@
 	import SlideView from '#lib/components/SlideView.svelte';
 	import PrintBooklet from '#lib/components/PrintBooklet.svelte';
 	import { slideToMarkdown } from '#lib/utils/markdownExporter';
+	import { presentation, type CategoryKey } from '#lib/controllers/presentation.svelte';
 	import {
 		Search,
 		X,
@@ -18,37 +19,26 @@
 		Printer
 	} from '@lucide/svelte';
 
-	let activeCategory = $state<'M' | 'A' | 'C' | 'F' | 'S'>('M');
-	let activeSlideId = $state<string>('m-basics');
-	let searchQuery = $state('');
 	let isMobileSidebarOpen = $state(false);
-	let isSidebarCollapsed = $state(false);
-	let isFullscreen = $state(false);
-	let showSearchResults = $state(false);
-	let fontScale = $state(100);
 	let isCopied = $state(false);
+	let isFullscreen = $state(false);
 
-	// Load user preferences from localStorage
+	let activeCategory = $derived(presentation.activeCategory);
+	let activeSlideId = $derived(presentation.activeSlideId);
+	let isSidebarCollapsed = $derived(presentation.isSidebarCollapsed);
+	let fontScale = $derived(presentation.fontScale);
+	let currentSlide = $derived(presentation.currentSlide);
+	let currentSlideIndex = $derived(presentation.currentSlideIndex);
+	let categorySlides = $derived(presentation.categorySlides);
+	let matchingSlides = $derived(presentation.matchingSlides);
+	let searchQuery = $derived(presentation.searchQuery);
+	let showSearchResults = $derived(presentation.showSearchResults);
+
 	onMount(() => {
-		try {
-			const savedCollapsed = localStorage.getItem('qa_sidebar_collapsed');
-			if (savedCollapsed !== null) {
-				isSidebarCollapsed = savedCollapsed === 'true';
-			}
-			const savedScale = localStorage.getItem('qa_font_scale');
-			if (savedScale) {
-				const num = parseInt(savedScale, 10);
-				if (!isNaN(num) && num >= 70 && num <= 150) {
-					fontScale = num;
-				}
-			}
-		} catch (e) {
-			console.error('Failed to load preferences', e);
-		}
-
 		window.addEventListener('keydown', handleKeydown);
 		const handleFsChange = () => {
 			isFullscreen = !!document.fullscreenElement;
+			presentation.isFullscreen = isFullscreen;
 		};
 		document.addEventListener('fullscreenchange', handleFsChange);
 
@@ -59,31 +49,15 @@
 	});
 
 	function toggleSidebarCollapse() {
-		isSidebarCollapsed = !isSidebarCollapsed;
-		try {
-			localStorage.setItem('qa_sidebar_collapsed', String(isSidebarCollapsed));
-		} catch (e) {
-			console.error(e);
-		}
+		presentation.toggleSidebarCollapse();
 	}
 
 	function changeFontScale(delta: number) {
-		const newScale = Math.min(140, Math.max(75, fontScale + delta));
-		fontScale = newScale;
-		try {
-			localStorage.setItem('qa_font_scale', String(fontScale));
-		} catch (e) {
-			console.error(e);
-		}
+		presentation.changeFontScale(delta);
 	}
 
 	function resetFontScale() {
-		fontScale = 100;
-		try {
-			localStorage.setItem('qa_font_scale', '100');
-		} catch (e) {
-			console.error(e);
-		}
+		presentation.resetFontScale();
 	}
 
 	async function copyCurrentSlideMarkdown() {
@@ -103,72 +77,32 @@
 		window.print();
 	}
 
-	// Slides in current category
-	let categorySlides = $derived.by(() => {
-		return slidesData.filter((s) => s.category === activeCategory);
-	});
-
-	// Current active slide object
-	let currentSlide = $derived.by(() => {
-		const found = slidesData.find((s) => s.id === activeSlideId);
-		if (found) return found;
-		return categorySlides[0] || slidesData[0];
-	});
-
-	// Current slide index in active category (1-based)
-	let currentSlideIndex = $derived.by(() => {
-		const idx = categorySlides.findIndex((s) => s.id === currentSlide.id);
-		return idx >= 0 ? idx + 1 : 1;
-	});
-
-	// Search matching slides across all slides
-	let matchingSlides = $derived.by(() => {
-		if (!searchQuery.trim()) return [];
-		const q = searchQuery.toLowerCase().trim();
-		return slidesData.filter((slide) => {
-			const inTitle = slide.menuTitle.toLowerCase().includes(q);
-			const inSub = slide.menuSub?.toLowerCase().includes(q) ?? false;
-			const inCards = slide.cards.some((c) => {
-				const inCardTitle = c.title?.toLowerCase().includes(q) ?? false;
-				const inContent = c.contentHtml?.toLowerCase().includes(q) ?? false;
-				return inCardTitle || inContent;
-			});
-			return inTitle || inSub || inCards;
-		});
-	});
-
-	function handleCategoryChange(cat: 'M' | 'A' | 'C' | 'F' | 'S') {
-		activeCategory = cat;
-		const slides = slidesData.filter((s) => s.category === cat);
-		if (slides.length > 0) {
-			activeSlideId = slides[0].id;
-		}
+	function handleCategoryChange(cat: CategoryKey) {
+		presentation.setCategory(cat);
 	}
 
 	function goToPrevSlide() {
-		const idx = categorySlides.findIndex((s) => s.id === currentSlide.id);
-		if (idx > 0) {
-			activeSlideId = categorySlides[idx - 1].id;
-		} else if (idx === 0) {
-			activeSlideId = categorySlides[categorySlides.length - 1].id;
-		}
+		presentation.goToPrevSlide();
 	}
 
 	function goToNextSlide() {
-		const idx = categorySlides.findIndex((s) => s.id === currentSlide.id);
-		if (idx >= 0 && idx < categorySlides.length - 1) {
-			activeSlideId = categorySlides[idx + 1].id;
-		} else if (idx === categorySlides.length - 1) {
-			activeSlideId = categorySlides[0].id;
-		}
+		presentation.goToNextSlide();
 	}
 
 	function selectSlide(id: string) {
-		const slide = slidesData.find((s) => s.id === id);
-		if (slide) {
-			activeCategory = slide.category;
-			activeSlideId = slide.id;
-		}
+		presentation.selectSlide(id);
+	}
+
+	function handleSearchInput(value: string) {
+		presentation.setSearch(value);
+	}
+
+	function clearSearch() {
+		presentation.clearSearch();
+	}
+
+	function closeSearchResults() {
+		presentation.showSearchResults = false;
 	}
 
 	function toggleFullscreen() {
@@ -177,10 +111,12 @@
 				console.error(`Error attempting to enable fullscreen: ${err.message}`);
 			});
 			isFullscreen = true;
+			presentation.isFullscreen = true;
 		} else {
 			if (document.exitFullscreen) {
 				document.exitFullscreen();
 				isFullscreen = false;
+				presentation.isFullscreen = false;
 			}
 		}
 	}
@@ -190,8 +126,7 @@
 		const target = e.target as HTMLElement;
 		if (target.tagName === 'INPUT' || target.tagName === 'TEXTAREA') {
 			if (e.key === 'Escape') {
-				searchQuery = '';
-				showSearchResults = false;
+				clearSearch();
 				(target as HTMLInputElement).blur();
 			}
 			return;
@@ -224,6 +159,11 @@
 <svelte:head>
 	<title>{currentSlide.menuTitle} | QA Interview Presentation</title>
 </svelte:head>
+
+<!-- ARIA Live Announcement Region (ACCESSIBILITY-v10) -->
+<div class="sr-only" role="status" aria-live="polite" aria-atomic="true">
+	{presentation.announcement}
+</div>
 
 <!-- Interactive App Container (Hidden during Print) -->
 <div
@@ -312,21 +252,17 @@
 					<input
 						type="text"
 						value={searchQuery}
-						onfocus={() => (showSearchResults = true)}
-						oninput={(e) => {
-							searchQuery = e.currentTarget.value;
-							showSearchResults = true;
+						onfocus={() => {
+							if (searchQuery.trim()) presentation.showSearchResults = true;
 						}}
+						oninput={(e) => handleSearchInput(e.currentTarget.value)}
 						placeholder="Швидкий пошук (BVA, STLC, SOLID, Git, SQL)..."
 						class="w-full pl-8 pr-7 py-1 text-xs rounded-lg bg-[#070d18] border border-cyan-900 focus:border-cyan-400 focus:outline-none focus:ring-1 focus:ring-cyan-400 text-white placeholder-slate-400 font-sans"
 					/>
 					{#if searchQuery}
 						<button
 							type="button"
-							onclick={() => {
-								searchQuery = '';
-								showSearchResults = false;
-							}}
+							onclick={clearSearch}
 							class="absolute right-2 p-0.5 text-slate-400 hover:text-cyan-300 cursor-pointer"
 							title="Очистити"
 						>
@@ -346,7 +282,7 @@
 							<span>Знайдено у {matchingSlides.length} слайдах:</span>
 							<button
 								type="button"
-								onclick={() => (showSearchResults = false)}
+								onclick={closeSearchResults}
 								class="text-slate-400 hover:text-white"
 								title="Закрити список"
 							>

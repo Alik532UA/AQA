@@ -1,8 +1,9 @@
 import { describe, it, expect } from 'vitest';
 import { readFileSync, readdirSync, statSync } from 'node:fs';
 import { join } from 'node:path';
+import { STORAGE_PREFIX } from '#lib/services/storagePrefix';
 
-describe('Security Baseline (SECURITY-v10)', () => {
+describe('Security Baseline (SECURITY-v10 & CSP-v10)', () => {
 	function scanDir(dir: string, fileList: string[] = []): string[] {
 		const files = readdirSync(dir);
 		for (const file of files) {
@@ -40,11 +41,13 @@ describe('Security Baseline (SECURITY-v10)', () => {
 		expect(cardSource).toContain(".replace(/>/g, '&gt;')");
 	});
 
-	it('перевіряє наявність суворої політики Content-Security-Policy в app.html', () => {
-		const appHtml = readFileSync('src/app.html', 'utf8');
-		expect(appHtml).toContain('http-equiv="Content-Security-Policy"');
-		expect(appHtml).toContain("default-src 'self'");
-		expect(appHtml).toContain("font-src 'self'");
+	it('перевіряє наявність суворої політики Content-Security-Policy у vite.config.ts', () => {
+		const viteConfig = readFileSync('vite.config.ts', 'utf8');
+		expect(viteConfig).toContain("mode: 'hash'");
+		expect(viteConfig).toContain("'default-src': ['self']");
+		expect(viteConfig).toContain("'base-uri': ['self']");
+		expect(viteConfig).toContain("'form-action': ['none']");
+		expect(viteConfig).toContain("'frame-ancestors': ['none']");
 	});
 
 	it('гарантує відсутність небезпечних інлайн-скриптів та обробників у даних слайдів', () => {
@@ -57,5 +60,10 @@ describe('Security Baseline (SECURITY-v10)', () => {
 			expect(content).not.toMatch(/\bonload\s*=/i);
 			expect(content).not.toMatch(/javascript:/i);
 		}
+	});
+
+	it('захищає збереження Web Storage ізольованим префіксом aqa_', () => {
+		expect(STORAGE_PREFIX).toBe('aqa_');
+		expect(STORAGE_PREFIX.endsWith('_')).toBe(true);
 	});
 });
