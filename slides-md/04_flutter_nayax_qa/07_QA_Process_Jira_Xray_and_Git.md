@@ -52,6 +52,4 @@ git stash / git stash pop // відкласти локальні правки
 
 ---
 
----
-
 [← Попередній: Mobile Test Design & Matrix](./06_Mobile_Test_Design_and_Matrix.md) | [📑 До змісту](../README.md) | [Наступний: Performance Testing & Profiling →](./08_Performance_Testing_and_Profiling.md)

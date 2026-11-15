@@ -37,6 +37,4 @@ Flutter не використовує системне сховище серти
 
 ---
 
----
-
 [← Попередній: iOS Testing & Xcode Toolset](./04_iOS_Testing_and_Xcode_Toolset.md) | [📑 До змісту](../README.md) | [Наступний: Mobile Test Design & Matrix →](./06_Mobile_Test_Design_and_Matrix.md)

@@ -44,6 +44,4 @@
 
 ---
 
----
-
 [📑 До змісту](../README.md) | [Наступний: Electron vs Native Windows →](./02_Electron_vs_Native_Windows.md)

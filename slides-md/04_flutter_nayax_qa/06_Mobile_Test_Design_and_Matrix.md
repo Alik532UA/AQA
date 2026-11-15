@@ -36,6 +36,4 @@
 
 ---
 
----
-
 [← Попередній: Client-Server, Postman & Sniffing](./05_Client-Server_Postman_and_Sniffing.md) | [📑 До змісту](../README.md) | [Наступний: QA Process: Jira, Xray & Git →](./07_QA_Process_Jira_Xray_and_Git.md)

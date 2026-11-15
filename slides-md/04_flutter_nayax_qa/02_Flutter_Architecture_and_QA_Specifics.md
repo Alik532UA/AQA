@@ -38,6 +38,4 @@ Flutter не компілюється у нативні UI-компоненти 
 
 ---
 
----
-
 [← Попередній: Nayax Domain & Vending CRM](./01_Nayax_Domain_and_Vending_CRM.md) | [📑 До змісту](../README.md) | [Наступний: Android Testing & Studio Toolset →](./03_Android_Testing_and_Studio_Toolset.md)

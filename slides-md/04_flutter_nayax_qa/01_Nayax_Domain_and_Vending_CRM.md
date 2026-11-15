@@ -41,6 +41,4 @@
 
 ---
 
----
-
 [📑 До змісту](../README.md) | [Наступний: Flutter Architecture & QA Specifics →](./02_Flutter_Architecture_and_QA_Specifics.md)

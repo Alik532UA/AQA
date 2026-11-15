@@ -40,6 +40,4 @@
 
 ---
 
----
-
 [← Попередній: Upgrades, Installers & Services](./05_Upgrades_Installers_and_Services.md) | [📑 До змісту](../README.md) | [Наступний: CI/CD on Windows Runners →](./07_CICD_on_Windows_Runners.md)

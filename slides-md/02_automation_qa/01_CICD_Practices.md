@@ -64,6 +64,4 @@ CI/CD (Неперервна інтеграція та Неперервна до�
 
 ---
 
----
-
 [📑 До змісту](../README.md) | [Наступний: Design Principles & Approaches →](./02_Design_Principles_and_Approaches.md)

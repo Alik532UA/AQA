@@ -70,6 +70,4 @@ Git - це легка та швидка розподілена система к
 
 ---
 
----
-
 [← Попередній: Test Automation Patterns](./07_Test_Automation_Patterns.md) | [📑 До змісту](../README.md) | [Наступний: Data Storages →](./09_Data_Storages.md)

@@ -56,6 +56,4 @@
 
 ---
 
----
-
 [← Попередній: Test Automation Framework](./05_Test_Automation_Framework.md) | [📑 До змісту](../README.md) | [Наступний: Test Automation Patterns →](./07_Test_Automation_Patterns.md)

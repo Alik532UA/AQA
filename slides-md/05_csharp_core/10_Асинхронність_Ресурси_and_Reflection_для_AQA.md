@@ -10,24 +10,26 @@
 
 ### Асинхронність: async, await та Task:
 
-- `Task` (повертає `void`) та `Task<T>` (повертає результат): представляють асинхронну операцію, що виконується без блокування потоку.
+- `Task` — об'єкт стану асинхронної операції (аналог `void` для синхронних методів). `Task<T>` повертає результат.
 
-- `async void` — **антипатерн!** Дозволений виключно для обробників подій UI. Будь-який виняток у `async void` не може бути перехоплений через `catch` і миттєво аварійно завершує процес.
+- `async void` — **антипатерн!** Дозволений виключно для UI event handlers. Будь-який виняток у `async void` не можна перехопити через `catch`, що веде до падіння процесу.
 
-- Паралельний запуск: `await Task.WhenAll(task1, task2);`
+- **Небезпека .Result та .Wait():** блокування асинхронного виклику (Sync-over-Async) призводить до Thread Pool Starvation або **Deadlock** (при наявності `SynchronizationContext`) і загортає помилки в `AggregateException`.
+
+- `CancellationToken`: стандартний механізм кооперативного скасування тривалих операцій за таймаутом: `await client.GetAsync(url, ct);`.
 
 ### IDisposable та інструкція using:
 
-Патерн `IDisposable` слугує для детермінованого звільнення **некерованих ресурсів** (дескрипторів файлів, потоків сокетів, сесій браузера Playwright/Selenium):
+Слугує для детермінованого звільнення **некерованих ресурсів** (дескрипторів файлів, з'єднань БД, процесів браузера WebDriver):
 
-```
-// C# 8 using declaration: звільняється при виході зі скоупу методу
+```csharp
+// C# 8 using declaration: звільняється при виході зі скоупу
 using var response = await httpClient.GetAsync("/api/users");
 var content = await response.Content.ReadAsStringAsync();
 // Під капотом розгортається у try { ... } finally { obj.Dispose(); }
 ```
 
-**HttpClient та JSON:** Створення `new HttpClient()` на кожен запит веде до *Socket Exhaustion* (виснаження портів ОС). Потрібно використовувати `static HttpClient` або `IHttpClientFactory`. Для серіалізації використовують вбудований високошвидкісний `System.Text.Json.JsonSerializer`.
+**HttpClient та JSON:** Створення `new HttpClient()` на кожен запит викликає *Socket Exhaustion* (виснаження портів). Слід використовувати `static HttpClient` або `IHttpClientFactory`. Для серіалізації використовуйте `System.Text.Json.JsonSerializer`.
 
 ---
 
@@ -45,11 +47,11 @@ var content = await response.Content.ReadAsStringAsync();
 
 ### Як NUnit / xUnit використовують рефлексію:
 
-Тестові раннери сканують збірки, шукають класи з атрибутами `[TestFixture]` та викликають методи з атрибутами `[Test]` / `[Fact]`. Також рефлексія зчитує тестові дані для параметризації (`[TestCase]`, `[Theory]`, `[TestCaseSource]`).
+Тестові раннери сканують збірки, знаходять класи з атрибутами `[TestFixture]` та викликають методи з атрибутами `[Test]` / `[Fact]`. Рефлексія також передає дані параметризації (`[TestCase]`, `[Theory]`).
 
 ### Створення кастомного атрибута для автотестів:
 
-```
+```csharp
 [AttributeUsage(AttributeTargets.Method)]
 public class SeverityAttribute(string level) : Attribute {
     public string Level { get; } = level;
@@ -60,9 +62,7 @@ public class SeverityAttribute(string level) : Attribute {
 public void PaymentCheckoutSmokeTest() { ... }
 ```
 
-**Висновок для інтерв'ю:** «Рефлексія та атрибути — фундамент будь-якого сучасного фреймворку автоматизації тестування (.NET). Вони забезпечують динамічне виявлення тестів, генерацію звітів (Allure/Extent) та керування життєвим циклом фікстур».
-
----
+**Висновок для інтерв'ю:** «Рефлексія та атрибути — фундамент сучасних тестових фреймворків (.NET). Вони забезпечують динамічне виявлення тестів, генерацію звітів (Allure/Extent) та керування фікстурами».
 
 ---
 

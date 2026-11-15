@@ -46,6 +46,4 @@ adb shell monkey -p com.nayax.retail -v 500 // стрес-тест хаотич�
 
 ---
 
----
-
 [← Попередній: Flutter Architecture & QA Specifics](./02_Flutter_Architecture_and_QA_Specifics.md) | [📑 До змісту](../README.md) | [Наступний: iOS Testing & Xcode Toolset →](./04_iOS_Testing_and_Xcode_Toolset.md)

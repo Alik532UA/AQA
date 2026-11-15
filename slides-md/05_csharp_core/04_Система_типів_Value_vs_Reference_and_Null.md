@@ -10,38 +10,25 @@
 
 ### Порівняння двох категорій типів:
 
-Параметр
-Value Types (Значення)
-Reference Types (Посилання)
+| Параметр | Value Types (Значення) | Reference Types (Посилання) |
+| :--- | :--- | :--- |
+| Базовий клас | `System.ValueType` (наслідує `Object`) | `System.Object` |
+| Приклади | `int`, `double`, `struct`, `enum`, `bool` | `class`, `string`, `interface`, `delegate`, масиви |
+| Розміщення | На Стеку (Stack) або всередині об'єкта у Heap | Самі дані у Купі (Heap), на Стеку лише адреса (4/8 байт) |
+| Копіювання | Копіюється саме **значення** (незалежна копія) | Копіюється лише **посилання** (адреса) |
+| Очищення | Миттєво при виході зі скоупу стекового фрейму | Збирач сміття (Garbage Collector — GC) |
 
-Базовий клас
-`System.ValueType`
-`System.Object`
+### Boxing, Unboxing та нюанси передачі:
 
-Приклади
-`int`, `struct`, `enum`, `bool`
-`class`, `string`, `interface`, масиви
-
-Розміщення
-Швидкий Стек (Stack) або inline у складі об'єкта
-Керована купа (Managed Heap), на стеку лише адреса (4/8B)
-
-Копіювання
-Копіюється саме **значення**
-Копіюється лише **посилання** (адреса)
-
-Очищення
-Миттєво при виході зі скоупу
-Збирач сміття (Garbage Collector)
-
-### Boxing та Unboxing:
-
-**Boxing (Пакування):** перетворення Value Type в `object`. Створюється екземпляр у хіпі, туди копіюється значення (навантажує GC):
+**Boxing (Пакування):** перетворення Value Type в `object` (виділення пам'яті в хіпі, копіювання значення, навантаження на GC):
 
 `int num = 42; object boxed = num; // Boxing`
 **Unboxing (Розпакування):** явне вилучення значення назад у Value Type:
 
-`int unboxed = (int)boxed; // Unboxing` (кидає `InvalidCastException` при помилці типу).
+`int unboxed = (int)boxed; // Unboxing`
+**Особливість Boxing для Nullable<T>:** при упаковці `int? x = 5` у купу пакується чистий `int`, а якщо `x = null`, упаковка дає `null` без виділення об'єкта.
+
+**Передача Reference Type у метод:** за замовчуванням посилання передається *за значенням* (копіюється адреса). Зміна поля (`user.Name = "New"`) змінить оригінал, але присвоєння `user = new User()` НЕ змінить зовнішню змінну (для цього потрібен `ref User user`).
 
 ---
 
@@ -51,30 +38,28 @@ Reference Types (Посилання)
 
 - `Nullable<T>` або `int?` — дозволяє типам значень зберігати `null`. Властивості: `.HasValue` та `.Value`.
 
-- `?.` (Null-conditional): `driver?.FindElement(by)?.Text` — зупиняє обчислення та повертає `null` без падіння з помилкою.
+- `?.` (Null-conditional): `driver?.FindElement(by)?.Text` — повертає `null` без падіння з `NullReferenceException`.
 
-- `??` (Null-coalescing): `string title = rawTitle ?? "Default"` — значення за замовчуванням.
+- `??` (Null-coalescing): `string title = rawTitle ?? "Default"` — дефолтне значення при `null`.
 
-- `??=` (Null-coalescing assignment): `_client ??= new HttpClient();` — ініціалізує змінну тільки якщо вона дорівнює `null`.
+- `??=` (Null-coalescing assignment): `_client ??= new HttpClient();` — ініціалізація тільки якщо значення дорівнює `null`.
 
-- `!` (Null-forgiving): `user!.Name` — запевняє компілятор, що значення не є null.
+- `!` (Null-forgiving): `user!.Name` — запевнення компілятора, що об'єкт не null.
 
 ### Приведення типів (Casting):
 
 **Implicit (неявне):** безпечне розширення без втрати точності (`int` у `long`).
 
-**Explicit (явне):** звуження з можливістю переповнення: `(int)3.14`.
+**Explicit (явне):** звуження з можливістю втрати точності: `(int)3.14`.
 
-**Оператор is:** перевірка типу та безпечне присвоєння (Pattern Matching):
+**Оператор is:** перевірка типу та Pattern Matching:
 
 `if (element is IJavaScriptExecutor js) { js.ExecuteScript("..."); }`
-**Оператор as:** безпечне приведення посилальних типів (повертає `null` замість винятку):
+**Оператор as:** безпечне приведення посилальних типів (повертає `null` замість викиду винятку):
 
-`var btn = element as Button; // якщо не Button, btn буде null`
+`var btn = element as Button; // якщо тип не збігся, btn буде null`
 
-**checked vs unchecked:** За замовчуванням C# працює в `unchecked` (при переповненні `int.MaxValue + 1` дає `int.MinValue`). Блок `checked { ... }` вмикає перевірку та кидає `OverflowException`.
-
----
+**checked vs unchecked:** За замовчуванням C# виконує цілочисельну арифметику в `unchecked` (при `int.MaxValue + 1` отримуємо `int.MinValue` без помилки). Блок `checked { ... }` вмикає перевірку CLR та кидає `OverflowException`.
 
 ---
 

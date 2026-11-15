@@ -41,6 +41,4 @@
 
 ---
 
----
-
 [← Попередній: QA Process: Jira, Xray & Git](./07_QA_Process_Jira_Xray_and_Git.md) | [📑 До змісту](../README.md) | [Наступний: Nayax Middle QA Interview Q&A →](./09_Nayax_Middle_QA_Interview_QandA.md)

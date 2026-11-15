@@ -10,11 +10,12 @@
 
 ### if-else та тернарний оператор:
 
-Тернарний оператор замінює прості `if-else` блоки в одну строчку:
+Тернарний оператор `умова ? вираз_true : вираз_false` замінює прості `if-else` блоки для присвоєння значень:
 
-```
-bool isPassed = actualStatus == HttpStatusCode.OK ? true : false;
+```csharp
+int timeout = isSlowEnv ? 60 : 10;
 string badge = score >= 90 ? "Senior" : score >= 60 ? "Middle" : "Junior";
+// Антипатерн: bool isOk = (code == 200) ? true : false; -> Пишіть просто: bool isOk = code == 200;
 ```
 
 ### Switch Statement vs Switch Expression (C# 8+):
@@ -24,7 +25,7 @@ string badge = score >= 90 ? "Senior" : score >= 60 ? "Middle" : "Junior";
 
 **Сучасний Switch Expression та Pattern Matching:**
 
-```
+```csharp
 var result = statusCode switch {
     200 => "Success",
     400 or 404 => "Client Error",
@@ -43,32 +44,30 @@ var result = statusCode switch {
 
 - `for (int i = 0; i < n; i++)` — ітерація з лічильником за індексами.
 
-- `foreach (var item in list)` — читання елементів через `IEnumerable`. *Змінювати (видаляти/додавати) елементи колекції під час foreach суворо заборонено* (викликає `InvalidOperationException`).
+- `foreach (var item in list)` — читання елементів через `IEnumerable`. *Модифікувати колекцію під час foreach заборонено* (кидає `InvalidOperationException`).
 
-- `while (cond)` — цикл з передумовою.
+- **Безпечне видалення під час ітерації:** використовуйте зворотний цикл `for (int i = list.Count - 1; i >= 0; i--)`, метод `list.RemoveAll(...)` або копію `list.ToList()`.
 
-- `do { ... } while (cond)` — цикл з післяумовою (гарантує **мінімум 1 виконання**).
+- `while (cond)` та `do { ... } while (cond)` (гарантує **мінімум 1 виконання**).
 
-- `break` — миттєвий вихід з циклу; `continue` — перехід до наступної ітерації.
+- `break` — миттєвий вихід; `continue` — перехід до наступної ітерації.
 
 ### Масиви: Одновимірні, Багатовимірні та Зубчасті:
 
 **Одновимірний:** `int[] arr = new int[5];` або `int[] nums = [1, 2, 3];` (C# 12).
 
-**Багатовимірний (2D Rectangular):** `int[,] matrix = new int[3, 3];` — суцільна прямокутна сітка в пам'яті.
+**Пастка .Length у 2D масивах:** Для `int[,] matrix = new int[2, 3];` властивість `matrix.Length` повертає загальну кількість елементів (`6`), а розміри вимірів беруться через `matrix.GetLength(0)` (2) та `matrix.GetLength(1)` (3).
 
-**Ступінчастий (Зубчастий / Jagged):** `int[][] jagged = new int[3][];` — масив масивів, де кожен рядок може мати різну довжину.
+**Ступінчастий (Jagged):** `int[][] jagged = new int[2][];` — масив масивів. Тут `jagged.Length` повертає кількість підмасивів (`2`).
 
 ### Індекси (^) та Діапазони (..) у C# 8+:
 
-```
+```csharp
 var words = new[] { "AQA", "C#", "Selenium", "Playwright", "NUnit" };
 var last = words[^1];      // "NUnit" (^1 = останній елемент з кінця)
 var slice = words[1..4];   // ["C#", "Selenium", "Playwright"] (з 1 включно по 4 виключно)
 var allExceptFirst = words[1..]; // від індексу 1 до кінця
 ```
-
----
 
 ---
 

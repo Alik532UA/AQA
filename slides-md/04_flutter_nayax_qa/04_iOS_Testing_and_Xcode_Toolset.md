@@ -34,6 +34,4 @@
 
 ---
 
----
-
 [← Попередній: Android Testing & Studio Toolset](./03_Android_Testing_and_Studio_Toolset.md) | [📑 До змісту](../README.md) | [Наступний: Client-Server, Postman & Sniffing →](./05_Client-Server_Postman_and_Sniffing.md)

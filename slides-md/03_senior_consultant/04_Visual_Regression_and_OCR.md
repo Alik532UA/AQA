@@ -45,6 +45,4 @@
 
 ---
 
----
-
 [← Попередній: Minimal Toolset Architecture](./03_Minimal_Toolset_Architecture.md) | [📑 До змісту](../README.md) | [Наступний: Upgrades, Installers & Services →](./05_Upgrades_Installers_and_Services.md)

@@ -40,6 +40,4 @@
 
 ---
 
----
-
 [← Попередній: Visual Regression & OCR](./04_Visual_Regression_and_OCR.md) | [📑 До змісту](../README.md) | [Наступний: Multi-Monitor & DPI Matrix →](./06_Multi-Monitor_and_DPI_Matrix.md)

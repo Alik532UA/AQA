@@ -58,6 +58,4 @@
 
 ---
 
----
-
 [← Попередній: Version Control Systems](./08_Version_Control_Systems.md) | [📑 До змісту](../README.md) | [Наступний: SQL →](./10_SQL.md)

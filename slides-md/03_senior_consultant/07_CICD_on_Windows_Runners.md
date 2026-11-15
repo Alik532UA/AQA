@@ -42,6 +42,4 @@
 
 ---
 
----
-
 [← Попередній: Multi-Monitor & DPI Matrix](./06_Multi-Monitor_and_DPI_Matrix.md) | [📑 До змісту](../README.md) | [Наступний: Architecture & Handover →](./08_Architecture_and_Handover.md)

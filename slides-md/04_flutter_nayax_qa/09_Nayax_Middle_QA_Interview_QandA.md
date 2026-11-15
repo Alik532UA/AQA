@@ -32,6 +32,4 @@ Flutter самостійно малює віджети через Skia/Impeller.
 
 ---
 
----
-
 [← Попередній: Performance Testing & Profiling](./08_Performance_Testing_and_Profiling.md) | [📑 До змісту](../README.md)

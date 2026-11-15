@@ -54,6 +54,4 @@
 
 ---
 
----
-
 [← Попередній: Design Principles & Approaches](./02_Design_Principles_and_Approaches.md) | [📑 До змісту](../README.md) | [Наступний: Refactoring →](./04_Refactoring.md)

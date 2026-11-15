@@ -54,6 +54,4 @@
 
 ---
 
----
-
 [← Попередній: CI/CD Practices](./01_CICD_Practices.md) | [📑 До змісту](../README.md) | [Наступний: Platform Specific Test Automation →](./03_Platform_Specific_Test_Automation.md)

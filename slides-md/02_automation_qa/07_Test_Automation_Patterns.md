@@ -58,6 +58,4 @@
 
 ---
 
----
-
 [← Попередній: Test Automation Infrastructure](./06_Test_Automation_Infrastructure.md) | [📑 До змісту](../README.md) | [Наступний: Version Control Systems →](./08_Version_Control_Systems.md)

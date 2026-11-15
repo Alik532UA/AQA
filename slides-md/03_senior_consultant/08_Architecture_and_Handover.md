@@ -46,6 +46,4 @@
 
 ---
 
----
-
 [← Попередній: CI/CD on Windows Runners](./07_CICD_on_Windows_Runners.md) | [📑 До змісту](../README.md) | [Наступний: Senior Consultant Interview Q&A →](./09_Senior_Consultant_Interview_QandA.md)

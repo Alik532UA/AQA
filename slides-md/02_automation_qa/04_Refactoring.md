@@ -26,6 +26,4 @@
 
 ---
 
----
-
 [← Попередній: Platform Specific Test Automation](./03_Platform_Specific_Test_Automation.md) | [📑 До змісту](../README.md) | [Наступний: Test Automation Framework →](./05_Test_Automation_Framework.md)

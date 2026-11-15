@@ -12,15 +12,15 @@
 
 - `List<T>`: динамічний масив. Швидкий доступ за індексом O(1). Додавання в кінець O(1) амортизовано. Пошук неіндексованого елемента O(N).
 
-- `Dictionary<TKey, TValue>`: асоціативний масив на базі хеш-таблиці. Пошук, додавання та видалення за ключем O(1). Ключі мають бути унікальними.
+- `Dictionary<TKey, TValue>`: хеш-таблиця. Визначає кошик (bucket) через `GetHashCode()`, а при колізіях перевіряє точний збіг через `Equals()`. Пошук O(1). Для безпечного читання використовуйте `dict.TryGetValue(key, out var val)`.
 
-- `HashSet<T>`: невпорядкована множина унікальних елементів. Миттєвий пошук `Contains` за O(1), операції перетину та об'єднання множин.
+- `HashSet<T>`: невпорядкована множина унікальних елементів. Пошук `Contains` за O(1), операції перетину та об'єднання множин.
 
-- `Queue<T>` (FIFO — перший прийшов, перший пішов) та `Stack<T>` (LIFO — останній прийшов, перший пішов).
+- `Queue<T>` (FIFO) та `Stack<T>` (LIFO).
 
 ### Обробка винятків (try-catch-finally when):
 
-```
+```csharp
 try {
     SendHttpRequest();
 } catch (HttpRequestException ex) when (ex.StatusCode == HttpStatusCode.NotFound) {
@@ -37,21 +37,22 @@ try {
 
 ---
 
-## LINQ & Завдання на співбесіді: Left Join
+## LINQ & Різниця First/Single & Left Join
 
-### Основи LINQ та Deferred Execution:
+### First, FirstOrDefault, Single та SingleOrDefault:
 
-LINQ (Language Integrated Query) надає SQL-подібні запити до колекцій. **Deferred Execution (Відкладене виконання):** фільтрація (`Where`, `Select`) не виконується в момент створення запиту, а лише при реальній ітерації (`foreach`, `.ToList()`).
-
-### Популярні методи розширення LINQ:
-
-`Where` (фільтрація), `Select` (маппінг/трансформація), `Any` / `All` (перевірка умов), `OrderBy`, `GroupBy`, `First` vs `FirstOrDefault` (повертає null/default, якщо список порожній).
+| Метод | 0 елементів | 1 елемент | > 1 елемента |
+| :--- | :--- | :--- | :--- |
+| First() | InvalidOperationException | Повертає елемент | Повертає перший |
+| FirstOrDefault() | default(T) / null | Повертає елемент | Повертає перший |
+| Single() | InvalidOperationException | Повертає елемент | InvalidOperationException |
+| SingleOrDefault() | default(T) / null | Повертає елемент | InvalidOperationException |
 
 ### LINQ Left Outer Join (Топ-завдання співбесіди):
 
-У LINQ немає окремого ключового слова `left join`. Left Join реалізується через `GroupJoin` + `SelectMany` + `DefaultIfEmpty()`:
+У LINQ немає окремого оператора `left join`. Він реалізується через комбінацію `GroupJoin` + `SelectMany` + `DefaultIfEmpty()`:
 
-```
+```csharp
 // Query Syntax:
 var leftJoin = from u in users
                join o in orders on u.Id equals o.UserId into userOrders
@@ -63,8 +64,6 @@ var methodLeftJoin = users
     .GroupJoin(orders, u => u.Id, o => o.UserId, (u, ords) => new { u, ords })
     .SelectMany(x => x.ords.DefaultIfEmpty(), (x, o) => new { x.u.Name, OrderId = o?.Id });
 ```
-
----
 
 ---
 

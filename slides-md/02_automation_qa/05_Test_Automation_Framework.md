@@ -66,6 +66,4 @@ Test Automation Framework - це сукупність інструментів �
 
 ---
 
----
-
 [← Попередній: Refactoring](./04_Refactoring.md) | [📑 До змісту](../README.md) | [Наступний: Test Automation Infrastructure →](./06_Test_Automation_Infrastructure.md)

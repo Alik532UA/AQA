@@ -44,6 +44,4 @@ Playwright покриває до 85-90% бізнес-сценаріїв мерч
 
 ---
 
----
-
 [← Попередній: Consulting Strategy & PoC](./01_Consulting_Strategy_and_PoC.md) | [📑 До змісту](../README.md) | [Наступний: Minimal Toolset Architecture →](./03_Minimal_Toolset_Architecture.md)

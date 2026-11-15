@@ -32,6 +32,4 @@ Playwright використовує модуль `_electron.launch()`, підк�
 
 ---
 
----
-
 [← Попередній: Architecture & Handover](./08_Architecture_and_Handover.md) | [📑 До змісту](../README.md)
