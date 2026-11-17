@@ -1,12 +1,12 @@
 # Колекції, Обробка винятків & LINQ
 
-> **Підтеми:** List, Dictionary, HashSet, try-catch-finally-when, LINQ оператори, Left Join
+> **Підтеми:** List, Dictionary, HashSet, yield return, try-catch-finally when, First vs Single, Left Join
 
 **Категорія:** C# Core & Advanced (.NET)
 
 ---
 
-## Колекції .NET & Обробка винятків
+## Колекції .NET, yield return & Обробка винятків
 
 ### Основні колекції (System.Collections.Generic):
 
@@ -17,6 +17,17 @@
 - `HashSet<T>`: невпорядкована множина унікальних елементів. Пошук `Contains` за O(1), операції перетину та об'єднання множин.
 
 - `Queue<T>` (FIFO) та `Stack<T>` (LIFO).
+
+### yield return та ліниве виконання (Lazy Evaluation):
+
+Оператор `yield return` генерує послідовність по одному елементу за запитом (State Machine), не виділяючи пам'ять під усю колекцію одразу:
+
+```csharp
+public IEnumerable<TestCaseData> GetTestData() {
+    yield return new TestCaseData("admin", 200);
+    yield return new TestCaseData("guest", 403);
+}
+```
 
 ### Обробка винятків (try-catch-finally when):
 
@@ -67,4 +78,4 @@ var methodLeftJoin = users
 
 ---
 
-[← Попередній: Generics, Делегати, Події & Лямбди](./08_Generics_Делегати_Події_and_Лямбди.md) | [📑 До змісту](../README.md) | [Наступний: Асинхронність, Ресурси & Reflection для AQA →](./10_Асинхронність_Ресурси_and_Reflection_для_AQA.md)
+[← Попередній: Generics, Делегати, Події & Лямбди](./10_Generics_Делегати_Події_and_Лямбди.md) | [📑 До змісту](../README.md) | [Наступний: Асинхронність, Ресурси & Reflection для AQA →](./12_Асинхронність_Ресурси_and_Reflection_для_AQA.md)

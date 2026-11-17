@@ -62,4 +62,4 @@ public class BasePage {
 
 ---
 
-[← Попередній: Система типів: Value vs Reference & Null](./04_Система_типів_Value_vs_Reference_and_Null.md) | [📑 До змісту](../README.md) | [Наступний: static, const vs readonly, Extension & Partial →](./06_static_const_vs_readonly_Extension_and_Partial.md)
+[← Попередній: 4 Принципи ООП (Фундамент)](./05_4_Принципи_ООП_(Фундамент).md) | [📑 До змісту](../README.md) | [Наступний: static, const vs readonly, Extension & Partial →](./07_static_const_vs_readonly_Extension_and_Partial.md)

@@ -59,4 +59,4 @@ public class LoginPage : BasePage {
 
 ---
 
-[← Попередній: static, const vs readonly, Extension & Partial](./06_static_const_vs_readonly_Extension_and_Partial.md) | [📑 До змісту](../README.md) | [Наступний: Generics, Делегати, Події & Лямбди →](./08_Generics_Делегати_Події_and_Лямбди.md)
+[← Попередній: static, const vs readonly, Extension & Partial](./07_static_const_vs_readonly_Extension_and_Partial.md) | [📑 До змісту](../README.md) | [Наступний: Пам'ять CLR, Garbage Collector & Рівність →](./09_Пам'ять_CLR_Garbage_Collector_and_Рівність.md)

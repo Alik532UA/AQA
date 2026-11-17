@@ -58,10 +58,12 @@
 2. [Керування потоком, цикли & Масиви](./05_csharp_core/02_Керування_потоком_цикли_and_Масиви.md) — *if-else, тернарний оператор, switch expressions, цикли, масиви, індекси ^ та діапазони ..*
 3. [Методи, параметри & Рекурсія](./05_csharp_core/03_Методи_параметри_and_Рекурсія.md) — *Сигнатура, overloading, ref, out, in, params, optional/named args, рекурсія*
 4. [Система типів: Value vs Reference & Null](./05_csharp_core/04_Система_типів_Value_vs_Reference_and_Null.md) — *Stack vs Heap, Nullable, ??, ??=, ?., implicit/explicit casting, checked/unchecked*
-5. [ООП: Класи, Конструктори & Властивості](./05_csharp_core/05_ООП_Класи_Конструктори_and_Властивості.md) — *Модифікатори доступу, інкапсуляція, конструктори, this, auto-properties, init, record*
-6. [static, const vs readonly, Extension & Partial](./05_csharp_core/06_static_const_vs_readonly_Extension_and_Partial.md) — *Статичні члени та класи, const vs readonly, методи розширення, partial класи*
-7. [Наслідування, Поліморфізм, Abstract & Interfaces](./05_csharp_core/07_Наслідування_Поліморфізм_Abstract_and_Interfaces.md) — *: base, virtual, override, new, abstract class vs interface, явна та дефолтна реалізація*
-8. [Generics, Делегати, Події & Лямбди](./05_csharp_core/08_Generics_Делегати_Події_and_Лямбди.md) — *Generic constraints (where), delegate, Action, Func, Predicate, event, лямбди =>*
-9. [Колекції, Обробка винятків & LINQ](./05_csharp_core/09_Колекції_Обробка_винятків_and_LINQ.md) — *List, Dictionary, HashSet, try-catch-finally-when, LINQ оператори, Left Join*
-10. [Асинхронність, Ресурси & Reflection для AQA](./05_csharp_core/10_Асинхронність_Ресурси_and_Reflection_для_AQA.md) — *async/await, Task, IDisposable, using, HttpClient, JSON, Reflection та атрибути NUnit/xUnit*
+5. [4 Принципи ООП (Фундамент)](./05_csharp_core/05_4_Принципи_ООП_(Фундамент).md) — *Інкапсуляція, Абстракція, Наслідування, Поліморфізм (Static vs Dynamic) та POM*
+6. [ООП: Класи, Конструктори & Властивості](./05_csharp_core/06_ООП_Класи_Конструктори_and_Властивості.md) — *Модифікатори доступу, інкапсуляція, конструктори, this, auto-properties, init, record*
+7. [static, const vs readonly, Extension & Partial](./05_csharp_core/07_static_const_vs_readonly_Extension_and_Partial.md) — *Статичні члени та класи, const vs readonly, методи розширення, partial класи*
+8. [Наслідування, Поліморфізм, Abstract & Interfaces](./05_csharp_core/08_Наслідування_Поліморфізм_Abstract_and_Interfaces.md) — *: base, virtual, override, new, abstract class vs interface, явна та дефолтна реалізація*
+9. [Пам'ять CLR, Garbage Collector & Рівність](./05_csharp_core/09_Пам'ять_CLR_Garbage_Collector_and_Рівність.md) — *Покоління GC (0, 1, 2, LOH), Mark-Sweep-Compact, IDisposable vs Finalizer, == vs Equals & GetHashCode*
+10. [Generics, Делегати, Події & Лямбди](./05_csharp_core/10_Generics_Делегати_Події_and_Лямбди.md) — *Generic constraints (where), delegate, Action, Func, Predicate, event, лямбди =>*
+11. [Колекції, Обробка винятків & LINQ](./05_csharp_core/11_Колекції_Обробка_винятків_and_LINQ.md) — *List, Dictionary, HashSet, yield return, try-catch-finally when, First vs Single, Left Join*
+12. [Асинхронність, Ресурси & Reflection для AQA](./05_csharp_core/12_Асинхронність_Ресурси_and_Reflection_для_AQA.md) — *async/await, Task, IDisposable, using, HttpClient, JSON, Reflection та атрибути NUnit/xUnit, DI Lifetimes*
 

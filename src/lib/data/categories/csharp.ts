@@ -310,6 +310,73 @@ var allExceptFirst = words[1..]; // від індексу 1 до кінця</cod
 		]
 	},
 	{
+		id: 's-oop-pillars',
+		category: 'S',
+		menuTitle: '4 Принципи ООП (Фундамент)',
+		menuSub: 'Інкапсуляція, Абстракція, Наслідування, Поліморфізм (Static vs Dynamic) та POM',
+		layout: 'grid-2',
+		cards: [
+			{
+				title: '4 Стовпи ООП & Види поліморфізму',
+				contentHtml: `
+					<p class="text-xs text-slate-300 mb-2">Об'єктно-орієнтоване програмування базується на <strong>4 базових парадигмах</strong>. <em>Не плутайте їх із SOLID</em> (SOLID — це правила архітектури класів, а ООП — фундамент моделювання сутностей):</p>
+					
+					<div class="space-y-1.5 text-[11px] text-slate-200 mb-2">
+						<div class="p-2 rounded bg-[#0d091a] border border-purple-900/50">
+							<strong class="text-purple-400">1. Інкапсуляція (Encapsulation):</strong>
+							<p class="text-slate-300">Об'єднання даних (полів) і методів роботи з ними в єдину сутність та захист цілісності стану об'єкта. <em>Різниця з Data Hiding:</em> приховування даних — це техніка (<code>private</code> поля), а інкапсуляція — концепція самодостатнього об'єкта, що контролює свої інваріанти через методи та властивості.</p>
+						</div>
+						<div class="p-2 rounded bg-[#0d091a] border border-purple-900/50">
+							<strong class="text-purple-400">2. Абстракція (Abstraction):</strong>
+							<p class="text-slate-300">Виділення головних характеристик сутності та відсікання зайвих деталей реалізації (контракти <code>interface</code> та <code>abstract class</code>). <em>Різниця:</em> інкапсуляція відповідає на питання <em>«Як захистити реалізацію?»</em>, а абстракція — <em>«Що саме показувати назовні?»</em>.</p>
+						</div>
+						<div class="p-2 rounded bg-[#0d091a] border border-purple-900/50">
+							<strong class="text-purple-400">3. Наслідування (Inheritance):</strong>
+							<p class="text-slate-300">Створення нових класів на основі існуючих ("IS-A"). Забезпечує повторне використання коду. <em>Composition over Inheritance:</em> якщо зв'язок радше "HAS-A", надавайте перевагу композиції для зменшення жорсткої зв'язності.</p>
+						</div>
+						<div class="p-2 rounded bg-[#0d091a] border border-purple-900/50">
+							<strong class="text-purple-400">4. Поліморфізм (Polymorphism):</strong>
+							<p class="text-slate-300">Здатність об'єктів з однаковим інтерфейсом мати різну поведінку. Поділяється на 2 фундаментальні види:</p>
+							<ul class="list-disc list-inside mt-0.5 space-y-0.5 text-slate-300">
+								<li><strong>Статичний (Compile-time / Ad-hoc / Parametric):</strong> перевантаження методів (Overloading) та Generics. Вибір методу відбувається на етапі компіляції.</li>
+								<li><strong>Динамічний (Runtime / Subtyping):</strong> перевизначення методів (<code>virtual</code> / <code>override</code>) через таблицю vtable та інтерфейси. Вибір методу відбувається під час виконання.</li>
+							</ul>
+						</div>
+					</div>
+				`
+			},
+			{
+				title: '4 Принципи ООП у практиці AQA (Page Object Model)',
+				contentHtml: `
+					<h4 class="font-bold text-purple-300 text-xs mb-1">Як 4 кити ООП реалізуються у фреймворку тестів:</h4>
+					<div class="space-y-1.5 text-[11px] text-slate-200 mb-2">
+						<div class="p-2 rounded bg-[#0d091a] border border-purple-900/50">
+							<strong class="text-purple-400">Інкапсуляція у POM:</strong>
+							<p class="text-slate-300">Усі локатори (<code>By.Id</code>, <code>ILocator</code>) та внутрішні затримки є <code>private</code>. Назовні сторінка надає лише публічні бізнес-методи (<code>public DashboardPage Login(User user)</code>). Тести не знають, які селектори на сторінці.</p>
+						</div>
+						<div class="p-2 rounded bg-[#0d091a] border border-purple-900/50">
+							<strong class="text-purple-400">Абстракція у тестах:</strong>
+							<p class="text-slate-300">Тестовий сценарій викликає <code>checkoutPage.PayWithCard(card)</code>. Тест абстрагований від HTML-структури DOM, AJAX-запитів, очікування спінерів та анімацій.</p>
+						</div>
+						<div class="p-2 rounded bg-[#0d091a] border border-purple-900/50">
+							<strong class="text-purple-400">Наслідування сторінок:</strong>
+							<p class="text-slate-300">Базовий клас <code>BasePage</code> містить спільні елементи (Header, Navigation, інстанс Driver, методи <code>WaitForElement</code>). Сторінки <code>LoginPage : BasePage</code> та <code>CartPage : BasePage</code> повторно використовують цю основу.</p>
+						</div>
+						<div class="p-2 rounded bg-[#0d091a] border border-purple-900/50">
+							<strong class="text-purple-400">Поліморфізм у тестах:</strong>
+							<p class="text-slate-300">1) Робота через інтерфейс <code>IWebDriver driver</code> — код тесту однаковий для Chrome, Firefox або Playwright.<br />
+							2) Віртуальні методи життєвого циклу сторінки: <code>public virtual void WaitForLoaded()</code> у <code>BasePage</code> перевизначається (<code>override</code>) у складних сторінках з графіками.</p>
+						</div>
+					</div>
+
+					<div class="p-2 rounded bg-purple-950/40 border border-purple-800/40 text-[11px] text-purple-200">
+						<strong>Фокус для інтерв'ю:</strong> «Page Object Model — це ідеальна демонстрація всіх 4 принципів ООП у дії. Вона перетворює сирий код взаємодії з браузером на надійну, типізовану та підтримувану бізнес-модель».
+					</div>
+				`
+			}
+		]
+	},
+	{
 		id: 's-oop-classes',
 		category: 'S',
 		menuTitle: 'ООП: Класи, Конструктори & Властивості',
@@ -558,6 +625,80 @@ var allExceptFirst = words[1..]; // від індексу 1 до кінця</cod
 		]
 	},
 	{
+		id: 's-memory-gc-equality',
+		category: 'S',
+		menuTitle: "Пам'ять CLR, Garbage Collector & Рівність",
+		menuSub:
+			'Покоління GC (0, 1, 2, LOH), Mark-Sweep-Compact, IDisposable vs Finalizer, == vs Equals & GetHashCode',
+		layout: 'grid-2',
+		cards: [
+			{
+				title: "Пам'ять CLR, Робота GC & IDisposable",
+				contentHtml: `
+					<h4 class="font-bold text-purple-300 text-xs mb-1">Як працює Garbage Collector (GC):</h4>
+					<p class="text-[11px] text-slate-300 mb-1">GC в .NET автоматично керує керованою купою (Managed Heap). Фази збирання:</p>
+					<ol class="list-decimal list-inside space-y-0.5 text-[11px] text-slate-200 mb-2">
+						<li><strong>Mark:</strong> починаючи від GC Roots (статичні поля, локальні змінні стеку), обходить граф і маркує живі об'єкти.</li>
+						<li><strong>Sweep:</strong> визначає блоки пам'яті з мертвими (недосяжними) об'єктами.</li>
+						<li><strong>Compact:</strong> переміщує живі об'єкти впритул один до одного для усунення фрагментації.</li>
+					</ol>
+
+					<h4 class="font-bold text-purple-300 text-xs mb-1">Покоління пам'яті (Generations):</h4>
+					<div class="space-y-1 text-[11px] text-slate-200 mb-2">
+						<div class="p-1.5 rounded bg-[#0d091a] border border-purple-900/50">
+							<strong class="text-purple-400">Gen 0:</strong> короткоживучі об'єкти (локальні змінні, DTO). Очищується найчастіше і найшвидше.
+						</div>
+						<div class="p-1.5 rounded bg-[#0d091a] border border-purple-900/50">
+							<strong class="text-purple-400">Gen 1:</strong> буфер між Gen 0 та Gen 2 для об'єктів середньої тривалості життя.
+						</div>
+						<div class="p-1.5 rounded bg-[#0d091a] border border-purple-900/50">
+							<strong class="text-purple-400">Gen 2:</strong> довгоживучі об'єкти (Singleton, кеші). Збирання Gen 2 (Full GC) — найважче і викликає паузу (Stop-The-World).
+						</div>
+						<div class="p-1.5 rounded bg-[#0d091a] border border-purple-900/50">
+							<strong class="text-purple-400">LOH (Large Object Heap):</strong> об'єкти <strong>&gt; 85,000 байт</strong> (великі масиви/буфери). За замовчуванням LOH не ущільнюється (ризик фрагментації пам'яті!).
+						</div>
+					</div>
+
+					<div class="p-2 rounded bg-purple-950/40 border border-purple-800/40 text-[11px] text-purple-200">
+						<strong>IDisposable vs Фіналізатор (~Destructor):</strong><br />
+						<code>Dispose()</code> викликається розробником (детерміновано). Фіналізатор <code>~MyClass()</code> викликається GC у черзі <em>Finalizer Queue</em>, якщо об'єкт забули задіспозити (недетерміновано, об'єкт живе довше).<br />
+						<code>GC.SuppressFinalize(this)</code> скасовує фіналізатор після успішного Dispose.
+					</div>
+				`
+			},
+			{
+				title: 'Рівність у C# (Equality) & Пастка GetHashCode',
+				contentHtml: `
+					<h4 class="font-bold text-purple-300 text-xs mb-1">Способи перевірки рівності в C#:</h4>
+					<div class="space-y-1.5 text-[11px] text-slate-200 mb-2">
+						<div class="p-2 rounded bg-[#0d091a] border border-purple-900/50">
+							<strong class="text-purple-400">ReferenceEquals(a, b):</strong>
+							<p class="text-slate-300">Суворо перевіряє, чи вказують дві змінні на <strong>одну й ту саму адресу в пам'яті</strong> (Identity). Для Value Types завжди повертає <code>false</code> через boxing.</p>
+						</div>
+						<div class="p-2 rounded bg-[#0d091a] border border-purple-900/50">
+							<strong class="text-purple-400">Оператор == vs Equals():</strong>
+							<p class="text-slate-300"><code>==</code> — статичний оператор (для класів за замовчуванням порівнює посилання, але у <code>string</code> перевантажений для порівняння вмісту). <code>Equals()</code> — віртуальний метод <code>Object</code>, який можна перевизначити для порівняння за значенням полів.</p>
+						</div>
+						<div class="p-2 rounded bg-[#0d091a] border border-purple-900/50">
+							<strong class="text-purple-400">IEquatable&lt;T&gt;:</strong>
+							<p class="text-slate-300">Реалізація <code>bool Equals(T other)</code> забезпечує швидке порівняння без упаковки в <code>object</code> (відсутність Boxing для структур).</p>
+						</div>
+					</div>
+
+					<h4 class="font-bold text-purple-300 text-xs mb-1">Золоте правило співбесід: пастка GetHashCode():</h4>
+					<div class="p-2 rounded bg-amber-950/40 border border-amber-800/40 text-[11px] text-amber-200 mb-2">
+						<strong>Контракт CLR:</strong> Якщо два об'єкти рівні за <code>Equals()</code>, їхній <code>GetHashCode()</code> <strong>ЗОБОВ'ЯЗАНИЙ повертати однакове число!</strong>
+					</div>
+
+					<div class="p-2 rounded bg-purple-950/40 border border-purple-800/40 text-[11px] text-purple-200">
+						<strong>Що буде, якщо перевизначити Equals, але не GetHashCode?</strong><br />
+						Об'єкт буде неможливо знайти в <code>Dictionary&lt;TKey, TValue&gt;</code> або <code>HashSet&lt;T&gt;</code>! Хеш-таблиця розрахує випадковий дефолтний хеш від адреси пам'яті, покладе об'єкт в один кошик (bucket), а при спробі знайти еквівалентний об'єкт шукатиме в іншому кошику і поверне <code>false</code> / <code>KeyNotFoundException</code>.
+					</div>
+				`
+			}
+		]
+	},
+	{
 		id: 's-generics-delegates-events',
 		category: 'S',
 		menuTitle: 'Generics, Делегати, Події & Лямбди',
@@ -635,11 +776,12 @@ actions.ForEach(a =&gt; a()); // Виведе "333", бо після циклу 
 		id: 's-collections-linq',
 		category: 'S',
 		menuTitle: 'Колекції, Обробка винятків & LINQ',
-		menuSub: 'List, Dictionary, HashSet, try-catch-finally-when, LINQ оператори, Left Join',
+		menuSub:
+			'List, Dictionary, HashSet, yield return, try-catch-finally when, First vs Single, Left Join',
 		layout: 'grid-2',
 		cards: [
 			{
-				title: 'Колекції .NET & Обробка винятків',
+				title: 'Колекції .NET, yield return & Обробка винятків',
 				contentHtml: `
 					<h4 class="font-bold text-purple-300 text-xs mb-1">Основні колекції (System.Collections.Generic):</h4>
 					<ul class="list-disc list-inside space-y-1 text-[11px] text-slate-300 mb-2">
@@ -648,6 +790,13 @@ actions.ForEach(a =&gt; a()); // Виведе "333", бо після циклу 
 						<li><code>HashSet&lt;T&gt;</code>: невпорядкована множина унікальних елементів. Пошук <code>Contains</code> за O(1), операції перетину та об'єднання множин.</li>
 						<li><code>Queue&lt;T&gt;</code> (FIFO) та <code>Stack&lt;T&gt;</code> (LIFO).</li>
 					</ul>
+
+					<h4 class="font-bold text-purple-300 text-xs mb-1">yield return та ліниве виконання (Lazy Evaluation):</h4>
+					<p class="text-[11px] text-slate-300 mb-1">Оператор <code>yield return</code> генерує послідовність по одному елементу за запитом (State Machine), не виділяючи пам'ять під усю колекцію одразу:</p>
+					<pre class="bg-black/80 p-1.5 rounded text-[10px] text-slate-200 font-mono mb-2"><code class="language-csharp">public IEnumerable&lt;TestCaseData&gt; GetTestData() {
+    yield return new TestCaseData("admin", 200);
+    yield return new TestCaseData("guest", 403);
+}</code></pre>
 
 					<h4 class="font-bold text-purple-300 text-xs mb-1">Обробка винятків (try-catch-finally when):</h4>
 					<pre class="bg-black/80 p-1.5 rounded text-[10px] text-slate-200 font-mono mb-2"><code class="language-csharp">try {
@@ -726,7 +875,7 @@ var methodLeftJoin = users
 		category: 'S',
 		menuTitle: 'Асинхронність, Ресурси & Reflection для AQA',
 		menuSub:
-			'async/await, Task, IDisposable, using, HttpClient, JSON, Reflection та атрибути NUnit/xUnit',
+			'async/await, Task, IDisposable, using, HttpClient, JSON, Reflection та атрибути NUnit/xUnit, DI Lifetimes',
 		layout: 'grid-2',
 		cards: [
 			{
@@ -753,7 +902,7 @@ var content = await response.Content.ReadAsStringAsync();
 				`
 			},
 			{
-				title: 'Рефлексія (Reflection) & Атрибути для AQA',
+				title: 'Рефлексія, Атрибути NUnit/xUnit & DI Життєві цикли',
 				contentHtml: `
 					<h4 class="font-bold text-purple-300 text-xs mb-1">Що таке Рефлексія (System.Reflection):</h4>
 					<p class="text-[11px] text-slate-300 mb-1">Механізм дослідження метаданих збірок, типів, методів та властивостей під час виконання програми:</p>
@@ -766,18 +915,16 @@ var content = await response.Content.ReadAsStringAsync();
 					<h4 class="font-bold text-purple-300 text-xs mb-1">Як NUnit / xUnit використовують рефлексію:</h4>
 					<p class="text-[11px] text-slate-300 mb-1">Тестові раннери сканують збірки, знаходять класи з атрибутами <code>[TestFixture]</code> та викликають методи з атрибутами <code>[Test]</code> / <code>[Fact]</code>. Рефлексія також передає дані параметризації (<code>[TestCase]</code>, <code>[Theory]</code>).</p>
 
-					<h4 class="font-bold text-purple-300 text-xs mb-1">Створення кастомного атрибута для автотестів:</h4>
-					<pre class="bg-black/80 p-1.5 rounded text-[10px] text-slate-200 font-mono mb-2"><code class="language-csharp">[AttributeUsage(AttributeTargets.Method)]
-public class SeverityAttribute(string level) : Attribute {
-    public string Level { get; } = level;
-}
-
-// Використання:
-[Test, Severity("Blocker")]
-public void PaymentCheckoutSmokeTest() { ... }</code></pre>
+					<h4 class="font-bold text-purple-300 text-xs mb-1">Dependency Injection (DI) Service Lifetimes:</h4>
+					<div class="space-y-1 text-[11px] text-slate-300 mb-2">
+						<p><strong>Transient:</strong> новий екземпляр створюється щоразу при запиті (ідеально для легковажних утиліт без стану).</p>
+						<p><strong>Scoped:</strong> один екземпляр на весь Scope (у тестах — один екземпляр <code>IWebDriver</code> на окремий тест/потік).</p>
+						<p><strong>Singleton:</strong> єдиний екземпляр на весь життєвий цикл додатку/прогону (конфігурація, підключення до TestRail).</p>
+					</div>
 
 					<div class="p-2 rounded bg-purple-950/40 border border-purple-800/40 text-[11px] text-purple-200">
-						<strong>Висновок для інтерв'ю:</strong> «Рефлексія та атрибути — фундамент сучасних тестових фреймворків (.NET). Вони забезпечують динамічне виявлення тестів, генерацію звітів (Allure/Extent) та керування фікстурами».
+						<strong>Кастомний атрибут для автотестів:</strong><br />
+						<code>[AttributeUsage(AttributeTargets.Method)] public class SeverityAttribute(string level) : Attribute { public string Level =&gt; level; }</code>
 					</div>
 				`
 			}

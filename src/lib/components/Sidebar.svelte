@@ -670,7 +670,22 @@
 				<p class="text-purple-400/80 text-[10px]">Stack/Heap, struct/class, ??, ??=, ?., checked</p>
 			</button>
 
-			<!-- 5. OOP: Classes, Constructors & Properties -->
+			<!-- 5. 4 Pillars of OOP -->
+			<button
+				type="button"
+				onclick={() => handleSlideClick('s-oop-pillars')}
+				class="w-full text-left p-2.5 rounded-2xl border transition-all duration-200 block cursor-pointer {activeSlideId ===
+				's-oop-pillars'
+					? 'border-2 border-purple-400 bg-purple-950/30 shadow-[0_0_15px_rgba(192,132,252,0.3)]'
+					: 'border-slate-800 bg-[#060910] hover:border-purple-700 hover:bg-[#09111c]'}"
+			>
+				<p class="font-bold text-white text-xs">4 Принципи ООП (Фундамент)</p>
+				<p class="text-purple-400/80 text-[10px]">
+					Інкапсуляція, Абстракція, Наслідування, Поліморфізм
+				</p>
+			</button>
+
+			<!-- 6. OOP: Classes, Constructors & Properties -->
 			<button
 				type="button"
 				onclick={() => handleSlideClick('s-oop-classes')}
@@ -683,7 +698,7 @@
 				<p class="text-purple-400/80 text-[10px]">інкапсуляція, конструктори, this, init, record</p>
 			</button>
 
-			<!-- 6. static, const vs readonly & Extension -->
+			<!-- 7. static, const vs readonly & Extension -->
 			<button
 				type="button"
 				onclick={() => handleSlideClick('s-static-const-advanced')}
@@ -698,7 +713,7 @@
 				</p>
 			</button>
 
-			<!-- 7. Inheritance, Polymorphism & Interfaces -->
+			<!-- 8. Inheritance, Polymorphism & Interfaces -->
 			<button
 				type="button"
 				onclick={() => handleSlideClick('s-oop-inheritance-polymorphism')}
@@ -713,7 +728,22 @@
 				</p>
 			</button>
 
-			<!-- 8. Generics, Delegates, Events & Lambdas -->
+			<!-- 9. Memory CLR, GC & Equality -->
+			<button
+				type="button"
+				onclick={() => handleSlideClick('s-memory-gc-equality')}
+				class="w-full text-left p-2.5 rounded-2xl border transition-all duration-200 block cursor-pointer {activeSlideId ===
+				's-memory-gc-equality'
+					? 'border-2 border-purple-400 bg-purple-950/30 shadow-[0_0_15px_rgba(192,132,252,0.3)]'
+					: 'border-slate-800 bg-[#060910] hover:border-purple-700 hover:bg-[#09111c]'}"
+			>
+				<p class="font-bold text-white text-xs">Пам'ять CLR, GC & Рівність</p>
+				<p class="text-purple-400/80 text-[10px]">
+					Покоління GC, LOH, Mark-Sweep, == vs Equals & HashCode
+				</p>
+			</button>
+
+			<!-- 10. Generics, Delegates, Events & Lambdas -->
 			<button
 				type="button"
 				onclick={() => handleSlideClick('s-generics-delegates-events')}
@@ -726,7 +756,7 @@
 				<p class="text-purple-400/80 text-[10px]">where T, Action, Func, Predicate, event, =></p>
 			</button>
 
-			<!-- 9. Collections, Exceptions & LINQ -->
+			<!-- 11. Collections, Exceptions & LINQ -->
 			<button
 				type="button"
 				onclick={() => handleSlideClick('s-collections-linq')}
@@ -739,7 +769,7 @@
 				<p class="text-purple-400/80 text-[10px]">List, Dictionary, try-when, LINQ Left Join</p>
 			</button>
 
-			<!-- 10. Async, IDisposable & Reflection for AQA -->
+			<!-- 12. Async, IDisposable & Reflection for AQA -->
 			<button
 				type="button"
 				onclick={() => handleSlideClick('s-async-reflection-qa')}

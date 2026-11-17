@@ -1,6 +1,6 @@
 # Асинхронність, Ресурси & Reflection для AQA
 
-> **Підтеми:** async/await, Task, IDisposable, using, HttpClient, JSON, Reflection та атрибути NUnit/xUnit
+> **Підтеми:** async/await, Task, IDisposable, using, HttpClient, JSON, Reflection та атрибути NUnit/xUnit, DI Lifetimes
 
 **Категорія:** C# Core & Advanced (.NET)
 
@@ -33,7 +33,7 @@ var content = await response.Content.ReadAsStringAsync();
 
 ---
 
-## Рефлексія (Reflection) & Атрибути для AQA
+## Рефлексія, Атрибути NUnit/xUnit & DI Життєві цикли
 
 ### Що таке Рефлексія (System.Reflection):
 
@@ -49,21 +49,18 @@ var content = await response.Content.ReadAsStringAsync();
 
 Тестові раннери сканують збірки, знаходять класи з атрибутами `[TestFixture]` та викликають методи з атрибутами `[Test]` / `[Fact]`. Рефлексія також передає дані параметризації (`[TestCase]`, `[Theory]`).
 
-### Створення кастомного атрибута для автотестів:
+### Dependency Injection (DI) Service Lifetimes:
 
-```csharp
-[AttributeUsage(AttributeTargets.Method)]
-public class SeverityAttribute(string level) : Attribute {
-    public string Level { get; } = level;
-}
+**Transient:** новий екземпляр створюється щоразу при запиті (ідеально для легковажних утиліт без стану).
 
-// Використання:
-[Test, Severity("Blocker")]
-public void PaymentCheckoutSmokeTest() { ... }
-```
+**Scoped:** один екземпляр на весь Scope (у тестах — один екземпляр `IWebDriver` на окремий тест/потік).
 
-**Висновок для інтерв'ю:** «Рефлексія та атрибути — фундамент сучасних тестових фреймворків (.NET). Вони забезпечують динамічне виявлення тестів, генерацію звітів (Allure/Extent) та керування фікстурами».
+**Singleton:** єдиний екземпляр на весь життєвий цикл додатку/прогону (конфігурація, підключення до TestRail).
+
+**Кастомний атрибут для автотестів:**
+
+`[AttributeUsage(AttributeTargets.Method)] public class SeverityAttribute(string level) : Attribute { public string Level => level; }`
 
 ---
 
-[← Попередній: Колекції, Обробка винятків & LINQ](./09_Колекції_Обробка_винятків_and_LINQ.md) | [📑 До змісту](../README.md)
+[← Попередній: Колекції, Обробка винятків & LINQ](./11_Колекції_Обробка_винятків_and_LINQ.md) | [📑 До змісту](../README.md)

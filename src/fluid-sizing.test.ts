@@ -46,11 +46,14 @@ describe('FLUID-SIZING-v10 canon in AQA', () => {
 
 	it('prefers dvh over bare vh in CSS/Tailwind (FLUID-SIZING-v10 § 3)', () => {
 		const offenders: string[] = [];
-		const BARE_VH = /(?<![a-zA-Z0-9_\-])(?<![dls])vh\b/;
+		const BARE_VH = /(?<![a-zA-Z0-9_-])(?<![dls])vh\b/;
 		for (const file of files) {
 			const text = readFileSync(file, 'utf8');
 			text.split('\n').forEach((line, idx) => {
-				if (BARE_VH.test(line) && (line.includes(':') || line.includes('min-h-') || line.includes('h-['))) {
+				if (
+					BARE_VH.test(line) &&
+					(line.includes(':') || line.includes('min-h-') || line.includes('h-['))
+				) {
 					offenders.push(`${file}:${idx + 1} ${line.trim()}`);
 				}
 			});
