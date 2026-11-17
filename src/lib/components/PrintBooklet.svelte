@@ -11,7 +11,7 @@
 <div class="print-booklet-container hidden print:block bg-white text-black p-4">
 	<!-- Cover Page -->
 	<section
-		class="print-page flex flex-col justify-center items-center text-center min-h-[90vh] p-8 border-4 border-slate-900 rounded-2xl mb-8"
+		class="print-page flex flex-col justify-center items-center text-center min-h-[90dvh] p-8 border-4 border-slate-900 rounded-2xl mb-8"
 	>
 		<div
 			class="mb-4 inline-block px-4 py-1 rounded-full border border-slate-700 text-xs font-mono font-bold tracking-widest uppercase"
@@ -125,7 +125,7 @@
 	<!-- All Slides Pages -->
 	{#each slides as slide, idx}
 		<section
-			class="print-page min-h-[92vh] flex flex-col justify-between p-6 border-2 border-slate-800 rounded-xl mb-8 bg-white"
+			class="print-page min-h-[92dvh] flex flex-col justify-between p-6 border-2 border-slate-800 rounded-xl mb-8 bg-white"
 		>
 			<!-- Slide Header -->
 			<header class="pb-3 mb-4 border-b-2 border-slate-900 flex items-center justify-between">
@@ -211,7 +211,7 @@
 		.print-page {
 			page-break-after: always;
 			break-after: page;
-			min-height: 95vh;
+			min-height: 95dvh;
 		}
 		.print-card-content :global(h4) {
 			font-weight: 700;
